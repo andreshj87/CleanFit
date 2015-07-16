@@ -22,19 +22,18 @@ import butterknife.Bind;
 /**
  * Created by Zireck on 16/07/2015.
  */
-public class FoodRepositoryFragment extends BaseFragment implements FoodRepositoryView {
+public abstract class FoodRepositoryBaseFragment extends BaseFragment implements FoodRepositoryView {
 
     @Bind(R.id.food_list)
     RecyclerView mRecyclerView;
-    private FoodRepositoryRecyclerAdapter mAdapter;
-    private FoodRepositoryPresenter mPresenter;
+    protected FoodRepositoryRecyclerAdapter mAdapter;
+    protected FoodRepositoryPresenter mPresenter;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Presenter
-        mPresenter = new FoodRepositoryPresenterImpl(this);
+        loadPresenter();
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -47,6 +46,8 @@ public class FoodRepositoryFragment extends BaseFragment implements FoodReposito
         mPresenter.onResume();
     }
 
+    public abstract void loadPresenter();
+
     @Override
     protected int getFragmentLayout() {
         return R.layout.fragment_food_repository;
@@ -56,10 +57,5 @@ public class FoodRepositoryFragment extends BaseFragment implements FoodReposito
     public void setFoodItems(List<Food> foodItems) {
         mAdapter = new FoodRepositoryRecyclerAdapter(foodItems, R.layout.food_repository_recyclerview_item);
         mRecyclerView.setAdapter(mAdapter);
-    }
-
-    @Override
-    public void showMessage(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
     }
 }

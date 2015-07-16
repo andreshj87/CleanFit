@@ -1,7 +1,7 @@
 package com.zireck.projectk.presenter;
 
 import com.zireck.projectk.interactor.FoodRepositoryInteractor;
-import com.zireck.projectk.interactor.FoodRepositoryInteractorImpl;
+import com.zireck.projectk.interactor.FoodRepositoryFoodInteractorImpl;
 import com.zireck.projectk.listener.OnFoodRepositoryFinishedListener;
 import com.zireck.projectk.model.Food;
 import com.zireck.projectk.view.FoodRepositoryView;
@@ -11,15 +11,17 @@ import java.util.List;
 /**
  * Created by Zireck on 16/07/2015.
  */
-public class FoodRepositoryPresenterImpl implements FoodRepositoryPresenter, OnFoodRepositoryFinishedListener {
+public abstract class FoodRepositoryPresenterImpl implements FoodRepositoryPresenter, OnFoodRepositoryFinishedListener {
 
-    private FoodRepositoryView mView;
-    private FoodRepositoryInteractor mInteractor;
+    protected FoodRepositoryView mView;
+    protected FoodRepositoryInteractor mInteractor;
 
     public FoodRepositoryPresenterImpl(FoodRepositoryView view) {
         mView = view;
-        mInteractor = new FoodRepositoryInteractorImpl();
+        loadInteractor();
     }
+
+    public abstract void loadInteractor();
 
     @Override
     public void onResume() {

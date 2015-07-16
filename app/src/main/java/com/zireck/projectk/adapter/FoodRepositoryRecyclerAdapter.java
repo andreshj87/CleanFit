@@ -8,19 +8,23 @@ import android.widget.TextView;
 
 import com.zireck.projectk.R;
 import com.zireck.projectk.model.Food;
+import com.zireck.projectk.util.MathUtils;
 
 import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by Zireck on 16/07/2015.
  */
 public class FoodRepositoryRecyclerAdapter extends RecyclerView.Adapter<FoodRepositoryRecyclerAdapter.ViewHolder> {
 
-    private List<Food> mItems;
+    private List<Food> mFoodItems;
     private int mLayout;
 
     public FoodRepositoryRecyclerAdapter(List<Food> items, int layout) {
-        mItems = items;
+        mFoodItems = items;
         mLayout = layout;
     }
 
@@ -32,22 +36,26 @@ public class FoodRepositoryRecyclerAdapter extends RecyclerView.Adapter<FoodRepo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Food item = mItems.get(position);
-        holder.text.setText(item.getName() + " (" + item.getBrand() + ")");
-        holder.itemView.setTag(item);
+        Food food = mFoodItems.get(position);
+        holder.foodCalories.setText(MathUtils.formatDouble(food.getCalories()));
+        holder.foodName.setText(food.getName());
+        holder.foodBrand.setText(food.getBrand());
+        holder.itemView.setTag(food);
     }
 
     @Override
     public int getItemCount() {
-        return mItems.size();
+        return mFoodItems.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView text;
+        @Bind(R.id.food_calories) TextView foodCalories;
+        @Bind(R.id.food_name) TextView foodName;
+        @Bind(R.id.food_brand) TextView foodBrand;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            text = (TextView) itemView.findViewById(R.id.food_name);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

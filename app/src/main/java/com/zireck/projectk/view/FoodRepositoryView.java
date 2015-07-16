@@ -10,5 +10,4 @@ import java.util.List;
  */
 public interface FoodRepositoryView {
     public void setFoodItems(List<Food> foodItems);
-    public void showMessage(String message);
 }
