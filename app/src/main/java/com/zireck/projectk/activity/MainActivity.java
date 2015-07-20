@@ -16,8 +16,8 @@ import android.view.View;
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 import com.zireck.projectk.R;
-import com.zireck.projectk.fragment.FoodRepositoryDrinkFragment;
-import com.zireck.projectk.fragment.FoodRepositoryFoodFragment;
+import com.zireck.projectk.fragment.FoodRepositoryDrinkListFragment;
+import com.zireck.projectk.fragment.FoodRepositoryFoodListFragment;
 
 import butterknife.Bind;
 
@@ -97,9 +97,9 @@ public class MainActivity extends BaseActivity {
             public boolean onNavigationItemSelected(MenuItem menuItem) {
 
                 if (menuItem.getTitle().toString().equalsIgnoreCase("Food")) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FoodRepositoryFoodFragment()).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FoodRepositoryFoodListFragment()).commit();
                 } else if (menuItem.getTitle().toString().equalsIgnoreCase("Drink")) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FoodRepositoryDrinkFragment()).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FoodRepositoryDrinkListFragment()).commit();
                 }
 
                 Snackbar.make(mContentLayout, menuItem.getTitle() + " pressed", Snackbar.LENGTH_LONG).show();

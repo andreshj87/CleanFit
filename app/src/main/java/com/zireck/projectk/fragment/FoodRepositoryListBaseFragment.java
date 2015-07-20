@@ -6,14 +6,12 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.zireck.projectk.R;
 import com.zireck.projectk.adapter.FoodRepositoryRecyclerAdapter;
 import com.zireck.projectk.model.Food;
-import com.zireck.projectk.presenter.FoodRepositoryPresenter;
-import com.zireck.projectk.presenter.FoodRepositoryPresenterImpl;
-import com.zireck.projectk.view.FoodRepositoryView;
+import com.zireck.projectk.presenter.FoodRepositoryListPresenter;
+import com.zireck.projectk.view.FoodRepositoryListView;
 
 import java.util.List;
 
@@ -22,12 +20,12 @@ import butterknife.Bind;
 /**
  * Created by Zireck on 16/07/2015.
  */
-public abstract class FoodRepositoryBaseFragment extends BaseFragment implements FoodRepositoryView {
+public abstract class FoodRepositoryListBaseFragment extends BaseFragment implements FoodRepositoryListView {
 
     @Bind(R.id.food_list)
     RecyclerView mRecyclerView;
     protected FoodRepositoryRecyclerAdapter mAdapter;
-    protected FoodRepositoryPresenter mPresenter;
+    protected FoodRepositoryListPresenter mPresenter;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {

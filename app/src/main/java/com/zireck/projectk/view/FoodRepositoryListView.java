@@ -8,6 +8,6 @@ import java.util.List;
 /**
  * Created by Zireck on 16/07/2015.
  */
-public interface FoodRepositoryView {
+public interface FoodRepositoryListView {
     public void setFoodItems(List<Food> foodItems);
 }

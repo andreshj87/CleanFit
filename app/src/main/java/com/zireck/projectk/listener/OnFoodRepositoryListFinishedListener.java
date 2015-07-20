@@ -7,6 +7,6 @@ import java.util.List;
 /**
  * Created by Zireck on 16/07/2015.
  */
-public interface OnFoodRepositoryFinishedListener {
+public interface OnFoodRepositoryListFinishedListener {
     public void onFinished(List<Food> foodItems);
 }
