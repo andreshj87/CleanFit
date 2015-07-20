@@ -1,14 +1,18 @@
 package com.zireck.projectk.activity;
 
+import android.annotation.TargetApi;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +22,7 @@ import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 import com.zireck.projectk.R;
 import com.zireck.projectk.fragment.FoodRepositoryDrinkListFragment;
 import com.zireck.projectk.fragment.FoodRepositoryFoodListFragment;
+import com.zireck.projectk.fragment.FoodRepositoryFragment;
 
 import butterknife.Bind;
 
@@ -96,14 +101,22 @@ public class MainActivity extends BaseActivity {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
 
-                if (menuItem.getTitle().toString().equalsIgnoreCase("Food")) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FoodRepositoryFoodListFragment()).commit();
-                } else if (menuItem.getTitle().toString().equalsIgnoreCase("Drink")) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FoodRepositoryDrinkListFragment()).commit();
+                switch (menuItem.getItemId()) {
+                    case R.id.drawer_food:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, FoodRepositoryFoodListFragment.newInstance()).commit();
+                        break;
+                    case R.id.drawer_drink:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, FoodRepositoryDrinkListFragment.newInstance()).commit();
+                        break;
+                    case R.id.drawer_repository:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, FoodRepositoryFragment.newInstance()).commit();
+                        break;
                 }
 
-                Snackbar.make(mContentLayout, menuItem.getTitle() + " pressed", Snackbar.LENGTH_LONG).show();
+                //Snackbar.make(mContentLayout, menuItem.getTitle() + " pressed", Snackbar.LENGTH_LONG).show();
+                mToolbar.setTitle(menuItem.getTitle());
                 menuItem.setChecked(true);
+
                 mDrawerLayout.closeDrawers();
                 return true;
             }

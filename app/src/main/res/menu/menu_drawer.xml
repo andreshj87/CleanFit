@@ -17,5 +17,9 @@
             android:id="@+id/drawer_drink"
             android:title="Drink"/>
 
+        <item
+            android:id="@+id/drawer_repository"
+            android:title="Food Repository" />
+
     </group>
 </menu>

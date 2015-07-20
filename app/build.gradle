@@ -27,7 +27,5 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:22.2.1'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.balysv.materialmenu:material-menu-toolbar:1.5.4'
-    compile ('com.github.florent37:materialviewpager:1.0.8@aar'){
-        transitive = true
-    }
+    compile 'com.jpardogo.materialtabstrip:library:1.1.0'
 }

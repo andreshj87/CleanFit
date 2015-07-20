@@ -48,7 +48,7 @@ public abstract class FoodRepositoryListBaseFragment extends BaseFragment implem
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.fragment_food_repository;
+        return R.layout.fragment_food_repository_list;
     }
 
     @Override
