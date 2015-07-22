@@ -1,13 +1,11 @@
 package com.zireck.projectk.activity;
 
-import android.annotation.TargetApi;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -28,10 +26,14 @@ import butterknife.Bind;
 
 public class MainActivity extends BaseActivity {
 
+    private static final String NAVIGATION_VIEW_SELECTED_ITEM = "NavigationViewSelectedItem";
+
     @Bind(R.id.navigation_view) NavigationView mNavigationView;
+    @Bind(R.id.appBarLayout) AppBarLayout mAppBarLayout;
     @Bind(R.id.toolbar) Toolbar mToolbar;
     @Bind(R.id.drawer_layout) DrawerLayout mDrawerLayout;
-    @Bind(R.id.content) View mContentLayout;
+    @Bind(R.id.content)
+    CoordinatorLayout mContentLayout;
     private MaterialMenuIconToolbar mMaterialMenuIconToolbar;
     private boolean mDrawerDirection;
 
@@ -40,13 +42,13 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setUpMaterialMenuIconToolbar();
+        initMaterialMenuIconToolbar();
 
-        setUpActionBar();
+        initActionBar();
 
-        setUpNavigationView();
+        initNavigationView();
 
-        setUpDrawerLayout();
+        initDrawerLayout();
     }
 
     @Override
@@ -84,10 +86,22 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         mMaterialMenuIconToolbar.onSaveInstanceState(outState);
+        Log.d(getClass().getSimpleName(), "save");
+        // TODO not working
+        outState.putInt(NAVIGATION_VIEW_SELECTED_ITEM, getNavigationViewSelectedItem());
         super.onSaveInstanceState(outState, outPersistentState);
     }
 
-    private void setUpActionBar() {
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.d(getClass().getSimpleName(), "restore");
+        if (savedInstanceState.containsKey(NAVIGATION_VIEW_SELECTED_ITEM)) {
+            setNavigationViewSelectedItem(savedInstanceState.getInt(NAVIGATION_VIEW_SELECTED_ITEM, 0));
+        }
+    }
+
+    private void initActionBar() {
         setSupportActionBar(mToolbar);
         final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -96,7 +110,7 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private void setUpNavigationView() {
+    private void initNavigationView() {
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -113,6 +127,8 @@ public class MainActivity extends BaseActivity {
                         break;
                 }
 
+                showAppBarLayout();
+
                 //Snackbar.make(mContentLayout, menuItem.getTitle() + " pressed", Snackbar.LENGTH_LONG).show();
                 mToolbar.setTitle(menuItem.getTitle());
                 menuItem.setChecked(true);
@@ -123,7 +139,7 @@ public class MainActivity extends BaseActivity {
         });
     }
 
-    private void setUpMaterialMenuIconToolbar() {
+    private void initMaterialMenuIconToolbar() {
         mMaterialMenuIconToolbar = new MaterialMenuIconToolbar(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN) {
             @Override
             public int getToolbarViewId() {
@@ -132,7 +148,7 @@ public class MainActivity extends BaseActivity {
         };
     }
 
-    private void setUpDrawerLayout() {
+    private void initDrawerLayout() {
         mDrawerLayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
@@ -152,5 +168,35 @@ public class MainActivity extends BaseActivity {
                 mDrawerDirection = false;
             }
         });
+    }
+
+    private void showAppBarLayout() {
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) mAppBarLayout.getLayoutParams();
+        AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
+
+        if (behavior != null) {
+            int[] consumed = new int[2];
+            behavior.onNestedFling(mContentLayout, mAppBarLayout, null, 0, -1000, true);
+        }
+    }
+
+    private int getNavigationViewSelectedItem() {
+        Menu menu = mNavigationView.getMenu();
+        int count = menu.size();
+
+        for (int i=0; i<count; i++) {
+            if (menu.getItem(i).isChecked()) {
+                Log.d(getClass().getSimpleName(), "get = " + i);
+                return i;
+            }
+        }
+
+        return 0;
+    }
+
+    private void setNavigationViewSelectedItem(int position) {
+        Menu menu = mNavigationView.getMenu();
+        menu.getItem(position).setChecked(true);
+        Log.d(getClass().getSimpleName(), "set = " + position);
     }
 }
