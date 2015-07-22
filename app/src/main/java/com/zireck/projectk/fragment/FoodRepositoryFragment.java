@@ -19,10 +19,8 @@ import butterknife.Bind;
  */
 public class FoodRepositoryFragment extends BaseFragment {
 
-    @Bind(R.id.pagerslidingtabstrip)
-    PagerSlidingTabStrip mPagerSlidingTabStrip;
-    @Bind(R.id.viewpager)
-    ViewPager mViewPager;
+    @Bind(R.id.pagerslidingtabstrip) PagerSlidingTabStrip mPagerSlidingTabStrip;
+    @Bind(R.id.viewpager) ViewPager mViewPager;
     private FoodRepositoryFragmentPagerAdapter mAdapter;
 
     public static FoodRepositoryFragment newInstance() {

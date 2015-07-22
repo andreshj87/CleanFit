@@ -18,8 +18,7 @@ import android.view.View;
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 import com.zireck.projectk.R;
-import com.zireck.projectk.fragment.FoodRepositoryDrinkListFragment;
-import com.zireck.projectk.fragment.FoodRepositoryFoodListFragment;
+import com.zireck.projectk.fragment.FoodListFragment;
 import com.zireck.projectk.fragment.FoodRepositoryFragment;
 
 import butterknife.Bind;
@@ -32,8 +31,7 @@ public class MainActivity extends BaseActivity {
     @Bind(R.id.appBarLayout) AppBarLayout mAppBarLayout;
     @Bind(R.id.toolbar) Toolbar mToolbar;
     @Bind(R.id.drawer_layout) DrawerLayout mDrawerLayout;
-    @Bind(R.id.content)
-    CoordinatorLayout mContentLayout;
+    @Bind(R.id.content) CoordinatorLayout mCoordinatorLayout;
     private MaterialMenuIconToolbar mMaterialMenuIconToolbar;
     private boolean mDrawerDirection;
 
@@ -117,10 +115,10 @@ public class MainActivity extends BaseActivity {
 
                 switch (menuItem.getItemId()) {
                     case R.id.drawer_food:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, FoodRepositoryFoodListFragment.newInstance()).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, FoodListFragment.newInstance(FoodListFragment.TAG_FOOD)).commit();
                         break;
                     case R.id.drawer_drink:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, FoodRepositoryDrinkListFragment.newInstance()).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, FoodListFragment.newInstance(FoodListFragment.TAG_DRINK)).commit();
                         break;
                     case R.id.drawer_repository:
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, FoodRepositoryFragment.newInstance()).commit();
@@ -129,7 +127,7 @@ public class MainActivity extends BaseActivity {
 
                 showAppBarLayout();
 
-                //Snackbar.make(mContentLayout, menuItem.getTitle() + " pressed", Snackbar.LENGTH_LONG).show();
+                //Snackbar.make(mCoordinatorLayout, menuItem.getTitle() + " pressed", Snackbar.LENGTH_LONG).show();
                 mToolbar.setTitle(menuItem.getTitle());
                 menuItem.setChecked(true);
 
@@ -175,8 +173,7 @@ public class MainActivity extends BaseActivity {
         AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
 
         if (behavior != null) {
-            int[] consumed = new int[2];
-            behavior.onNestedFling(mContentLayout, mAppBarLayout, null, 0, -1000, true);
+            behavior.onNestedFling(mCoordinatorLayout, mAppBarLayout, null, 0, -1000, true);
         }
     }
 
@@ -186,7 +183,6 @@ public class MainActivity extends BaseActivity {
 
         for (int i=0; i<count; i++) {
             if (menu.getItem(i).isChecked()) {
-                Log.d(getClass().getSimpleName(), "get = " + i);
                 return i;
             }
         }
@@ -197,6 +193,5 @@ public class MainActivity extends BaseActivity {
     private void setNavigationViewSelectedItem(int position) {
         Menu menu = mNavigationView.getMenu();
         menu.getItem(position).setChecked(true);
-        Log.d(getClass().getSimpleName(), "set = " + position);
     }
 }
