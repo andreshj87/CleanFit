@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.zireck.projectk.R;
@@ -49,7 +48,7 @@ public class FoodListFragment extends BaseFragment implements FoodListView {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        retrieveTag(savedInstanceState);
+        retrieveFoodTag(savedInstanceState);
 
         loadPresenter();
 
@@ -64,12 +63,12 @@ public class FoodListFragment extends BaseFragment implements FoodListView {
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.fragment_food_repository_list;
+        return R.layout.fragment_food_list;
     }
 
     @Override
     public void setFoodItems(List<Food> items) {
-        mAdapter = new FoodRepositoryRecyclerAdapter(items, R.layout.food_repository_recyclerview_item);
+        mAdapter = new FoodRepositoryRecyclerAdapter(items, R.layout.fragment_food_list_item);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -93,7 +92,7 @@ public class FoodListFragment extends BaseFragment implements FoodListView {
         return FoodListFragment.TAG_RECENT;
     }
 
-    private void retrieveTag(Bundle bundle) {
+    private void retrieveFoodTag(Bundle bundle) {
         if (getArguments() != null && getArguments().containsKey(FoodListFragment.TAG_NAME)) {
             mCurrentTag = getArguments().getInt(FoodListFragment.TAG_NAME);
         }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -32,6 +33,7 @@ public class MainActivity extends BaseActivity {
     @Bind(R.id.toolbar) Toolbar mToolbar;
     @Bind(R.id.drawer_layout) DrawerLayout mDrawerLayout;
     @Bind(R.id.content) CoordinatorLayout mCoordinatorLayout;
+    @Bind(R.id.fab) FloatingActionButton mFloatingActionButton;
     private MaterialMenuIconToolbar mMaterialMenuIconToolbar;
     private boolean mDrawerDirection;
 
@@ -113,6 +115,8 @@ public class MainActivity extends BaseActivity {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
 
+                hideFAB();
+
                 switch (menuItem.getItemId()) {
                     case R.id.drawer_food:
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, FoodListFragment.newInstance(FoodListFragment.TAG_FOOD)).commit();
@@ -122,6 +126,7 @@ public class MainActivity extends BaseActivity {
                         break;
                     case R.id.drawer_repository:
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, FoodRepositoryFragment.newInstance()).commit();
+                        showFAB();
                         break;
                 }
 
@@ -193,5 +198,13 @@ public class MainActivity extends BaseActivity {
     private void setNavigationViewSelectedItem(int position) {
         Menu menu = mNavigationView.getMenu();
         menu.getItem(position).setChecked(true);
+    }
+
+    private void showFAB() {
+        mFloatingActionButton.show();
+    }
+
+    private void hideFAB() {
+        mFloatingActionButton.hide();
     }
 }
