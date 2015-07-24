@@ -45,6 +45,7 @@
             android:layout_margin="16dp"
             android:src="@drawable/ic_plus_white_24dp"
             app:layout_behavior="com.zireck.projectk.helper.ScrollAwareFABBehavior"
+            app:rippleColor="@android:color/white"
             app:fabSize="normal"
             app:borderWidth="0dp"
             app:elevation="6dp"
