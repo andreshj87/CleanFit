@@ -1,39 +1,245 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/food_name_text_input_layout"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <EditText
-            android:id="@+id/food_name_edit_text"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/food_name_text_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:hint="food name"/>
+            android:layout_alignParentTop="true">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:id="@+id/food_name_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nextFocusDown="@+id/food_brand_edit_text"
+                android:gravity="center_vertical"
+                android:textColor="@color/black"
+                android:singleLine="true"
+                android:hint="name"/>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/food_brand_text_input_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/food_brand_edit_text"
+        <LinearLayout
+            android:id="@+id/row_second"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:hint="food brand"
-            android:drawableLeft="@drawable/ic_tag_grey600_18dp"
-            android:drawablePadding="16dp"/>
+            android:layout_below="@+id/food_name_text_input_layout"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-    </android.support.design.widget.TextInputLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:src="@drawable/ic_tag_text_outline_grey600_24dp"/>
 
-</LinearLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/food_brand_text_input_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/food_brand_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nextFocusDown="@+id/food_calories_edit_text"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"
+                    android:singleLine="true"
+                    android:hint="brand"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/row_third"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/row_second"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:src="@drawable/ic_beer_grey600_24dp"/>
+
+            <CheckBox
+                android:id="@+id/food_isdrink_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="Drink?"
+                android:checked="false"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:visibility="invisible"
+                android:id="@+id/placeholder_text_input_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/placeholder_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"
+                    android:singleLine="true"
+                    android:hint="placeholder"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/nutrients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/row_third"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:text="Energy &amp; Nutrients (per 100gr)"
+            android:textColor="@color/primary_dark"
+            android:textStyle="bold"
+            android:textAllCaps="true"/>
+
+        <View
+            android:id="@+id/separator"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@+id/nutrients"
+            android:layout_marginBottom="8dp"
+            android:background="@color/primary_dark"/>
+
+        <LinearLayout
+            android:id="@+id/row_fourth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/separator"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:src="@drawable/ic_fire_grey600_24dp"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/food_calories_text_input_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/food_calories_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nextFocusDown="@+id/food_fats_edit_text"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"
+                    android:singleLine="true"
+                    android:inputType="numberDecimal"
+                    android:digits="0123456789."
+                    android:hint="calories"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ro_fifth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/row_fourth"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:src="@drawable/ic_poll_grey600_24dp"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/food_fats_text_input_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/food_fats_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nextFocusDown="@+id/food_carbohydrates_edit_text"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"
+                    android:singleLine="true"
+                    android:inputType="numberDecimal"
+                    android:digits="0123456789."
+                    android:hint="fats"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/food_carbohydrates_text_input_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/food_carbohydrates_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nextFocusDown="@+id/food_proteins_edit_text"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"
+                    android:singleLine="true"
+                    android:inputType="numberDecimal"
+                    android:digits="0123456789."
+                    android:hint="carbohydrates"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/food_proteins_text_input_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/food_proteins_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"
+                    android:singleLine="true"
+                    android:inputType="numberDecimal"
+                    android:digits="0123456789."
+                    android:hint="proteins"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</ScrollView>
