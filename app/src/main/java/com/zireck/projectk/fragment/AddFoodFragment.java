@@ -1,5 +1,6 @@
 package com.zireck.projectk.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -9,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 
 import com.zireck.projectk.R;
 import com.zireck.projectk.helper.LimitedDecimalsInputFilter;
+import com.zireck.projectk.listener.OnAddFoodFinishedListener;
 import com.zireck.projectk.presenter.AddFoodPresenter;
 import com.zireck.projectk.presenter.AddFoodPresenterImpl;
 import com.zireck.projectk.util.ToastUtils;
@@ -53,7 +56,19 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
     @Bind(R.id.food_proteins_text_input_layout) TextInputLayout mFoodProteinsTextInputLayout;
     @Bind(R.id.food_proteins_edit_text) EditText mFoodProteinsEditText;
 
+    private OnAddFoodFinishedListener mCallback;
     private AddFoodPresenter mPresenter;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        try {
+            mCallback = (OnAddFoodFinishedListener) activity;
+        } catch (ClassCastException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,6 +79,8 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         mPresenter = new AddFoodPresenterImpl(this);
 
@@ -121,14 +138,12 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
     }
 
     @Override
-    public void notifyFoodSuccessfullyAdded() {
-        //Snackbar.make(getView(), "Food successfully added", Snackbar.LENGTH_SHORT).show();
-        ToastUtils.showShortMessage(getActivity(), "Food successfully added");
-    }
-
-    @Override
-    public void navigateBack() {
-        getActivity().finish();
+    public void foodSuccessfullyAdded() {
+        if (mCallback != null) {
+            mCallback.foodAdded();
+        } else {
+            // TODO it's a tablet, therefore show Snackbar on MainActivity
+        }
     }
 
     @Override

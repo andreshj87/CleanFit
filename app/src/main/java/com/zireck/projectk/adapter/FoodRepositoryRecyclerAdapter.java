@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zireck.projectk.R;
@@ -40,6 +41,24 @@ public class FoodRepositoryRecyclerAdapter extends RecyclerView.Adapter<FoodRepo
         holder.foodCalories.setText(MathUtils.formatDouble(food.getCalories()));
         holder.foodName.setText(food.getName());
         holder.foodBrand.setText(food.getBrand());
+
+        // Nutrients
+        holder.layoutNutrients.setWeightSum(100.0f);
+
+        LinearLayout.LayoutParams params;
+
+        params = (LinearLayout.LayoutParams) holder.fats.getLayoutParams();
+        params.weight = (float) food.getFatsPercent();
+        holder.fats.setLayoutParams(params);
+
+        params = (LinearLayout.LayoutParams) holder.carbohydrates.getLayoutParams();
+        params.weight = (float) food.getCarbohydratesPercent();
+        holder.carbohydrates.setLayoutParams(params);
+
+        params = (LinearLayout.LayoutParams) holder.proteins.getLayoutParams();
+        params.weight = (float) food.getProteins();
+        holder.proteins.setLayoutParams(params);
+
         holder.itemView.setTag(food);
     }
 
@@ -52,6 +71,11 @@ public class FoodRepositoryRecyclerAdapter extends RecyclerView.Adapter<FoodRepo
         @Bind(R.id.food_calories) TextView foodCalories;
         @Bind(R.id.food_name) TextView foodName;
         @Bind(R.id.food_brand) TextView foodBrand;
+
+        @Bind(R.id.layout_nutrients_percent) LinearLayout layoutNutrients;
+        @Bind(R.id.fats_percent) View fats;
+        @Bind(R.id.carbohydrates_percent) View carbohydrates;
+        @Bind(R.id.proteins_percent) View proteins;
 
         public ViewHolder(View itemView) {
             super(itemView);

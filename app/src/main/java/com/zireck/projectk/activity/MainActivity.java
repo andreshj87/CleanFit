@@ -22,25 +22,30 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 import com.zireck.projectk.R;
 import com.zireck.projectk.fragment.FoodListFragment;
 import com.zireck.projectk.fragment.FoodRepositoryFragment;
+import com.zireck.projectk.listener.OnFoodRepositoryTabChangeListener;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements OnFoodRepositoryTabChangeListener {
 
     private static final String NAVIGATION_VIEW_SELECTED_ITEM = "NavigationViewSelectedItem";
+
+    public static final int ADD_FOOD_REQUEST = 1;
 
     @Bind(R.id.navigation_view) NavigationView mNavigationView;
     @Bind(R.id.appBarLayout) AppBarLayout mAppBarLayout;
     @Bind(R.id.toolbar) Toolbar mToolbar;
     @Bind(R.id.drawer_layout) DrawerLayout mDrawerLayout;
     @Bind(R.id.content) CoordinatorLayout mCoordinatorLayout;
+    @Bind(R.id.fragment_container) RelativeLayout mContainer;
     @Bind(R.id.fab) FloatingActionButton mFloatingActionButton;
     private ActionBarDrawerToggle mDrawerToggle;
 
@@ -119,6 +124,46 @@ public class MainActivity extends BaseActivity {
         if (savedInstanceState.containsKey(NAVIGATION_VIEW_SELECTED_ITEM)) {
             setNavigationViewSelectedItem(savedInstanceState.getInt(NAVIGATION_VIEW_SELECTED_ITEM, 0));
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == ADD_FOOD_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Snackbar snackbar = Snackbar.make(mCoordinatorLayout, "Food successfully added", Snackbar.LENGTH_SHORT);
+                snackbar.getView().setElevation(8);
+                snackbar.show();
+            }
+        }
+    }
+
+    @Override
+    public void tabChanged() {
+        showFAB();
+    }
+
+    @OnClick(R.id.fab)
+    public void onClickFAB() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        if (fragment != null) {
+            if (fragment instanceof FoodRepositoryFragment) {
+                Intent intent = new Intent(this, AddFoodActivity.class);
+                //startActivity(intent);
+                startActivityForResult(intent, ADD_FOOD_REQUEST);
+            } else {
+                Snackbar.make(mCoordinatorLayout, "Nothing!", Snackbar.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void showFAB() {
+        mFloatingActionButton.show();
+    }
+
+    private void hideFAB() {
+        mFloatingActionButton.hide();
     }
 
     private void initActionBar() {
@@ -207,27 +252,6 @@ public class MainActivity extends BaseActivity {
     private void setNavigationViewSelectedItem(int position) {
         Menu menu = mNavigationView.getMenu();
         menu.getItem(position).setChecked(true);
-    }
-
-    private void showFAB() {
-        mFloatingActionButton.show();
-    }
-
-    private void hideFAB() {
-        mFloatingActionButton.hide();
-    }
-
-    @OnClick(R.id.fab)
-    public void onClickFAB() {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-        if (fragment != null) {
-            if (fragment instanceof FoodRepositoryFragment) {
-                Intent intent = new Intent(this, AddFoodActivity.class);
-                startActivity(intent);
-            } else {
-                Snackbar.make(mCoordinatorLayout, "Nothing!", Snackbar.LENGTH_SHORT).show();
-            }
-        }
     }
 
 }

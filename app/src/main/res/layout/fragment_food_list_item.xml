@@ -6,59 +6,96 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    android:padding="10dp"
-    card_view:contentPadding="4dp"
+    card_view:contentPadding="0dp"
     card_view:cardUseCompatPadding="true"
     card_view:cardBackgroundColor="@color/white"
     card_view:cardCornerRadius="4dp"
-    card_view:cardElevation="4dp">
+    card_view:cardElevation="2dp">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="64dp">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/food_calories"
-            android:text="kcal"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:gravity="center"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:textSize="24sp"
-            android:textColor="@color/white"
-            android:background="@color/red"/>
-
-        <View
-            android:visibility="invisible"
-            android:id="@+id/separator"
+        <LinearLayout
+            android:id="@+id/layout_nutrients_percent"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_centerVertical="true"
-            android:background="@color/black" />
-
-        <TextView
-            android:id="@+id/food_name"
-            android:text="Food Name"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/separator"
-            android:layout_toEndOf="@+id/food_calories"
-            android:layout_toRightOf="@+id/food_calories"
-            android:textSize="20sp"/>
+            android:weightSum="3"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/food_brand"
-            android:text="Food Brand"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/separator"
-            android:layout_toRightOf="@+id/food_calories"
-            android:layout_toEndOf="@+id/food_calories" />
+            <View
+                android:id="@+id/fats_percent"
+                android:layout_width="0dp"
+                android:layout_height="4dp"
+                android:layout_weight="1"
+                android:background="@color/fats"/>
 
-    </RelativeLayout>
+            <View
+                android:id="@+id/carbohydrates_percent"
+                android:layout_width="0dp"
+                android:layout_height="4dp"
+                android:layout_weight="1"
+                android:background="@color/carbohydrates"/>
+
+            <View
+                android:id="@+id/proteins_percent"
+                android:layout_width="0dp"
+                android:layout_height="4dp"
+                android:layout_weight="1"
+                android:background="@color/proteins"/>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:padding="4dp">
+
+            <TextView
+                android:id="@+id/food_calories"
+                android:text="kcal"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:gravity="center"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:textSize="24sp"
+                android:textColor="@color/white"
+                android:background="@color/calories"/>
+
+            <View
+                android:visibility="invisible"
+                android:id="@+id/separator"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_centerVertical="true"
+                android:background="@color/black" />
+
+            <TextView
+                android:id="@+id/food_name"
+                android:text="Food Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/separator"
+                android:layout_toEndOf="@+id/food_calories"
+                android:layout_toRightOf="@+id/food_calories"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/food_brand"
+                android:text="Food Brand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/separator"
+                android:layout_toRightOf="@+id/food_calories"
+                android:layout_toEndOf="@+id/food_calories" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </android.support.v7.widget.CardView>

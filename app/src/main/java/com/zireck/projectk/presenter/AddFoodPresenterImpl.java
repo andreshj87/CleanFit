@@ -70,8 +70,7 @@ public class AddFoodPresenterImpl implements AddFoodPresenter {
             FoodDao foodDao = greenDaoHelper.getFoodDao();
             foodDao.insert(food);
 
-            mView.notifyFoodSuccessfullyAdded();
-            mView.navigateBack();
+            mView.foodSuccessfullyAdded();
         }
     }
 

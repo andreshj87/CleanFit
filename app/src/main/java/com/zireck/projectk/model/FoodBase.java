@@ -40,4 +40,25 @@ public abstract class FoodBase {
 
         return food.toString();
     }
+
+    public double getFatsPercent() {
+        return getNutrientPercent(getFats());
+    }
+
+    public double getCarbohydratesPercent() {
+        return getNutrientPercent(getCarbohydrates());
+    }
+
+    public double getProteinsPercent() {
+        return getNutrientPercent(getProteins());
+    }
+
+    private double getNutrientPercent(double nutrient) {
+        if (nutrient <= 0) {
+            return 0;
+        }
+
+        double nutrientsTotalAmount = getFats() + getCarbohydrates() + getProteins();
+        return (nutrient * 100) / nutrientsTotalAmount;
+    }
 }
