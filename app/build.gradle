@@ -29,4 +29,5 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.balysv.materialmenu:material-menu-toolbar:1.5.4'
     compile 'com.jpardogo.materialtabstrip:library:1.1.0'
+    compile 'net.steamcrafted:materialiconlib:1.0.3'
 }

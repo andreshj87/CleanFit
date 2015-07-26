@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -36,12 +37,15 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <ImageView
+            <net.steamcrafted.materialiconlib.MaterialIconView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
                 android:layout_marginRight="24dp"
-                android:src="@drawable/ic_tag_text_outline_grey600_24dp"/>
+                android:scaleType="center"
+                app:materialIcon="tag_text_outline"
+                app:materialIconColor="@color/icons_grey"
+                app:materialIconSize="24dp"/>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/food_brand_text_input_layout"
@@ -71,12 +75,15 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <ImageView
+            <net.steamcrafted.materialiconlib.MaterialIconView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
                 android:layout_marginRight="24dp"
-                android:src="@drawable/ic_beer_grey600_24dp"/>
+                android:scaleType="center"
+                app:materialIcon="beer"
+                app:materialIconColor="@color/icons_grey"
+                app:materialIconSize="24dp"/>
 
             <CheckBox
                 android:id="@+id/food_isdrink_checkbox"
@@ -135,12 +142,15 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <ImageView
+            <net.steamcrafted.materialiconlib.MaterialIconView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
                 android:layout_marginRight="24dp"
-                android:src="@drawable/ic_fire_grey600_24dp"/>
+                android:scaleType="center"
+                app:materialIcon="fire"
+                app:materialIconColor="@color/icons_grey"
+                app:materialIconSize="24dp"/>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/food_calories_text_input_layout"
@@ -165,19 +175,22 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ro_fifth"
+            android:id="@+id/row_fifth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/row_fourth"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <ImageView
+            <net.steamcrafted.materialiconlib.MaterialIconView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
                 android:layout_marginRight="24dp"
-                android:src="@drawable/ic_poll_grey600_24dp"/>
+                android:scaleType="center"
+                app:materialIcon="poll"
+                app:materialIconColor="@color/icons_grey"
+                app:materialIconSize="24dp"/>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/food_fats_text_input_layout"

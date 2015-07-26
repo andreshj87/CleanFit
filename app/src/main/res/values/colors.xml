@@ -26,6 +26,9 @@
     <color name="navy">#000080</color>
     <color name="black">#000000</color>
 
+    <color name="material_grey_600">#757575</color>
+    <color name="icons_grey">@color/material_grey_600</color>
+
     <color name="calories">#FFC107</color>
     <color name="fats">#E57373</color>
     <color name="carbohydrates">#4FC3F7</color>

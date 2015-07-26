@@ -76,5 +76,4 @@ public class AddFoodActivity extends BaseActivity implements OnAddFoodFinishedLi
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
-
 }
