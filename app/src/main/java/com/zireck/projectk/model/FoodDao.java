@@ -31,6 +31,7 @@ public class FoodDao extends AbstractDao<Food, Long> {
         public final static Property Fats = new Property(5, double.class, "fats", false, "FATS");
         public final static Property Carbohydrates = new Property(6, double.class, "carbohydrates", false, "CARBOHYDRATES");
         public final static Property Proteins = new Property(7, double.class, "proteins", false, "PROTEINS");
+        public final static Property Picture = new Property(8, String.class, "picture", false, "PICTURE");
     };
 
 
@@ -53,7 +54,8 @@ public class FoodDao extends AbstractDao<Food, Long> {
                 "'CALORIES' REAL NOT NULL ," + // 4: calories
                 "'FATS' REAL NOT NULL ," + // 5: fats
                 "'CARBOHYDRATES' REAL NOT NULL ," + // 6: carbohydrates
-                "'PROTEINS' REAL NOT NULL );"); // 7: proteins
+                "'PROTEINS' REAL NOT NULL ," + // 7: proteins
+                "'PICTURE' TEXT);"); // 8: picture
     }
 
     /** Drops the underlying database table. */
@@ -78,6 +80,11 @@ public class FoodDao extends AbstractDao<Food, Long> {
         stmt.bindDouble(6, entity.getFats());
         stmt.bindDouble(7, entity.getCarbohydrates());
         stmt.bindDouble(8, entity.getProteins());
+ 
+        String picture = entity.getPicture();
+        if (picture != null) {
+            stmt.bindString(9, picture);
+        }
     }
 
     /** @inheritdoc */
@@ -97,7 +104,8 @@ public class FoodDao extends AbstractDao<Food, Long> {
             cursor.getDouble(offset + 4), // calories
             cursor.getDouble(offset + 5), // fats
             cursor.getDouble(offset + 6), // carbohydrates
-            cursor.getDouble(offset + 7) // proteins
+            cursor.getDouble(offset + 7), // proteins
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8) // picture
         );
         return entity;
     }
@@ -113,6 +121,7 @@ public class FoodDao extends AbstractDao<Food, Long> {
         entity.setFats(cursor.getDouble(offset + 5));
         entity.setCarbohydrates(cursor.getDouble(offset + 6));
         entity.setProteins(cursor.getDouble(offset + 7));
+        entity.setPicture(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
      }
     
     /** @inheritdoc */

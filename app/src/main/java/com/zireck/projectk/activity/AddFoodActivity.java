@@ -53,7 +53,7 @@ public class AddFoodActivity extends BaseActivity implements OnAddFoodFinishedLi
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                //onBackPressed();
+                notifyActivityStopToFragment();
                 foodNotAdded();
                 break;
         }
@@ -94,12 +94,11 @@ public class AddFoodActivity extends BaseActivity implements OnAddFoodFinishedLi
         }
     }
 
-    /*
-    private void sendPictureUriToFragment(Uri pictureUri) {
+    private void notifyActivityStopToFragment() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_add_food);
         if (fragment != null && fragment instanceof AddFoodFragment) {
             AddFoodFragment addFoodFragment = (AddFoodFragment) fragment;
-            addFoodFragment.receivePictureUri(mPictureFileName, pictureUri);
+            addFoodFragment.activityStopped();
         }
-    }*/
+    }
 }

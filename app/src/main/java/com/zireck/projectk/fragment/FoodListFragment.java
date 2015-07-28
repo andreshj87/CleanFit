@@ -68,7 +68,7 @@ public class FoodListFragment extends BaseFragment implements FoodListView {
 
     @Override
     public void setFoodItems(List<Food> items) {
-        mAdapter = new FoodRepositoryRecyclerAdapter(items, R.layout.fragment_food_list_item);
+        mAdapter = new FoodRepositoryRecyclerAdapter(getActivity(), items, R.layout.fragment_food_list_item);
         mRecyclerView.setAdapter(mAdapter);
     }
 

@@ -10,6 +10,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 
 import com.zireck.projectk.R;
+import com.zireck.projectk.util.BitmapUtils;
 
 import java.io.File;
 
@@ -45,9 +46,17 @@ public class PictureHelper {
         return intent;
     }
 
+    @Deprecated
     public Bitmap getPictureBitmap(Uri pictureUri) {
-        System.out.println("k9d3 " + pictureUri.getPath());
         return BitmapFactory.decodeFile(pictureUri.getPath());
+    }
+
+    public Bitmap getSampledPictureBitmap(Uri pictureUri, int width, int height) {
+        return BitmapUtils.decodeSampledBitmapFromUri(pictureUri, width, height);
+    }
+
+    public Bitmap getSampledPictureBitmap(String fileName, int width, int height) {
+        return getSampledPictureBitmap(getPhotoFileUri(mFolderName, fileName), width, height);
     }
 
     public Uri getPhotoFileUri(String folderName, String fileName) {

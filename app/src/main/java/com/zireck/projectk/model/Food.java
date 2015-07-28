@@ -16,6 +16,7 @@ public class Food extends FoodBase  {
     private double fats;
     private double carbohydrates;
     private double proteins;
+    private String picture;
 
     public Food() {
     }
@@ -24,7 +25,7 @@ public class Food extends FoodBase  {
         this.id = id;
     }
 
-    public Food(Long id, String name, String brand, boolean isDrink, double calories, double fats, double carbohydrates, double proteins) {
+    public Food(Long id, String name, String brand, boolean isDrink, double calories, double fats, double carbohydrates, double proteins, String picture) {
         this.id = id;
         this.name = name;
         this.brand = brand;
@@ -33,6 +34,7 @@ public class Food extends FoodBase  {
         this.fats = fats;
         this.carbohydrates = carbohydrates;
         this.proteins = proteins;
+        this.picture = picture;
     }
 
     public Long getId() {
@@ -101,6 +103,14 @@ public class Food extends FoodBase  {
 
     public void setProteins(double proteins) {
         this.proteins = proteins;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 
 }

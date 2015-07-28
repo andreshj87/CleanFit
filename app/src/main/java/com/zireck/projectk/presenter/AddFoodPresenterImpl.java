@@ -27,7 +27,7 @@ public class AddFoodPresenterImpl implements AddFoodPresenter {
     }
 
     @Override
-    public void validateData(String name, String brand, boolean isDrink, String calories, String fats, String carboydrates, String proteins) {
+    public void validateData(String name, String brand, boolean isDrink, String calories, String fats, String carboydrates, String proteins, String pictureFileName) {
         boolean error = false;
 
         if (TextUtils.isEmpty(name)) {
@@ -69,6 +69,7 @@ public class AddFoodPresenterImpl implements AddFoodPresenter {
             food.setFats(Double.valueOf(fats));
             food.setCarbohydrates(Double.valueOf(carboydrates));
             food.setProteins(Double.valueOf(proteins));
+            food.setPicture(pictureFileName);
 
             GreenDaoHelper greenDaoHelper = new GreenDaoHelper();
             FoodDao foodDao = greenDaoHelper.getFoodDao();
@@ -102,17 +103,36 @@ public class AddFoodPresenterImpl implements AddFoodPresenter {
             deleteCurrentPicture();
         }
 
+        System.out.println("k9d3 receiving picture with (new)name = " + mView.getPictureNewName());
+
         Uri pictureUri = mPictureHelper.getPhotoFileUri(mPictureHelper.getFolderName(), mView.getPictureNewName());
-        Bitmap picture = mPictureHelper.getPictureBitmap(pictureUri);
+        //Bitmap picture = mPictureHelper.getPictureBitmap(pictureUri);
+        Bitmap picture = mPictureHelper.getSampledPictureBitmap(pictureUri, mView.getPictureWidth(), mView.getPictureHeight());
         mView.setPicture(picture);
 
         mView.setPictureCurrentName(mView.getPictureNewName());
         mView.setPictureNewName("");
+
+        mView.showDeletePictureButton();
     }
 
-    private void deleteCurrentPicture() {
+    @Override
+    public void doNotReceivePicture() {
+        mView.setPictureNewName("");
+
+        if (!TextUtils.isEmpty(mView.getPictureCurrentName())) {
+            mView.showDeletePictureButton();
+        } else {
+            mView.hideDeletePictureButton();
+        }
+    }
+
+    @Override
+    public void deleteCurrentPicture() {
         mPictureHelper.deletePicture(mView.getPictureCurrentName());
+        mView.setPictureCurrentName("");
         mView.deletePicture();
+        mView.hideDeletePictureButton();
     }
 
 }

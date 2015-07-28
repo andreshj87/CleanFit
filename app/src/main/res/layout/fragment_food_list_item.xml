@@ -15,57 +15,25 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="8dp"
         android:orientation="vertical">
-
-        <LinearLayout
-            android:id="@+id/layout_nutrients_percent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="3"
-            android:orientation="horizontal">
-
-            <View
-                android:id="@+id/fats_percent"
-                android:layout_width="0dp"
-                android:layout_height="4dp"
-                android:layout_weight="1"
-                android:background="@color/fats"/>
-
-            <View
-                android:id="@+id/carbohydrates_percent"
-                android:layout_width="0dp"
-                android:layout_height="4dp"
-                android:layout_weight="1"
-                android:background="@color/carbohydrates"/>
-
-            <View
-                android:id="@+id/proteins_percent"
-                android:layout_width="0dp"
-                android:layout_height="4dp"
-                android:layout_weight="1"
-                android:background="@color/proteins"/>
-
-        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:padding="4dp">
+            android:layout_height="64dp">
 
-            <TextView
-                android:id="@+id/food_calories"
-                android:text="kcal"
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/food_picture"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_centerVertical="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
-                android:gravity="center"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:textSize="24sp"
-                android:textColor="@color/white"
-                android:background="@color/calories"/>
+                app:border_width="1dp"
+                app:border_color="@color/black"/>
 
             <View
                 android:visibility="invisible"
@@ -81,8 +49,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/separator"
-                android:layout_toEndOf="@+id/food_calories"
-                android:layout_toRightOf="@+id/food_calories"
+                android:layout_toEndOf="@+id/food_picture"
+                android:layout_toRightOf="@+id/food_picture"
                 android:textSize="20sp"/>
 
             <TextView
@@ -91,8 +59,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/separator"
-                android:layout_toRightOf="@+id/food_calories"
-                android:layout_toEndOf="@+id/food_calories" />
+                android:layout_toRightOf="@+id/food_picture"
+                android:layout_toEndOf="@+id/food_picture" />
 
         </RelativeLayout>
 

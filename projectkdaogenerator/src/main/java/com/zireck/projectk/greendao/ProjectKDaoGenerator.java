@@ -19,6 +19,7 @@ public class ProjectKDaoGenerator {
         food.addDoubleProperty("fats").notNull();
         food.addDoubleProperty("carbohydrates").notNull();
         food.addDoubleProperty("proteins").notNull();
+        food.addStringProperty("picture");
 
         Entity meal = schema.addEntity("Meal");
         meal.setSuperclass("MealBase");

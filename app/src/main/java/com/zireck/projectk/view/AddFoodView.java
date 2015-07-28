@@ -24,4 +24,8 @@ public interface AddFoodView {
     public void setPictureNewName(String fileName);
     public void setPicture(Bitmap picture);
     public void deletePicture();
+    public void showDeletePictureButton();
+    public void hideDeletePictureButton();
+    public int getPictureWidth();
+    public int getPictureHeight();
 }

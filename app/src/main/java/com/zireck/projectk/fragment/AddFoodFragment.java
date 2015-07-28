@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -36,6 +37,9 @@ import butterknife.OnClick;
 public class AddFoodFragment extends BaseFragment implements AddFoodView {
 
     @Bind(R.id.food_picture) ImageView mFoodPicture;
+
+    @Bind(R.id.button_take_picture) Button mButtonTakePicture;
+    @Bind(R.id.button_delete_picture) Button mButtonDeletePicture;
 
     @Bind(R.id.food_name_text_input_layout) TextInputLayout mFoodNameTextInputLayout;
     @Bind(R.id.food_name_edit_text) EditText mFoodNameEditText;
@@ -128,6 +132,7 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
             if (resultCode == Activity.RESULT_OK) {
                 mPresenter.receivePicture();
             } else {
+                mPresenter.doNotReceivePicture();
                 SnackbarUtils.showError(getView(), "Picture wasn't taken.");
             }
         }
@@ -135,9 +140,19 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
 
     @OnClick(R.id.food_picture)
     public void onFoodImageClick() {
-        //mCallbackOnFoodPicture.launchCamera(String.valueOf(System.currentTimeMillis()) + ".jpg");
         mPresenter.startCamera(getActivity());
     }
+
+    @OnClick(R.id.button_take_picture)
+    public void onTakePictureClick() {
+        mPresenter.startCamera(getActivity());
+    }
+
+    @OnClick(R.id.button_delete_picture)
+    public void onDeletePictureClick() {
+        mPresenter.deleteCurrentPicture();
+    }
+
 
     @Override
     public void foodSuccessfullyAdded() {
@@ -224,17 +239,31 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
     @Override
     public void setPicture(Bitmap picture) {
         mFoodPicture.setImageBitmap(picture);
-        /*
-        if (picture != null) {
-            mFoodPicture.setImageBitmap(picture);
-        } else {
-            throw new NullPointerException("Picture can't be null");
-        }*/
     }
 
     @Override
     public void deletePicture() {
         mFoodPicture.setImageBitmap(null);
+    }
+
+    @Override
+    public void showDeletePictureButton() {
+        mButtonDeletePicture.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideDeletePictureButton() {
+        mButtonDeletePicture.setVisibility(View.GONE);
+    }
+
+    @Override
+    public int getPictureWidth() {
+        return mFoodPicture.getWidth();
+    }
+
+    @Override
+    public int getPictureHeight() {
+        return mFoodPicture.getHeight();
     }
 
     private void setUnits(String unit) {
@@ -257,8 +286,9 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
         String fats = mFoodFatsEditText.getText().toString();
         String carbohydrates = mFoodCarbohydratesEditText.getText().toString();
         String proteins = mFoodProteinsEditText.getText().toString();
+        String pictureFileName = getPictureCurrentName();
 
-        mPresenter.validateData(name, brand, isDrink, calories, fats, carbohydrates, proteins);
+        mPresenter.validateData(name, brand, isDrink, calories, fats, carbohydrates, proteins, pictureFileName);
     }
 
     private void applyDecimalFilters() {
@@ -268,5 +298,9 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
         mFoodFatsEditText.setFilters(inputFilter);
         mFoodCarbohydratesEditText.setFilters(inputFilter);
         mFoodProteinsEditText.setFilters(inputFilter);
+    }
+
+    public void activityStopped() {
+        mPresenter.deleteCurrentPicture();
     }
 }
