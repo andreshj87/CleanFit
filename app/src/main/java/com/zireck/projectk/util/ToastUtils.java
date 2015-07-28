@@ -16,6 +16,10 @@ public class ToastUtils {
         getToast(context, message, Toast.LENGTH_SHORT).show();
     }
 
+    public static void showLongMessage(Context context, String message) {
+        getToast(context, message, Toast.LENGTH_LONG).show();
+    }
+
     public static void showError(final Context context, final String message) {
         getToast(context, message).show();
     }
@@ -27,4 +31,5 @@ public class ToastUtils {
     private static Toast getToast(Context context, String message, int length) {
         return Toast.makeText(context, message, length);
     }
+
 }

@@ -17,6 +17,9 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
 
+    <string name="picture_current">Current Picture</string>
+    <string name="picture_new">New Picture</string>
+
     <string name="fragment_foods">Foods</string>
     <string name="fragment_drinks">Drinks</string>
 </resources>

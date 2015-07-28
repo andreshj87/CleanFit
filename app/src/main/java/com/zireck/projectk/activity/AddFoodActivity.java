@@ -1,16 +1,27 @@
 package com.zireck.projectk.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import com.zireck.projectk.R;
+import com.zireck.projectk.fragment.AddFoodFragment;
 import com.zireck.projectk.listener.OnAddFoodFinishedListener;
+import com.zireck.projectk.listener.OnFoodPictureListener;
+
+import java.io.File;
 
 import butterknife.Bind;
 
@@ -19,6 +30,7 @@ import butterknife.Bind;
  */
 public class AddFoodActivity extends BaseActivity implements OnAddFoodFinishedListener {
 
+    @Bind(R.id.root_layout) LinearLayout mRootLayout;
     @Bind(R.id.toolbar) Toolbar mToolbar;
 
     @Override
@@ -50,6 +62,11 @@ public class AddFoodActivity extends BaseActivity implements OnAddFoodFinishedLi
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
     public void foodAdded() {
         navigateBack(RESULT_OK);
     }
@@ -76,4 +93,13 @@ public class AddFoodActivity extends BaseActivity implements OnAddFoodFinishedLi
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
+
+    /*
+    private void sendPictureUriToFragment(Uri pictureUri) {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_add_food);
+        if (fragment != null && fragment instanceof AddFoodFragment) {
+            AddFoodFragment addFoodFragment = (AddFoodFragment) fragment;
+            addFoodFragment.receivePictureUri(mPictureFileName, pictureUri);
+        }
+    }*/
 }

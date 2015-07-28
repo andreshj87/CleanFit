@@ -1,15 +1,17 @@
 package com.zireck.projectk.presenter;
 
-import android.support.design.widget.Snackbar;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.text.TextUtils;
 
+import com.zireck.projectk.helper.PictureHelper;
 import com.zireck.projectk.model.Food;
 import com.zireck.projectk.model.FoodDao;
 import com.zireck.projectk.model.GreenDaoHelper;
 import com.zireck.projectk.util.MathUtils;
 import com.zireck.projectk.view.AddFoodView;
-
-import org.w3c.dom.Text;
 
 /**
  * Created by Zireck on 24/07/2015.
@@ -17,8 +19,10 @@ import org.w3c.dom.Text;
 public class AddFoodPresenterImpl implements AddFoodPresenter {
 
     private AddFoodView mView;
+    private PictureHelper mPictureHelper;
 
-    public AddFoodPresenterImpl(AddFoodView view) {
+    public AddFoodPresenterImpl(Context context, AddFoodView view) {
+        mPictureHelper = new PictureHelper(context);
         mView = view;
     }
 
@@ -82,4 +86,33 @@ public class AddFoodPresenterImpl implements AddFoodPresenter {
             mView.setGr();
         }
     }
+
+    @Override
+    public void startCamera(Context context) {
+        String fileName = mPictureHelper.generateFileName();
+        mView.setPictureNewName(fileName);
+
+        Intent intent = mPictureHelper.getIntentForCameraLaunch(fileName);
+        mView.startIntentForCameraLaunch(intent, mPictureHelper.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+    }
+
+    @Override
+    public void receivePicture() {
+        if (!TextUtils.isEmpty(mView.getPictureCurrentName())) {
+            deleteCurrentPicture();
+        }
+
+        Uri pictureUri = mPictureHelper.getPhotoFileUri(mPictureHelper.getFolderName(), mView.getPictureNewName());
+        Bitmap picture = mPictureHelper.getPictureBitmap(pictureUri);
+        mView.setPicture(picture);
+
+        mView.setPictureCurrentName(mView.getPictureNewName());
+        mView.setPictureNewName("");
+    }
+
+    private void deleteCurrentPicture() {
+        mPictureHelper.deletePicture(mView.getPictureCurrentName());
+        mView.deletePicture();
+    }
+
 }

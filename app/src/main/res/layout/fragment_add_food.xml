@@ -11,29 +11,60 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/food_name_text_input_layout"
+        <ImageView
+            android:id="@+id/food_picture"
+            android:layout_width="100dp"
+            android:layout_height="150dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:background="#8000"/>
+
+        <LinearLayout
+            android:id="@+id/row_first"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true">
+            android:layout_below="@+id/food_picture"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/food_name_edit_text"
-                android:layout_width="match_parent"
+            <net.steamcrafted.materialiconlib.MaterialIconView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:nextFocusDown="@+id/food_brand_edit_text"
-                android:gravity="center_vertical"
-                android:textColor="@color/black"
-                android:singleLine="true"
-                android:hint="name"/>
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:scaleType="center"
+                app:materialIcon="food_apple"
+                app:materialIconColor="@color/icons_grey"
+                app:materialIconSize="24dp"/>
 
-        </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/food_name_text_input_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/food_name_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nextFocusDown="@+id/food_brand_edit_text"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"
+                    android:singleLine="true"
+                    android:hint="name"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/row_second"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/food_name_text_input_layout"
+            android:layout_below="@+id/row_first"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 

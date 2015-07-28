@@ -2,10 +2,9 @@ package com.zireck.projectk.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.text.InputFilter;
 import android.view.Menu;
@@ -16,15 +15,16 @@ import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zireck.projectk.R;
-import com.zireck.projectk.activity.AddFoodActivity;
 import com.zireck.projectk.helper.LimitedDecimalsInputFilter;
+import com.zireck.projectk.helper.PictureHelper;
 import com.zireck.projectk.listener.OnAddFoodFinishedListener;
 import com.zireck.projectk.presenter.AddFoodPresenter;
 import com.zireck.projectk.presenter.AddFoodPresenterImpl;
-import com.zireck.projectk.util.ToastUtils;
+import com.zireck.projectk.util.SnackbarUtils;
 import com.zireck.projectk.view.AddFoodView;
 
 import butterknife.Bind;
@@ -35,10 +35,10 @@ import butterknife.OnClick;
  */
 public class AddFoodFragment extends BaseFragment implements AddFoodView {
 
-    @Bind(R.id.food_name_text_input_layout)
-    TextInputLayout mFoodNameTextInputLayout;
-    @Bind(R.id.food_name_edit_text)
-    EditText mFoodNameEditText;
+    @Bind(R.id.food_picture) ImageView mFoodPicture;
+
+    @Bind(R.id.food_name_text_input_layout) TextInputLayout mFoodNameTextInputLayout;
+    @Bind(R.id.food_name_edit_text) EditText mFoodNameEditText;
 
     @Bind(R.id.food_brand_text_input_layout) TextInputLayout mFoodBrandTextInputLayout;
     @Bind(R.id.food_brand_edit_text) EditText mFoodBrandEditText;
@@ -85,7 +85,7 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
 
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-        mPresenter = new AddFoodPresenterImpl(this);
+        mPresenter = new AddFoodPresenterImpl(getActivity(), this);
 
         applyDecimalFilters();
 
@@ -119,25 +119,24 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
         return super.onOptionsItemSelected(item);
     }
 
-    private void validateData() {
-        String name = mFoodNameEditText.getText().toString();
-        String brand = mFoodBrandEditText.getText().toString();
-        boolean isDrink = mFoodIsDrinkCheckbox.isChecked();
-        String calories = mFoodCaloriesEditText.getText().toString();
-        String fats = mFoodFatsEditText.getText().toString();
-        String carbohydrates = mFoodCarbohydratesEditText.getText().toString();
-        String proteins = mFoodProteinsEditText.getText().toString();
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-        mPresenter.validateData(name, brand, isDrink, calories, fats, carbohydrates, proteins);
+        System.out.println("k9d3 called!");
+        if (requestCode == PictureHelper.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                mPresenter.receivePicture();
+            } else {
+                SnackbarUtils.showError(getView(), "Picture wasn't taken.");
+            }
+        }
     }
 
-    private void applyDecimalFilters() {
-        InputFilter[] inputFilter = new InputFilter[] { new LimitedDecimalsInputFilter(5, 2) };
-
-        mFoodCaloriesEditText.setFilters(inputFilter);
-        mFoodFatsEditText.setFilters(inputFilter);
-        mFoodCarbohydratesEditText.setFilters(inputFilter);
-        mFoodProteinsEditText.setFilters(inputFilter);
+    @OnClick(R.id.food_picture)
+    public void onFoodImageClick() {
+        //mCallbackOnFoodPicture.launchCamera(String.valueOf(System.currentTimeMillis()) + ".jpg");
+        mPresenter.startCamera(getActivity());
     }
 
     @Override
@@ -189,6 +188,55 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
         setError(mFoodProteinsEditText, "proteins");
     }
 
+    @Override
+    public String getPictureCurrentName() {
+        if (mFoodPicture.getTag(R.string.picture_current) == null) {
+            return "";
+        } else {
+            return mFoodPicture.getTag(R.string.picture_current).toString();
+        }
+    }
+
+    @Override
+    public String getPictureNewName() {
+        if (mFoodPicture.getTag(R.string.picture_new) == null) {
+            return "";
+        } else {
+            return mFoodPicture.getTag(R.string.picture_new).toString();
+        }
+    }
+
+    @Override
+    public void setPictureCurrentName(String fileName) {
+        mFoodPicture.setTag(R.string.picture_current, fileName);
+    }
+
+    @Override
+    public void setPictureNewName(String fileName) {
+        mFoodPicture.setTag(R.string.picture_new, fileName);
+    }
+
+    @Override
+    public void startIntentForCameraLaunch(Intent intent, final int requestCode) {
+        startActivityForResult(intent, requestCode);
+    }
+
+    @Override
+    public void setPicture(Bitmap picture) {
+        mFoodPicture.setImageBitmap(picture);
+        /*
+        if (picture != null) {
+            mFoodPicture.setImageBitmap(picture);
+        } else {
+            throw new NullPointerException("Picture can't be null");
+        }*/
+    }
+
+    @Override
+    public void deletePicture() {
+        mFoodPicture.setImageBitmap(null);
+    }
+
     private void setUnits(String unit) {
         StringBuilder text = new StringBuilder();
         text.append("Energy & Nutrients (per 100");
@@ -199,5 +247,26 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
 
     private void setError(EditText editText, String type) {
         editText.setError("Invalid " + type);
+    }
+
+    private void validateData() {
+        String name = mFoodNameEditText.getText().toString();
+        String brand = mFoodBrandEditText.getText().toString();
+        boolean isDrink = mFoodIsDrinkCheckbox.isChecked();
+        String calories = mFoodCaloriesEditText.getText().toString();
+        String fats = mFoodFatsEditText.getText().toString();
+        String carbohydrates = mFoodCarbohydratesEditText.getText().toString();
+        String proteins = mFoodProteinsEditText.getText().toString();
+
+        mPresenter.validateData(name, brand, isDrink, calories, fats, carbohydrates, proteins);
+    }
+
+    private void applyDecimalFilters() {
+        InputFilter[] inputFilter = new InputFilter[] { new LimitedDecimalsInputFilter(5, 2) };
+
+        mFoodCaloriesEditText.setFilters(inputFilter);
+        mFoodFatsEditText.setFilters(inputFilter);
+        mFoodCarbohydratesEditText.setFilters(inputFilter);
+        mFoodProteinsEditText.setFilters(inputFilter);
     }
 }
