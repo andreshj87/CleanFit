@@ -6,13 +6,21 @@ package com.zireck.projectk.model;
 public abstract class FoodBase {
 
     public abstract Long getId();
+    public abstract void setId(Long id);
     public abstract String getName();
+    public abstract void setName(String name);
     public abstract String getBrand();
+    public abstract void setBrand(String brand);
     public abstract boolean getIsDrink();
+    public abstract void setIsDrink(boolean isDrink);
     public abstract double getCalories();
+    public abstract void setCalories(double calories);
     public abstract double getFats();
+    public abstract void setFats(double fats);
     public abstract double getCarbohydrates();
+    public abstract void setCarbohydrates(double carbohydrates);
     public abstract double getProteins();
+    public abstract void setProteins(double proteins);
 
     @Override
     public String toString() {

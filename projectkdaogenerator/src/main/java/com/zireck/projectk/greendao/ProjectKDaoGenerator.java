@@ -65,7 +65,6 @@ public class ProjectKDaoGenerator {
         user.addDoubleProperty("burn");
         user.addDoubleProperty("gain");
 
-
         new DaoGenerator().generateAll(schema, "../app/src/main/java");
     }
 }

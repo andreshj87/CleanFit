@@ -10,12 +10,10 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.zireck.projectk.R;
-import com.zireck.projectk.util.PictureUtils;
 import com.zireck.projectk.model.Food;
-import com.zireck.projectk.util.BitmapUtils;
 import com.zireck.projectk.util.MathUtils;
+import com.zireck.projectk.util.PictureUtils;
 
-import java.io.File;
 import java.util.List;
 
 import butterknife.Bind;
@@ -47,6 +45,8 @@ public class FoodRepositoryRecyclerAdapter extends RecyclerView.Adapter<FoodRepo
     public void onBindViewHolder(ViewHolder holder, int position) {
         Food food = mFoodItems.get(position);
 
+        holder.foodId.setText(String.valueOf(food.getId()));
+
         Uri pictureUri = PictureUtils.getPhotoFileUri(food.getPicture());
         Picasso.with(mContext).load(pictureUri).fit().centerCrop().into(holder.foodPicture);
 
@@ -63,6 +63,7 @@ public class FoodRepositoryRecyclerAdapter extends RecyclerView.Adapter<FoodRepo
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        @Bind(R.id.food_id) TextView foodId;
         @Bind(R.id.food_picture) CircleImageView foodPicture;
         @Bind(R.id.food_name) TextView foodName;
         @Bind(R.id.food_brand) TextView foodBrand;

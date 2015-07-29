@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.zireck.projectk.R;
 import com.zireck.projectk.adapter.FoodRepositoryRecyclerAdapter;
+import com.zireck.projectk.helper.RecyclerItemClickListener;
 import com.zireck.projectk.model.Food;
 import com.zireck.projectk.presenter.FoodListPresenter;
 import com.zireck.projectk.presenter.FoodListPresenterImpl;
@@ -99,13 +100,19 @@ public class FoodListFragment extends BaseFragment implements FoodListView {
     }
 
     private void loadPresenter() {
-        mPresenter = new FoodListPresenterImpl(this);
+        mPresenter = new FoodListPresenterImpl(getActivity(), this);
     }
 
     private void initRecyclerView() {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                mPresenter.onItemClick(view, position);
+            }
+        }));
     }
 
 }

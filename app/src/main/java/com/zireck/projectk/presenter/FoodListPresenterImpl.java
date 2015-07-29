@@ -1,5 +1,11 @@
 package com.zireck.projectk.presenter;
 
+import android.content.Context;
+import android.view.View;
+import android.widget.TextView;
+
+import com.zireck.projectk.R;
+import com.zireck.projectk.helper.Navigator;
 import com.zireck.projectk.interactor.FoodListInteractor;
 import com.zireck.projectk.interactor.FoodListInteractorImpl;
 import com.zireck.projectk.listener.OnFoodListFinishedListener;
@@ -13,12 +19,14 @@ import java.util.List;
  */
 public class FoodListPresenterImpl implements FoodListPresenter, OnFoodListFinishedListener {
 
-    protected FoodListView mView;
-    protected FoodListInteractor mInteractor;
+    private Navigator mNavigator;
+    private FoodListView mView;
+    private FoodListInteractor mInteractor;
 
-    public FoodListPresenterImpl(FoodListView view) {
+    public FoodListPresenterImpl(Context context, FoodListView view) {
+        mNavigator = new Navigator(context);
         mView = view;
-        loadInteractor();
+        mInteractor = new FoodListInteractorImpl();
     }
 
     @Override
@@ -31,11 +39,14 @@ public class FoodListPresenterImpl implements FoodListPresenter, OnFoodListFinis
     }
 
     @Override
-    public void onFinished(List<Food> items) {
-        mView.setFoodItems(items);
+    public void onItemClick(View view, int position) {
+        TextView foodId = (TextView) view.findViewById(R.id.food_id);
+        long id = Long.valueOf(foodId.getText().toString());
+        mNavigator.openFoodDetailActivity(id);
     }
 
-    private void loadInteractor() {
-        mInteractor = new FoodListInteractorImpl();
+    @Override
+    public void onFinished(List<Food> items) {
+        mView.setFoodItems(items);
     }
 }
