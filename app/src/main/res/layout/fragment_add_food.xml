@@ -18,37 +18,77 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="24dp"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            android:background="#3000"/>
+            android:background="#4000"/>
 
-        <Button
-            android:id="@+id/button_take_picture"
+        <LinearLayout
+            android:id="@+id/layout_take_picture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/food_picture"
             android:layout_toEndOf="@+id/food_picture"
             android:layout_toRightOf="@+id/food_picture"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:text="Take Picture"
-            android:textColor="@color/primary"
-            style="?borderlessButtonStyle" />
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <Button
+            <net.steamcrafted.materialiconlib.MaterialIconView
+                android:id="@+id/icon_take_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
+                android:scaleType="center"
+                app:materialIcon="camera"
+                app:materialIconColor="@color/primary"
+                app:materialIconSize="24dp"/>
+
+            <Button
+                android:id="@+id/button_take_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Take Picture"
+                android:textColor="@color/primary"
+                style="?borderlessButtonStyle" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:visibility="gone"
-            android:id="@+id/button_delete_picture"
+            android:id="@+id/layout_delete_picture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/button_take_picture"
+            android:layout_above="@+id/layout_take_picture"
             android:layout_toEndOf="@+id/food_picture"
-            android:layout_toRightOf="@id/food_picture"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:text="Delete Picture"
-            android:textColor="@color/primary"
-            style="?borderlessButtonStyle"/>
+            android:layout_toRightOf="@+id/food_picture"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <net.steamcrafted.materialiconlib.MaterialIconView
+                android:id="@+id/icon_delete_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
+                android:scaleType="center"
+                app:materialIcon="close"
+                app:materialIconColor="@color/primary"
+                app:materialIconSize="24dp"/>
+
+            <Button
+                android:id="@+id/button_delete_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delete Picture"
+                android:textColor="@color/primary"
+                style="?borderlessButtonStyle"/>
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/row_first"
@@ -59,13 +99,14 @@
             android:orientation="horizontal">
 
             <net.steamcrafted.materialiconlib.MaterialIconView
+                android:id="@+id/food_name_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
                 android:layout_marginRight="24dp"
                 android:scaleType="center"
                 app:materialIcon="food_apple"
-                app:materialIconColor="@color/icons_grey"
+                app:materialIconColor="@color/icon_deactivated"
                 app:materialIconSize="24dp"/>
 
             <android.support.design.widget.TextInputLayout
@@ -97,13 +138,14 @@
             android:orientation="horizontal">
 
             <net.steamcrafted.materialiconlib.MaterialIconView
+                android:id="@+id/food_brand_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
                 android:layout_marginRight="24dp"
                 android:scaleType="center"
                 app:materialIcon="tag_text_outline"
-                app:materialIconColor="@color/icons_grey"
+                app:materialIconColor="@color/icon_deactivated"
                 app:materialIconSize="24dp"/>
 
             <android.support.design.widget.TextInputLayout
@@ -135,13 +177,14 @@
             android:orientation="horizontal">
 
             <net.steamcrafted.materialiconlib.MaterialIconView
+                android:id="@+id/food_isdrink_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
                 android:layout_marginRight="24dp"
                 android:scaleType="center"
                 app:materialIcon="beer"
-                app:materialIconColor="@color/icons_grey"
+                app:materialIconColor="@color/icon_deactivated"
                 app:materialIconSize="24dp"/>
 
             <CheckBox
@@ -191,7 +234,7 @@
             android:layout_height="2dp"
             android:layout_below="@+id/nutrients"
             android:layout_marginBottom="8dp"
-            android:background="@color/primary_dark"/>
+            android:background="@color/primary"/>
 
         <LinearLayout
             android:id="@+id/row_fourth"
@@ -202,13 +245,14 @@
             android:orientation="horizontal">
 
             <net.steamcrafted.materialiconlib.MaterialIconView
+                android:id="@+id/food_calories_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
                 android:layout_marginRight="24dp"
                 android:scaleType="center"
                 app:materialIcon="fire"
-                app:materialIconColor="@color/icons_grey"
+                app:materialIconColor="@color/icon_deactivated"
                 app:materialIconSize="24dp"/>
 
             <android.support.design.widget.TextInputLayout
@@ -227,6 +271,9 @@
                     android:singleLine="true"
                     android:inputType="numberDecimal"
                     android:digits="0123456789."
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:hint="calories"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -242,13 +289,14 @@
             android:orientation="horizontal">
 
             <net.steamcrafted.materialiconlib.MaterialIconView
+                android:id="@+id/food_nutrients_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
                 android:layout_marginRight="24dp"
                 android:scaleType="center"
                 app:materialIcon="poll"
-                app:materialIconColor="@color/icons_grey"
+                app:materialIconColor="@color/icon_deactivated"
                 app:materialIconSize="24dp"/>
 
             <android.support.design.widget.TextInputLayout

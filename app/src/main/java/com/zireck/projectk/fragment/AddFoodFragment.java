@@ -2,7 +2,7 @@ package com.zireck.projectk.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -17,16 +17,20 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.zireck.projectk.R;
 import com.zireck.projectk.helper.LimitedDecimalsInputFilter;
-import com.zireck.projectk.helper.PictureHelper;
+import com.zireck.projectk.util.PictureUtils;
 import com.zireck.projectk.listener.OnAddFoodFinishedListener;
 import com.zireck.projectk.presenter.AddFoodPresenter;
 import com.zireck.projectk.presenter.AddFoodPresenterImpl;
 import com.zireck.projectk.util.SnackbarUtils;
 import com.zireck.projectk.view.AddFoodView;
+
+import net.steamcrafted.materialiconlib.MaterialIconView;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -38,21 +42,29 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
 
     @Bind(R.id.food_picture) ImageView mFoodPicture;
 
+    @Bind(R.id.layout_take_picture) LinearLayout mLayoutTakePicture;
+    @Bind(R.id.layout_delete_picture) LinearLayout mLayoutDeletePicture;
     @Bind(R.id.button_take_picture) Button mButtonTakePicture;
     @Bind(R.id.button_delete_picture) Button mButtonDeletePicture;
 
+    @Bind(R.id.food_name_icon) MaterialIconView mFoodNameIcon;
     @Bind(R.id.food_name_text_input_layout) TextInputLayout mFoodNameTextInputLayout;
     @Bind(R.id.food_name_edit_text) EditText mFoodNameEditText;
 
+    @Bind(R.id.food_brand_icon) MaterialIconView mFoodBrandIcon;
     @Bind(R.id.food_brand_text_input_layout) TextInputLayout mFoodBrandTextInputLayout;
     @Bind(R.id.food_brand_edit_text) EditText mFoodBrandEditText;
 
+    @Bind(R.id.food_isdrink_icon) MaterialIconView mFoodIsDrinkIcon;
     @Bind(R.id.food_isdrink_checkbox) CheckBox mFoodIsDrinkCheckbox;
 
     @Bind(R.id.nutrients) TextView mNutrientsTextView;
 
+    @Bind(R.id.food_calories_icon) MaterialIconView mFoodCaloriesIcon;
     @Bind(R.id.food_calories_text_input_layout) TextInputLayout mFoodCaloriesTextInputLayout;
     @Bind(R.id.food_calories_edit_text) EditText mFoodCaloriesEditText;
+
+    @Bind(R.id.food_nutrients_icon) MaterialIconView mFoodNutrientsIcon;
 
     @Bind(R.id.food_fats_text_input_layout) TextInputLayout mFoodFatsTextInputLayout;
     @Bind(R.id.food_fats_edit_text) EditText mFoodFatsEditText;
@@ -91,6 +103,9 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
 
         mPresenter = new AddFoodPresenterImpl(getActivity(), this);
 
+        //initEditTextFocusListeners();
+        initEditTextFocusListenersWeird();
+
         applyDecimalFilters();
 
         mFoodIsDrinkCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -127,8 +142,7 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        System.out.println("k9d3 called!");
-        if (requestCode == PictureHelper.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+        if (requestCode == PictureUtils.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 mPresenter.receivePicture();
             } else {
@@ -204,6 +218,26 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
     }
 
     @Override
+    public MaterialIconView getIconName() {
+        return mFoodNameIcon;
+    }
+
+    @Override
+    public MaterialIconView getIconBrand() {
+        return mFoodBrandIcon;
+    }
+
+    @Override
+    public MaterialIconView getIconCalories() {
+        return mFoodCaloriesIcon;
+    }
+
+    @Override
+    public MaterialIconView getIconNutrients() {
+        return mFoodNutrientsIcon;
+    }
+
+    @Override
     public String getPictureCurrentName() {
         if (mFoodPicture.getTag(R.string.picture_current) == null) {
             return "";
@@ -237,33 +271,142 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
     }
 
     @Override
-    public void setPicture(Bitmap picture) {
-        mFoodPicture.setImageBitmap(picture);
-    }
-
-    @Override
     public void deletePicture() {
         mFoodPicture.setImageBitmap(null);
     }
 
     @Override
-    public void showDeletePictureButton() {
-        mButtonDeletePicture.setVisibility(View.VISIBLE);
+    public ImageView getPictureImageView() {
+        return mFoodPicture;
     }
 
     @Override
-    public void hideDeletePictureButton() {
-        mButtonDeletePicture.setVisibility(View.GONE);
+    public void showDeletePictureLayout() {
+        mLayoutDeletePicture.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public int getPictureWidth() {
-        return mFoodPicture.getWidth();
+    public void hideDeletePictureLayout() {
+        mLayoutDeletePicture.setVisibility(View.GONE);
     }
 
-    @Override
-    public int getPictureHeight() {
-        return mFoodPicture.getHeight();
+    private void initEditTextFocusListeners() {
+        View.OnFocusChangeListener onFocusChangeListener = new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (v instanceof EditText) {
+                    EditText editText = (EditText) v;
+                    if (hasFocus) {
+                        mPresenter.hasFocus(editText);
+                    } else {
+                        mPresenter.lostFocus(editText);
+                    }
+                }
+            }
+        };
+
+        mFoodNameEditText.setOnFocusChangeListener(onFocusChangeListener);
+        mFoodBrandEditText.setOnFocusChangeListener(onFocusChangeListener);
+        mFoodCaloriesEditText.setOnFocusChangeListener(onFocusChangeListener);
+        mFoodFatsEditText.setOnFocusChangeListener(onFocusChangeListener);
+        mFoodCarbohydratesEditText.setOnFocusChangeListener(onFocusChangeListener);
+        mFoodProteinsEditText.setOnFocusChangeListener(onFocusChangeListener);
+    }
+
+    @Deprecated
+    private void initEditTextFocusListenersWeird() {
+        // https://code.google.com/p/android/issues/detail?id=178693
+
+        final EditText nameEditText = mFoodNameTextInputLayout.getEditText();
+        final View.OnFocusChangeListener nameExistingOnFocusChangeListener = nameEditText.getOnFocusChangeListener();
+        nameEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                nameExistingOnFocusChangeListener.onFocusChange(v, hasFocus);
+
+                if (hasFocus) {
+                    mPresenter.hasFocus(nameEditText);
+                } else {
+                    mPresenter.lostFocus(nameEditText);
+                }
+            }
+        });
+
+        final EditText brandEditText = mFoodBrandTextInputLayout.getEditText();
+        final View.OnFocusChangeListener brandExistingOnFocusChangeListener = brandEditText.getOnFocusChangeListener();
+        brandEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                brandExistingOnFocusChangeListener.onFocusChange(v, hasFocus);
+
+                if (hasFocus) {
+                    mPresenter.hasFocus(brandEditText);
+                } else {
+                    mPresenter.lostFocus(brandEditText);
+                }
+            }
+        });
+
+        final EditText caloriesEditText = mFoodCaloriesTextInputLayout.getEditText();
+        final View.OnFocusChangeListener caloriesExistingOnFocusChangeListener = caloriesEditText.getOnFocusChangeListener();
+        caloriesEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                caloriesExistingOnFocusChangeListener.onFocusChange(v, hasFocus);
+
+                if (hasFocus) {
+                    mPresenter.hasFocus(caloriesEditText);
+                } else {
+                    mPresenter.lostFocus(caloriesEditText);
+                }
+            }
+        });
+
+        final EditText fatsEditText = mFoodFatsTextInputLayout.getEditText();
+        final View.OnFocusChangeListener fatsExistingOnFocusChangeListener = fatsEditText.getOnFocusChangeListener();
+        fatsEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                fatsExistingOnFocusChangeListener.onFocusChange(v, hasFocus);
+
+                if (hasFocus) {
+                    mPresenter.hasFocus(fatsEditText);
+                } else {
+                    mPresenter.lostFocus(fatsEditText);
+                }
+            }
+        });
+
+        final EditText carbohydratesEditText = mFoodCarbohydratesTextInputLayout.getEditText();
+        final View.OnFocusChangeListener carbohydratesExistingOnFocusChangeListener = carbohydratesEditText.getOnFocusChangeListener();
+        carbohydratesEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                carbohydratesExistingOnFocusChangeListener.onFocusChange(v, hasFocus);
+
+                if (hasFocus) {
+                    mPresenter.hasFocus(carbohydratesEditText);
+                } else {
+                    mPresenter.lostFocus(carbohydratesEditText);
+                }
+            }
+        });
+
+        final EditText proteinsEditText = mFoodProteinsTextInputLayout.getEditText();
+        final View.OnFocusChangeListener proteinsExistingOnFocusChangeListener = proteinsEditText.getOnFocusChangeListener();
+        proteinsEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                proteinsExistingOnFocusChangeListener.onFocusChange(v, hasFocus);
+
+                if (hasFocus) {
+                    mPresenter.hasFocus(proteinsEditText);
+                } else {
+                    mPresenter.lostFocus(proteinsEditText);
+                }
+            }
+        });
+
     }
 
     private void setUnits(String unit) {

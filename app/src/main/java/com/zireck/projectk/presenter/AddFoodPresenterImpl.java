@@ -2,27 +2,31 @@ package com.zireck.projectk.presenter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.widget.EditText;
 
-import com.zireck.projectk.helper.PictureHelper;
+import com.squareup.picasso.Picasso;
+import com.zireck.projectk.R;
+import com.zireck.projectk.util.PictureUtils;
 import com.zireck.projectk.model.Food;
 import com.zireck.projectk.model.FoodDao;
 import com.zireck.projectk.model.GreenDaoHelper;
 import com.zireck.projectk.util.MathUtils;
 import com.zireck.projectk.view.AddFoodView;
 
+import net.steamcrafted.materialiconlib.MaterialIconView;
+
 /**
  * Created by Zireck on 24/07/2015.
  */
 public class AddFoodPresenterImpl implements AddFoodPresenter {
 
+    private Context mContext;
     private AddFoodView mView;
-    private PictureHelper mPictureHelper;
 
     public AddFoodPresenterImpl(Context context, AddFoodView view) {
-        mPictureHelper = new PictureHelper(context);
+        mContext = context;
         mView = view;
     }
 
@@ -90,11 +94,11 @@ public class AddFoodPresenterImpl implements AddFoodPresenter {
 
     @Override
     public void startCamera(Context context) {
-        String fileName = mPictureHelper.generateFileName();
+        String fileName = PictureUtils.generateFileName();
         mView.setPictureNewName(fileName);
 
-        Intent intent = mPictureHelper.getIntentForCameraLaunch(fileName);
-        mView.startIntentForCameraLaunch(intent, mPictureHelper.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+        Intent intent = PictureUtils.getIntentForCameraLaunch(fileName);
+        mView.startIntentForCameraLaunch(intent, PictureUtils.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
     }
 
     @Override
@@ -103,17 +107,13 @@ public class AddFoodPresenterImpl implements AddFoodPresenter {
             deleteCurrentPicture();
         }
 
-        System.out.println("k9d3 receiving picture with (new)name = " + mView.getPictureNewName());
-
-        Uri pictureUri = mPictureHelper.getPhotoFileUri(mPictureHelper.getFolderName(), mView.getPictureNewName());
-        //Bitmap picture = mPictureHelper.getPictureBitmap(pictureUri);
-        Bitmap picture = mPictureHelper.getSampledPictureBitmap(pictureUri, mView.getPictureWidth(), mView.getPictureHeight());
-        mView.setPicture(picture);
+        Uri pictureUri = PictureUtils.getPhotoFileUri(mView.getPictureNewName());
+        Picasso.with(mContext).load(pictureUri).fit().centerCrop().into(mView.getPictureImageView());
 
         mView.setPictureCurrentName(mView.getPictureNewName());
         mView.setPictureNewName("");
 
-        mView.showDeletePictureButton();
+        mView.showDeletePictureLayout();
     }
 
     @Override
@@ -121,18 +121,75 @@ public class AddFoodPresenterImpl implements AddFoodPresenter {
         mView.setPictureNewName("");
 
         if (!TextUtils.isEmpty(mView.getPictureCurrentName())) {
-            mView.showDeletePictureButton();
+            mView.showDeletePictureLayout();
         } else {
-            mView.hideDeletePictureButton();
+            mView.hideDeletePictureLayout();
         }
     }
 
     @Override
     public void deleteCurrentPicture() {
-        mPictureHelper.deletePicture(mView.getPictureCurrentName());
+        PictureUtils.deletePicture(mView.getPictureCurrentName());
         mView.setPictureCurrentName("");
         mView.deletePicture();
-        mView.hideDeletePictureButton();
+        mView.hideDeletePictureLayout();
+    }
+
+    @Override
+    public void hasFocus(EditText editText) {
+        deactivateAllIcons();
+
+        switch (editText.getId()) {
+            case R.id.food_name_edit_text:
+                activateIcon(mView.getIconName());
+                break;
+            case R.id.food_brand_edit_text:
+                activateIcon(mView.getIconBrand());
+                break;
+            case R.id.food_calories_edit_text:
+                activateIcon(mView.getIconCalories());
+                break;
+            case R.id.food_fats_edit_text:
+            case R.id.food_carbohydrates_edit_text:
+            case R.id.food_proteins_edit_text:
+                activateIcon(mView.getIconNutrients());
+                break;
+        }
+    }
+
+    @Override
+    public void lostFocus(EditText editText) {
+        switch (editText.getId()) {
+            case R.id.food_name_edit_text:
+                deactivateIcon(mView.getIconName());
+                break;
+            case R.id.food_brand_edit_text:
+                deactivateIcon(mView.getIconBrand());
+                break;
+            case R.id.food_calories_edit_text:
+                deactivateIcon(mView.getIconCalories());
+                break;
+            case R.id.food_fats_edit_text:
+            case R.id.food_carbohydrates_edit_text:
+            case R.id.food_proteins_edit_text:
+                deactivateIcon(mView.getIconNutrients());
+                break;
+        }
+    }
+
+    private void activateIcon(MaterialIconView icon) {
+        icon.setColorResource(R.color.icon_activated);
+    }
+
+    private void deactivateIcon(MaterialIconView icon) {
+        icon.setColorResource(R.color.icon_deactivated);
+    }
+
+    private void deactivateAllIcons() {
+        mView.getIconName().setColorResource(R.color.icon_deactivated);
+        mView.getIconBrand().setColorResource(R.color.icon_deactivated);
+        mView.getIconCalories().setColorResource(R.color.icon_deactivated);
+        mView.getIconNutrients().setColorResource(R.color.icon_deactivated);
     }
 
 }

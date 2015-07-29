@@ -2,6 +2,9 @@ package com.zireck.projectk.view;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.widget.ImageView;
+
+import net.steamcrafted.materialiconlib.MaterialIconView;
 
 /**
  * Created by Zireck on 24/07/2015.
@@ -17,15 +20,21 @@ public interface AddFoodView {
     public void setCarbohydratesError();
     public void setProteinsError();
 
+    public MaterialIconView getIconName();
+    public MaterialIconView getIconBrand();
+    public MaterialIconView getIconCalories();
+    public MaterialIconView getIconNutrients();
+
     public void startIntentForCameraLaunch(Intent intent, final int requestCode);
+
+    public ImageView getPictureImageView();
+
     public String getPictureCurrentName();
-    public String getPictureNewName();
     public void setPictureCurrentName(String fileName);
+    public String getPictureNewName();
     public void setPictureNewName(String fileName);
-    public void setPicture(Bitmap picture);
+
     public void deletePicture();
-    public void showDeletePictureButton();
-    public void hideDeletePictureButton();
-    public int getPictureWidth();
-    public int getPictureHeight();
+    public void showDeletePictureLayout();
+    public void hideDeletePictureLayout();
 }

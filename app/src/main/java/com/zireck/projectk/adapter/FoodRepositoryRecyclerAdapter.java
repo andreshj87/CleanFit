@@ -1,20 +1,21 @@
 package com.zireck.projectk.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.zireck.projectk.R;
-import com.zireck.projectk.helper.PictureHelper;
+import com.zireck.projectk.util.PictureUtils;
 import com.zireck.projectk.model.Food;
 import com.zireck.projectk.util.BitmapUtils;
 import com.zireck.projectk.util.MathUtils;
 
+import java.io.File;
 import java.util.List;
 
 import butterknife.Bind;
@@ -30,14 +31,10 @@ public class FoodRepositoryRecyclerAdapter extends RecyclerView.Adapter<FoodRepo
     private List<Food> mFoodItems;
     private int mLayout;
 
-    private PictureHelper mPictureHelper;
-
     public FoodRepositoryRecyclerAdapter(Context context, List<Food> items, int layout) {
         mContext = context;
         mFoodItems = items;
         mLayout = layout;
-
-        mPictureHelper = new PictureHelper(mContext);
     }
 
     @Override
@@ -49,11 +46,13 @@ public class FoodRepositoryRecyclerAdapter extends RecyclerView.Adapter<FoodRepo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Food food = mFoodItems.get(position);
-        //holder.foodCalories.setText(MathUtils.formatDouble(food.getCalories()));
 
-        holder.foodPicture.setImageBitmap(mPictureHelper.getSampledPictureBitmap(food.getPicture(), ViewHolder.PICTURE_WIDTH, ViewHolder.PICTURE_HEIGHT));
+        Uri pictureUri = PictureUtils.getPhotoFileUri(food.getPicture());
+        Picasso.with(mContext).load(pictureUri).fit().centerCrop().into(holder.foodPicture);
+
         holder.foodName.setText(food.getName());
         holder.foodBrand.setText(food.getBrand());
+        holder.foodCalories.setText(MathUtils.formatDouble(food.getCalories()));
 
         holder.itemView.setTag(food);
     }
@@ -64,12 +63,10 @@ public class FoodRepositoryRecyclerAdapter extends RecyclerView.Adapter<FoodRepo
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public static int PICTURE_WIDTH = 64;
-        public static int PICTURE_HEIGHT = 64;
-
         @Bind(R.id.food_picture) CircleImageView foodPicture;
         @Bind(R.id.food_name) TextView foodName;
         @Bind(R.id.food_brand) TextView foodBrand;
+        @Bind(R.id.food_calories) TextView foodCalories;
 
         public ViewHolder(View itemView) {
             super(itemView);

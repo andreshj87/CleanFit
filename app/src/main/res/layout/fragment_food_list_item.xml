@@ -62,6 +62,35 @@
                 android:layout_toRightOf="@+id/food_picture"
                 android:layout_toEndOf="@+id/food_picture" />
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/food_calories"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="350"
+                    android:textSize="24sp"
+                    android:textColor="@color/accent"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="kcal"
+                    android:textSize="12sp"
+                    android:textColor="@color/accent"
+                    />
+
+            </LinearLayout>
+
         </RelativeLayout>
 
     </LinearLayout>

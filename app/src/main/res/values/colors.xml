@@ -27,7 +27,9 @@
     <color name="black">#000000</color>
 
     <color name="material_grey_600">#757575</color>
-    <color name="icons_grey">@color/material_grey_600</color>
+
+    <color name="icon_activated">@color/primary</color>
+    <color name="icon_deactivated">@color/material_grey_600</color>
 
     <color name="calories">#FFC107</color>
     <color name="fats">#E57373</color>
