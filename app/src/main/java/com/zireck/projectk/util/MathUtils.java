@@ -1,11 +1,18 @@
 package com.zireck.projectk.util;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.regex.Pattern;
 
 /**
  * Created by Zireck on 16/07/2015.
  */
 public class MathUtils {
+
+    public static String betterFormatDouble(double value) {
+        NumberFormat numberFormat = new DecimalFormat("###.##");
+        return numberFormat.format(value);
+    }
 
     public static String formatDouble(double d) {
         if(d == (long) d)

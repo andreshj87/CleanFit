@@ -2,17 +2,14 @@ package com.zireck.projectk.activity;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -21,15 +18,14 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.balysv.materialmenu.MaterialMenuDrawable;
-import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 import com.zireck.projectk.R;
 import com.zireck.projectk.fragment.FoodListFragment;
 import com.zireck.projectk.fragment.FoodRepositoryFragment;
+import com.zireck.projectk.helper.Navigator;
 import com.zireck.projectk.listener.OnFoodRepositoryTabChangeListener;
+import com.zireck.projectk.util.SnackbarUtils;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -38,7 +34,7 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
 
     private static final String NAVIGATION_VIEW_SELECTED_ITEM = "NavigationViewSelectedItem";
 
-    public static final int ADD_FOOD_REQUEST = 1;
+    private Navigator mNavigator;
 
     @Bind(R.id.navigation_view) NavigationView mNavigationView;
     @Bind(R.id.appBarLayout) AppBarLayout mAppBarLayout;
@@ -53,6 +49,8 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mNavigator = new Navigator(this);
 
         initActionBar();
 
@@ -130,11 +128,13 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == ADD_FOOD_REQUEST) {
+        if (requestCode == Navigator.ADD_FOOD_REQUEST) {
             if (resultCode == RESULT_OK) {
-                Snackbar snackbar = Snackbar.make(mCoordinatorLayout, "Food successfully added", Snackbar.LENGTH_SHORT);
-                snackbar.getView().setElevation(8);
-                snackbar.show();
+                SnackbarUtils.showShortMessageWithElevation(mCoordinatorLayout, "Food successfully added", 8);
+            }
+        } else if (requestCode == Navigator.DELETE_FOOD_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                SnackbarUtils.showShortMessageWithElevation(mCoordinatorLayout, "Food successfully deleted", 8);
             }
         }
     }
@@ -149,11 +149,9 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         if (fragment != null) {
             if (fragment instanceof FoodRepositoryFragment) {
-                Intent intent = new Intent(this, AddFoodActivity.class);
-                //startActivity(intent);
-                startActivityForResult(intent, ADD_FOOD_REQUEST);
+                mNavigator.openAddFoodActivity();
             } else {
-                Snackbar.make(mCoordinatorLayout, "Nothing!", Snackbar.LENGTH_SHORT).show();
+                SnackbarUtils.showShortMessage(mCoordinatorLayout, "Nothing!");
             }
         }
     }

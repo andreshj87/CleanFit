@@ -1,27 +1,18 @@
 package com.zireck.projectk.activity;
 
+import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.zireck.projectk.R;
 import com.zireck.projectk.fragment.AddFoodFragment;
 import com.zireck.projectk.listener.OnAddFoodFinishedListener;
-import com.zireck.projectk.listener.OnFoodPictureListener;
-
-import java.io.File;
 
 import butterknife.Bind;
 
@@ -32,6 +23,13 @@ public class AddFoodActivity extends BaseActivity implements OnAddFoodFinishedLi
 
     @Bind(R.id.root_layout) LinearLayout mRootLayout;
     @Bind(R.id.toolbar) Toolbar mToolbar;
+
+    /**
+     * Generates the intent needed to launch this activity.
+     */
+    public static Intent getLaunchIntent(final Context context) {
+        return new Intent(context, AddFoodActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

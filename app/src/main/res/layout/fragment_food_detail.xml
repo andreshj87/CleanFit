@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/food_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="hello world"
+        android:textSize="36sp"/>
+
+    <TextView
+        android:id="@+id/food_brand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:gravity="center_vertical"
+        android:text="brand"/>
+
+    <TextView
+        android:id="@+id/nutrients_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:text="Energy &amp; Nutrients (per 100gr)"
+        android:textColor="@color/primary_dark"
+        android:textStyle="bold"
+        android:textAllCaps="true"/>
+
+    <View
+        android:id="@+id/separator"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/primary"/>
+
+    <LinearLayout
+        android:id="@+id/row_first"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <net.steamcrafted.materialiconlib.MaterialIconView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="center"
+                app:materialIcon="fire"
+                app:materialIconColor="@color/accent"
+                app:materialIconSize="75dp"/>
+
+            <TextView
+                android:id="@+id/food_calories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="54sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="calories"
+                android:textColor="@color/accent"/>
+
+        </LinearLayout>
+
+        <lecho.lib.hellocharts.view.PieChartView
+            android:id="@+id/pie_chart"
+            android:layout_width="175dp"
+            android:layout_height="175dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_gravity="center_horizontal"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_fats"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <View
+            android:background="@color/fats"
+            style="@style/nutrient_square"/>
+
+        <TextView
+            android:text="Fats"
+            style="@style/nutrient_text"/>
+
+        <TextView
+            android:id="@+id/fats_amount"
+            style="@style/nutrient_value"/>
+
+        <TextView
+            android:id="@+id/fats_percent"
+            style="@style/nutrient_value"/>
+
+    </LinearLayout>
+
+    <View
+        style="@style/nutrient_separator"/>
+
+    <LinearLayout
+        android:id="@+id/layout_carbohydrates"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <View
+            android:background="@color/carbohydrates"
+            style="@style/nutrient_square"/>
+
+        <TextView
+            android:text="Carbs"
+            style="@style/nutrient_text"/>
+
+        <TextView
+            android:id="@+id/carbohydrates_amount"
+            style="@style/nutrient_value"/>
+
+        <TextView
+            android:id="@+id/carbohydrates_percent"
+            style="@style/nutrient_value"/>
+
+    </LinearLayout>
+
+    <View
+        style="@style/nutrient_separator"/>
+
+    <LinearLayout
+        android:id="@+id/layout_proteins"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <View
+            android:background="@color/proteins"
+            style="@style/nutrient_square"/>
+
+        <TextView
+            android:text="Proteins"
+            style="@style/nutrient_text"/>
+
+        <TextView
+            android:id="@+id/proteins_amount"
+            style="@style/nutrient_value"/>
+
+        <TextView
+            android:id="@+id/proteins_percent"
+            style="@style/nutrient_value"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_marginTop="200dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lorem_ipsum"/>
+
+</LinearLayout>

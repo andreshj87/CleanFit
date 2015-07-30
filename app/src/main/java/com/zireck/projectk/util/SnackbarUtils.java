@@ -1,6 +1,5 @@
 package com.zireck.projectk.util;
 
-import android.content.Context;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.Toast;
@@ -32,6 +31,20 @@ public class SnackbarUtils {
 
     private static Snackbar getSnackbar(View view, String message, int length) {
         return Snackbar.make(view, message, length);
+    }
+
+    public static void showShortMessageWithElevation(View view, String message, int elevation) {
+        getSnackbarWithElevation(view, message, elevation, Snackbar.LENGTH_SHORT).show();
+    }
+
+    public static void showLongMessageWithElevation(View view, String message, int elevation) {
+        getSnackbarWithElevation(view, message, elevation, Snackbar.LENGTH_LONG).show();
+    }
+
+    private static Snackbar getSnackbarWithElevation(View view, String message, int elevation, int length) {
+        Snackbar snackbar = Snackbar.make(view, message, length);
+        snackbar.getView().setElevation(elevation);
+        return snackbar;
     }
 
 }
