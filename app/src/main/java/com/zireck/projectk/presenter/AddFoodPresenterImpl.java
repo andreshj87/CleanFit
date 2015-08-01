@@ -22,12 +22,20 @@ import net.steamcrafted.materialiconlib.MaterialIconView;
  */
 public class AddFoodPresenterImpl implements AddFoodPresenter {
 
-    private Context mContext;
+    protected Context mContext;
     private AddFoodView mView;
+
+    private boolean mAdded;
+
+    public AddFoodPresenterImpl() {
+
+    }
 
     public AddFoodPresenterImpl(Context context, AddFoodView view) {
         mContext = context;
         mView = view;
+
+        mAdded = false;
     }
 
     @Override
@@ -79,6 +87,8 @@ public class AddFoodPresenterImpl implements AddFoodPresenter {
             FoodDao foodDao = greenDaoHelper.getFoodDao();
             foodDao.insert(food);
 
+            mAdded = true;
+
             mView.foodSuccessfullyAdded();
         }
     }
@@ -103,6 +113,10 @@ public class AddFoodPresenterImpl implements AddFoodPresenter {
 
     @Override
     public void receivePicture() {
+        if (TextUtils.isEmpty(mView.getPictureNewName())) {
+            return;
+        }
+
         if (!TextUtils.isEmpty(mView.getPictureCurrentName())) {
             deleteCurrentPicture();
         }
@@ -174,6 +188,13 @@ public class AddFoodPresenterImpl implements AddFoodPresenter {
             case R.id.food_proteins_edit_text:
                 deactivateIcon(mView.getIconNutrients());
                 break;
+        }
+    }
+
+    @Override
+    public void onStop() {
+        if (mView != null && !mAdded) {
+            deleteCurrentPicture();
         }
     }
 

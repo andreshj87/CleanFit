@@ -25,6 +25,7 @@
 
         <activity android:name=".activity.FoodDetailActivity" android:label="Food Detail" android:theme="@style/AppTheme.ActionBar" android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity android:name=".activity.AddFoodActivity" android:label="Add Food" android:theme="@style/AppTheme.ActionBar" android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity android:name=".activity.EditFoodActivity" android:label="Edit Food" android:theme="@style/AppTheme.ActionBar" android:configChanges="keyboardHidden|orientation|screenSize" />
     </application>
 
 </manifest>

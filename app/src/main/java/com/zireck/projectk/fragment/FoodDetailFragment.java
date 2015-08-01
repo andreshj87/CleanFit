@@ -1,9 +1,11 @@
 package com.zireck.projectk.fragment;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -11,10 +13,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.zireck.projectk.R;
+import com.zireck.projectk.helper.Navigator;
 import com.zireck.projectk.listener.FoodDetailCallback;
 import com.zireck.projectk.presenter.FoodDetailPresenter;
 import com.zireck.projectk.presenter.FoodDetailPresenterImpl;
-import com.zireck.projectk.util.ToastUtils;
 import com.zireck.projectk.view.FoodDetailView;
 
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
@@ -29,6 +31,8 @@ import lecho.lib.hellocharts.view.PieChartView;
  */
 public class FoodDetailFragment extends BaseFragment implements FoodDetailView {
     private static final String EXTRA_FOOD_ID = "food_id";
+
+    private Navigator mNavigator;
 
     private FoodDetailCallback mCallback;
     private FoodDetailPresenter mPresenter;
@@ -76,6 +80,8 @@ public class FoodDetailFragment extends BaseFragment implements FoodDetailView {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mNavigator = new Navigator(getActivity());
+
         setFoodBrandIcon();
 
         mPresenter = new FoodDetailPresenterImpl(this);
@@ -99,10 +105,12 @@ public class FoodDetailFragment extends BaseFragment implements FoodDetailView {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_edit:
-                ToastUtils.showShortMessage(getActivity(), "edit");
+                //ToastUtils.showShortMessage(getActivity(), "edit");
+                mNavigator.openEditFoodActivity(mPresenter.getFoodId());
                 break;
             case R.id.action_delete:
-                mPresenter.deleteFood();
+                showDeleteDialog();
+                //mPresenter.deleteFood();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -218,5 +226,25 @@ public class FoodDetailFragment extends BaseFragment implements FoodDetailView {
 
         itemEdit.setIcon(iconEdit.getDrawable());
         itemDelete.setIcon(iconDelete.getDrawable());
+    }
+
+    private void showDeleteDialog() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+        alertDialogBuilder.setTitle("Delete");
+        alertDialogBuilder.setMessage("Delete selected item?");
+        alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mPresenter.deleteFood();
+            }
+        });
+        alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        alertDialogBuilder.show();
     }
 }

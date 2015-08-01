@@ -1,7 +1,6 @@
 package com.zireck.projectk.view;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.widget.ImageView;
 
 import net.steamcrafted.materialiconlib.MaterialIconView;

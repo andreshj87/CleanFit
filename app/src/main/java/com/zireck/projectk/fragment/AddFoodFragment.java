@@ -2,7 +2,6 @@ package com.zireck.projectk.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -20,13 +19,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
 import com.zireck.projectk.R;
 import com.zireck.projectk.helper.LimitedDecimalsInputFilter;
-import com.zireck.projectk.util.PictureUtils;
 import com.zireck.projectk.listener.OnAddFoodFinishedListener;
 import com.zireck.projectk.presenter.AddFoodPresenter;
 import com.zireck.projectk.presenter.AddFoodPresenterImpl;
+import com.zireck.projectk.util.PictureUtils;
 import com.zireck.projectk.util.SnackbarUtils;
 import com.zireck.projectk.view.AddFoodView;
 
@@ -125,6 +123,7 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_add_food, menu);
+        menu.findItem(R.id.action_save).setVisible(true);
     }
 
     @Override
@@ -152,6 +151,13 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
         }
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        mPresenter.onStop();
+    }
+
     @OnClick(R.id.food_picture)
     public void onFoodImageClick() {
         mPresenter.startCamera(getActivity());
@@ -166,7 +172,6 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
     public void onDeletePictureClick() {
         mPresenter.deleteCurrentPicture();
     }
-
 
     @Override
     public void foodSuccessfullyAdded() {
@@ -409,7 +414,7 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
 
     }
 
-    private void setUnits(String unit) {
+    protected void setUnits(String unit) {
         StringBuilder text = new StringBuilder();
         text.append("Energy & Nutrients (per 100");
         text.append(unit);
@@ -417,11 +422,11 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
         mNutrientsTextView.setText(text);
     }
 
-    private void setError(EditText editText, String type) {
+    protected void setError(EditText editText, String type) {
         editText.setError("Invalid " + type);
     }
 
-    private void validateData() {
+    protected void validateData() {
         String name = mFoodNameEditText.getText().toString();
         String brand = mFoodBrandEditText.getText().toString();
         boolean isDrink = mFoodIsDrinkCheckbox.isChecked();
@@ -434,7 +439,7 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
         mPresenter.validateData(name, brand, isDrink, calories, fats, carbohydrates, proteins, pictureFileName);
     }
 
-    private void applyDecimalFilters() {
+    protected void applyDecimalFilters() {
         InputFilter[] inputFilter = new InputFilter[] { new LimitedDecimalsInputFilter(5, 2) };
 
         mFoodCaloriesEditText.setFilters(inputFilter);
@@ -444,6 +449,6 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
     }
 
     public void activityStopped() {
-        mPresenter.deleteCurrentPicture();
+        //mPresenter.deleteCurrentPicture();
     }
 }

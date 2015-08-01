@@ -74,13 +74,13 @@ public class AddFoodActivity extends BaseActivity implements OnAddFoodFinishedLi
         navigateBack(RESULT_CANCELED);
     }
 
-    private void navigateBack(int result) {
+    protected void navigateBack(int result) {
         Intent intent = new Intent();
         setResult(result, intent);
         finish();
     }
 
-    private void initActionBar() {
+    protected void initActionBar() {
         mToolbar.setNavigationIcon(R.drawable.ic_close_white_24dp);
 
         setSupportActionBar(mToolbar);

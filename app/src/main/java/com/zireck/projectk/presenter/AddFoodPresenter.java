@@ -15,4 +15,5 @@ public interface AddFoodPresenter {
     public void deleteCurrentPicture();
     public void hasFocus(EditText editText);
     public void lostFocus(EditText editText);
+    public void onStop();
 }

@@ -55,6 +55,11 @@ public class FoodDetailPresenterImpl implements FoodDetailPresenter, OnFoodDetai
         mInteractor.deleteFood(this, mFood);
     }
 
+    @Override
+    public long getFoodId() {
+        return mFoodId;
+    }
+
     private boolean isValidFoodId(long foodId) {
         return foodId >= 0;
     }
