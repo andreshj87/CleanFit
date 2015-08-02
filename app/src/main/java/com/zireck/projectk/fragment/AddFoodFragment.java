@@ -11,7 +11,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -40,10 +39,7 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
 
     @Bind(R.id.food_picture) ImageView mFoodPicture;
 
-    @Bind(R.id.layout_take_picture) LinearLayout mLayoutTakePicture;
     @Bind(R.id.layout_delete_picture) LinearLayout mLayoutDeletePicture;
-    @Bind(R.id.button_take_picture) Button mButtonTakePicture;
-    @Bind(R.id.button_delete_picture) Button mButtonDeletePicture;
 
     @Bind(R.id.food_name_icon) MaterialIconView mFoodNameIcon;
     @Bind(R.id.food_name_text_input_layout) TextInputLayout mFoodNameTextInputLayout;
@@ -53,7 +49,6 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
     @Bind(R.id.food_brand_text_input_layout) TextInputLayout mFoodBrandTextInputLayout;
     @Bind(R.id.food_brand_edit_text) EditText mFoodBrandEditText;
 
-    @Bind(R.id.food_isdrink_icon) MaterialIconView mFoodIsDrinkIcon;
     @Bind(R.id.food_isdrink_checkbox) CheckBox mFoodIsDrinkCheckbox;
 
     @Bind(R.id.nutrients) TextView mNutrientsTextView;
@@ -97,7 +92,7 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        hideKeyboard();
 
         mPresenter = new AddFoodPresenterImpl(getActivity(), this);
 
@@ -106,12 +101,7 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
 
         applyDecimalFilters();
 
-        mFoodIsDrinkCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mPresenter.isDrink(isChecked);
-            }
-        });
+        initDrinkCheckBox();
     }
 
     @Override
@@ -145,17 +135,9 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
             if (resultCode == Activity.RESULT_OK) {
                 mPresenter.receivePicture();
             } else {
-                mPresenter.doNotReceivePicture();
                 SnackbarUtils.showError(getView(), "Picture wasn't taken.");
             }
         }
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        //mPresenter.onStop();
     }
 
     @OnClick(R.id.food_picture)
@@ -243,47 +225,19 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
     }
 
     @Override
-    public String getPictureCurrentName() {
-        if (mFoodPicture.getTag(R.string.picture_current) == null) {
-            return "";
-        } else {
-            return mFoodPicture.getTag(R.string.picture_current).toString();
-        }
-    }
-
-    @Override
-    public String getPictureNewName() {
-        if (mFoodPicture.getTag(R.string.picture_new) == null) {
-            return "";
-        } else {
-            return mFoodPicture.getTag(R.string.picture_new).toString();
-        }
-    }
-
-    @Override
-    public void setPictureCurrentName(String fileName) {
-        mFoodPicture.setTag(R.string.picture_current, fileName);
-    }
-
-    @Override
-    public void setPictureNewName(String fileName) {
-        mFoodPicture.setTag(R.string.picture_new, fileName);
-    }
-
-    @Override
     public void startIntentForCameraLaunch(Intent intent, final int requestCode) {
         startActivityForResult(intent, requestCode);
+    }
+
+    @Override
+    public ImageView getPictureImageView() {
+        return mFoodPicture;
     }
 
     @Override
     public void deletePicture() {
         mFoodPicture.setImageBitmap(null);
         mFoodPicture.setImageDrawable(null);
-    }
-
-    @Override
-    public ImageView getPictureImageView() {
-        return mFoodPicture;
     }
 
     @Override
@@ -435,7 +389,6 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
         String fats = mFoodFatsEditText.getText().toString();
         String carbohydrates = mFoodCarbohydratesEditText.getText().toString();
         String proteins = mFoodProteinsEditText.getText().toString();
-        //String pictureFileName = getPictureCurrentName();
 
         mPresenter.validateData(name, brand, isDrink, calories, fats, carbohydrates, proteins);
     }
@@ -449,7 +402,16 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
         mFoodProteinsEditText.setFilters(inputFilter);
     }
 
-    public void activityStopped() {
-        //mPresenter.deleteCurrentPicture();
+    protected void hideKeyboard() {
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+    }
+
+    protected void initDrinkCheckBox() {
+        mFoodIsDrinkCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mPresenter.isDrink(isChecked);
+            }
+        });
     }
 }

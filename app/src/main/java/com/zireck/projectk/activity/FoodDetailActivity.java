@@ -3,7 +3,6 @@ package com.zireck.projectk.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
@@ -30,7 +29,6 @@ public class FoodDetailActivity extends BaseActivity implements FoodDetailCallba
 
     private long mFoodId;
 
-    @Bind(R.id.collapsing_toolbar) CollapsingToolbarLayout mCollapsingToolbar;
     @Bind(R.id.food_image) ImageView mFoodImage;
     @Bind(R.id.fab) FloatingActionButton mFloatingActionButton;
 
@@ -106,11 +104,6 @@ public class FoodDetailActivity extends BaseActivity implements FoodDetailCallba
     private static void throwIllegalArgumentException() {
         throw new IllegalArgumentException(
                 "FoodDetailActivity has to be launched using a valid Food identifier as extra");
-    }
-
-    @Override
-    public void setFoodName(String foodName) {
-        //mCollapsingToolbar.setTitle(foodName);
     }
 
     @Override

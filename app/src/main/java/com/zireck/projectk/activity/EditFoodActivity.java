@@ -3,7 +3,6 @@ package com.zireck.projectk.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
 
@@ -48,7 +47,6 @@ public class EditFoodActivity extends AddFoodActivity implements OnEditFoodFinis
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                notifyActivityStopToFragment();
                 foodNotEdited();
                 break;
         }
@@ -94,14 +92,6 @@ public class EditFoodActivity extends AddFoodActivity implements OnEditFoodFinis
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, EditFoodFragment.newInstance(mFoodId)).commit();
-    }
-
-    private void notifyActivityStopToFragment() {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-        if (fragment != null && fragment instanceof EditFoodFragment) {
-            EditFoodFragment editFoodFragment = (EditFoodFragment) fragment;
-            editFoodFragment.activityStopped();
-        }
     }
 
     private static void throwIllegalArgumentException() {

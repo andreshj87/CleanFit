@@ -86,6 +86,11 @@ public class FoodDetailFragment extends BaseFragment implements FoodDetailView {
 
         mPresenter = new FoodDetailPresenterImpl(this);
         mPresenter.mapExtras(getArguments());
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         mPresenter.getFood();
     }
 
@@ -105,12 +110,10 @@ public class FoodDetailFragment extends BaseFragment implements FoodDetailView {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_edit:
-                //ToastUtils.showShortMessage(getActivity(), "edit");
                 mNavigator.openEditFoodActivity(mPresenter.getFoodId());
                 break;
             case R.id.action_delete:
                 showDeleteDialog();
-                //mPresenter.deleteFood();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -124,7 +127,6 @@ public class FoodDetailFragment extends BaseFragment implements FoodDetailView {
     @Override
     public void setFoodName(String foodName) {
         mFoodName.setText(foodName);
-        mCallback.setFoodName(foodName);
     }
 
     @Override

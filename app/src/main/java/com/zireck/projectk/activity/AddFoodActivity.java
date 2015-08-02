@@ -3,15 +3,12 @@ package com.zireck.projectk.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
 
 import com.zireck.projectk.R;
-import com.zireck.projectk.fragment.AddFoodFragment;
 import com.zireck.projectk.listener.OnAddFoodFinishedListener;
 
 import butterknife.Bind;
@@ -21,7 +18,6 @@ import butterknife.Bind;
  */
 public class AddFoodActivity extends BaseActivity implements OnAddFoodFinishedListener {
 
-    @Bind(R.id.root_layout) LinearLayout mRootLayout;
     @Bind(R.id.toolbar) Toolbar mToolbar;
 
     /**
@@ -51,7 +47,6 @@ public class AddFoodActivity extends BaseActivity implements OnAddFoodFinishedLi
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                notifyActivityStopToFragment();
                 foodNotAdded();
                 break;
         }
@@ -89,14 +84,6 @@ public class AddFoodActivity extends BaseActivity implements OnAddFoodFinishedLi
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-    }
-
-    private void notifyActivityStopToFragment() {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_add_food);
-        if (fragment != null && fragment instanceof AddFoodFragment) {
-            AddFoodFragment addFoodFragment = (AddFoodFragment) fragment;
-            addFoodFragment.activityStopped();
         }
     }
 }

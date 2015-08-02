@@ -8,11 +8,12 @@ import android.widget.EditText;
 
 import com.squareup.picasso.Picasso;
 import com.zireck.projectk.R;
-import com.zireck.projectk.util.PictureUtils;
+import com.zireck.projectk.interactor.AddFoodInteractor;
+import com.zireck.projectk.interactor.AddFoodInteractorImpl;
+import com.zireck.projectk.listener.OnAddFoodInteractorFinishedListener;
 import com.zireck.projectk.model.Food;
-import com.zireck.projectk.model.FoodDao;
-import com.zireck.projectk.model.GreenDaoHelper;
 import com.zireck.projectk.util.MathUtils;
+import com.zireck.projectk.util.PictureUtils;
 import com.zireck.projectk.view.AddFoodView;
 
 import net.steamcrafted.materialiconlib.MaterialIconView;
@@ -20,15 +21,11 @@ import net.steamcrafted.materialiconlib.MaterialIconView;
 /**
  * Created by Zireck on 24/07/2015.
  */
-public class AddFoodPresenterImpl implements AddFoodPresenter {
+public class AddFoodPresenterImpl implements AddFoodPresenter, OnAddFoodInteractorFinishedListener {
 
     protected Context mContext;
     private AddFoodView mView;
-
-    //private boolean mAdded;
-
-    //private String mCurrentPictureName;
-    //private String mNewPictureName;
+    private AddFoodInteractor mInteractor;
 
     public AddFoodPresenterImpl() {
 
@@ -37,8 +34,7 @@ public class AddFoodPresenterImpl implements AddFoodPresenter {
     public AddFoodPresenterImpl(Context context, AddFoodView view) {
         mContext = context;
         mView = view;
-
-        //mAdded = false;
+        mInteractor = new AddFoodInteractorImpl();
     }
 
     @Override
@@ -86,13 +82,8 @@ public class AddFoodPresenterImpl implements AddFoodPresenter {
             food.setProteins(Double.valueOf(proteins));
             food.setPicture(consolidateNewPicture());
 
-            GreenDaoHelper greenDaoHelper = new GreenDaoHelper();
-            FoodDao foodDao = greenDaoHelper.getFoodDao();
-            foodDao.insert(food);
+            mInteractor.addFood(this, food);
 
-            //mAdded = true;
-
-            mView.foodSuccessfullyAdded();
         }
     }
 
@@ -107,29 +98,13 @@ public class AddFoodPresenterImpl implements AddFoodPresenter {
 
     @Override
     public void startCamera(Context context) {
-        //String fileName = PictureUtils.generateFileName();
-        //mView.setPictureNewName(fileName);
-        //mNewPictureName = fileName;
-
         Intent intent = PictureUtils.getIntentForCameraLaunch(PictureUtils.TEMP_PICTURE_NAME);
         mView.startIntentForCameraLaunch(intent, PictureUtils.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
     }
 
     @Override
     public void receivePicture() {
-        //if (TextUtils.isEmpty(mView.getPictureNewName())) {
-        /*if (TextUtils.isEmpty(mNewPictureName)) {
-            return;
-        }*/
-
-        //if (!TextUtils.isEmpty(mView.getPictureCurrentName())) {
-        /*if (!TextUtils.isEmpty(mCurrentPictureName)) {
-            deleteCurrentPicture();
-        }*/
-
-        //Uri pictureUri = PictureUtils.getPhotoFileUri(mView.getPictureNewName());
         Uri pictureUri = PictureUtils.getPhotoFileUri(PictureUtils.TEMP_PICTURE_NAME);
-        //Picasso.with(mContext).load(pictureUri).fit().centerCrop().into(mView.getPictureImageView());
         Picasso.Builder picassoBuilder = new Picasso.Builder(mContext);
         picassoBuilder.listener(new Picasso.Listener() {
             @Override
@@ -140,25 +115,7 @@ public class AddFoodPresenterImpl implements AddFoodPresenter {
         Picasso picasso = picassoBuilder.build();
         picasso.load(pictureUri).fit().centerCrop().into(mView.getPictureImageView());
 
-        //mView.setPictureCurrentName(mView.getPictureNewName());
-        //mCurrentPictureName = mNewPictureName;
-        //mView.setPictureNewName("");
-        //mNewPictureName = "";
-
         mView.showDeletePictureLayout();
-    }
-
-    @Override
-    public void doNotReceivePicture() {
-        //mView.setPictureNewName("");
-        //mNewPictureName = "";
-
-        //if (!TextUtils.isEmpty(mView.getPictureCurrentName())) {
-        /*if (!TextUtils.isEmpty(mCurrentPictureName)) {
-            mView.showDeletePictureLayout();
-        } else {
-            mView.hideDeletePictureLayout();
-        }*/
     }
 
     @Override
@@ -166,13 +123,6 @@ public class AddFoodPresenterImpl implements AddFoodPresenter {
         PictureUtils.deletePicture(PictureUtils.TEMP_PICTURE_NAME);
         mView.deletePicture();
         mView.hideDeletePictureLayout();
-
-        //PictureUtils.deletePicture(mView.getPictureCurrentName());
-        //PictureUtils.deletePicture(mCurrentPictureName);
-        //mView.setPictureCurrentName("");
-        //mCurrentPictureName = "";
-        //mView.deletePicture();
-        //mView.hideDeletePictureLayout();
     }
 
     @Override
@@ -234,12 +184,13 @@ public class AddFoodPresenterImpl implements AddFoodPresenter {
 
     private String consolidateNewPicture() {
         String pictureName = PictureUtils.generateFileName();
-        if (!PictureUtils.renameTempPictureTo(pictureName)) {
-            /*throw new IllegalArgumentException(
-                    "Picture origin must exists and Picture destiny must be a non-empty string");*/
-            System.out.println("k9d3 exception lanzado...");
-        }
+        PictureUtils.renameTempPictureTo(pictureName);
 
         return pictureName;
+    }
+
+    @Override
+    public void onFoodAdded() {
+        mView.foodSuccessfullyAdded();
     }
 }

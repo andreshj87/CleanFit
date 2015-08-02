@@ -3,7 +3,7 @@ package com.zireck.projectk.interactor;
 import com.zireck.projectk.listener.OnFoodListFinishedListener;
 import com.zireck.projectk.model.Food;
 import com.zireck.projectk.model.FoodDao;
-import com.zireck.projectk.model.GreenDaoHelper;
+import com.zireck.projectk.util.GreenDaoUtils;
 
 import java.util.List;
 
@@ -22,9 +22,9 @@ public class FoodListInteractorImpl implements FoodListInteractor {
     }
 
     private List<Food> retrieveFood(boolean isDrink) {
-        GreenDaoHelper daoHelper = new GreenDaoHelper();
-        FoodDao foodDao = daoHelper.getFoodDao();
+        FoodDao foodDao = GreenDaoUtils.getFoodDao();
         List<Food> foodList = foodDao.queryBuilder().where(FoodDao.Properties.IsDrink.eq(isDrink)).list();
+
         return foodList;
     }
 }

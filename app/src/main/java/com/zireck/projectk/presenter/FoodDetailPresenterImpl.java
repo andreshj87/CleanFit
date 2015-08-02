@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.zireck.projectk.interactor.FoodDetailInteractor;
 import com.zireck.projectk.interactor.FoodDetailInteractorImpl;
-import com.zireck.projectk.listener.OnFoodDetailFinishedListener;
+import com.zireck.projectk.listener.OnFoodDetailInteractorFinishedListener;
 import com.zireck.projectk.model.Food;
 import com.zireck.projectk.util.MathUtils;
 import com.zireck.projectk.view.FoodDetailView;
@@ -18,7 +18,7 @@ import lecho.lib.hellocharts.model.SliceValue;
 /**
  * Created by Zireck on 29/07/2015.
  */
-public class FoodDetailPresenterImpl implements FoodDetailPresenter, OnFoodDetailFinishedListener {
+public class FoodDetailPresenterImpl implements FoodDetailPresenter, OnFoodDetailInteractorFinishedListener {
 
     private long mFoodId;
     private Food mFood;

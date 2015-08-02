@@ -28,11 +28,6 @@ public interface AddFoodView {
 
     public ImageView getPictureImageView();
 
-    public String getPictureCurrentName();
-    public void setPictureCurrentName(String fileName);
-    public String getPictureNewName();
-    public void setPictureNewName(String fileName);
-
     public void deletePicture();
     public void showDeletePictureLayout();
     public void hideDeletePictureLayout();

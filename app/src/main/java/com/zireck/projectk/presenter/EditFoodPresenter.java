@@ -9,4 +9,5 @@ public interface EditFoodPresenter extends AddFoodPresenter {
     public void mapExtras(Bundle bundle);
     public void getFood();
     public void loadPicture();
+    public void doNotReceivePicture();
 }

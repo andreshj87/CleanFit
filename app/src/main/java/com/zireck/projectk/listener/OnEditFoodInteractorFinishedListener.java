@@ -7,4 +7,5 @@ import com.zireck.projectk.model.Food;
  */
 public interface OnEditFoodInteractorFinishedListener {
     public void onGetFoodFinished(Food food);
+    public void onFoodUpdated();
 }

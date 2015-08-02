@@ -90,20 +90,6 @@ public class EditFoodFragment extends AddFoodFragment implements EditFoodView {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-
-        //mPresenter.loadPicture();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        System.out.println("k9d3 EditFoodFragment.onStop()");
-        //mPresenter.onStop();
-    }
-
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -124,7 +110,6 @@ public class EditFoodFragment extends AddFoodFragment implements EditFoodView {
 
     @OnClick(R.id.button_take_picture)
     public void onTakePictureClick() {
-        System.out.println("k9d3 clicked @OnClick takePictureclick");
         mPresenter.startCamera(getActivity());
     }
 
@@ -136,34 +121,6 @@ public class EditFoodFragment extends AddFoodFragment implements EditFoodView {
     @Override
     public ImageView getPictureImageView() {
         return mFoodPicture;
-    }
-
-    @Override
-    public String getPictureCurrentName() {
-        if (mFoodPicture.getTag(R.string.picture_current) == null) {
-            return "";
-        } else {
-            return mFoodPicture.getTag(R.string.picture_current).toString();
-        }
-    }
-
-    @Override
-    public String getPictureNewName() {
-        if (mFoodPicture.getTag(R.string.picture_new) == null) {
-            return "";
-        } else {
-            return mFoodPicture.getTag(R.string.picture_new).toString();
-        }
-    }
-
-    @Override
-    public void setPictureCurrentName(String fileName) {
-        mFoodPicture.setTag(R.string.picture_current, fileName);
-    }
-
-    @Override
-    public void setPictureNewName(String fileName) {
-        mFoodPicture.setTag(R.string.picture_new, fileName);
     }
 
     @Override
@@ -223,7 +180,6 @@ public class EditFoodFragment extends AddFoodFragment implements EditFoodView {
         String fats = mFoodFatsEditText.getText().toString();
         String carbohydrates = mFoodCarbohydratesEditText.getText().toString();
         String proteins = mFoodProteinsEditText.getText().toString();
-        //String pictureFileName = getPictureCurrentName();
 
         mPresenter.validateData(name, brand, isDrink, calories, fats, carbohydrates, proteins);
     }
