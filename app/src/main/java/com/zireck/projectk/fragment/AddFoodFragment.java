@@ -155,7 +155,7 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
     public void onStop() {
         super.onStop();
 
-        mPresenter.onStop();
+        //mPresenter.onStop();
     }
 
     @OnClick(R.id.food_picture)
@@ -278,6 +278,7 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
     @Override
     public void deletePicture() {
         mFoodPicture.setImageBitmap(null);
+        mFoodPicture.setImageDrawable(null);
     }
 
     @Override
@@ -434,9 +435,9 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
         String fats = mFoodFatsEditText.getText().toString();
         String carbohydrates = mFoodCarbohydratesEditText.getText().toString();
         String proteins = mFoodProteinsEditText.getText().toString();
-        String pictureFileName = getPictureCurrentName();
+        //String pictureFileName = getPictureCurrentName();
 
-        mPresenter.validateData(name, brand, isDrink, calories, fats, carbohydrates, proteins, pictureFileName);
+        mPresenter.validateData(name, brand, isDrink, calories, fats, carbohydrates, proteins);
     }
 
     protected void applyDecimalFilters() {

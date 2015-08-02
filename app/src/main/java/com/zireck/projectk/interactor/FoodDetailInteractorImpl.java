@@ -4,6 +4,7 @@ import com.zireck.projectk.listener.OnFoodDetailFinishedListener;
 import com.zireck.projectk.model.Food;
 import com.zireck.projectk.model.FoodDao;
 import com.zireck.projectk.model.GreenDaoHelper;
+import com.zireck.projectk.util.PictureUtils;
 
 /**
  * Created by Zireck on 29/07/2015.
@@ -16,13 +17,14 @@ public class FoodDetailInteractorImpl implements FoodDetailInteractor {
 
     @Override
     public void deleteFood(OnFoodDetailFinishedListener listener, Food food) {
+        deleteFoodPicture(food.getPicture());
+
         FoodDao foodDao = retrieveFoodDao();
         foodDao.delete(food);
         listener.onDeleteFoodFinished();
     }
 
     private Food retrieveFood(long foodId) {
-        GreenDaoHelper daoHelper = new GreenDaoHelper();
         FoodDao foodDao = retrieveFoodDao();
         Food food = foodDao.queryBuilder().where(FoodDao.Properties.Id.eq(foodId)).unique();
 
@@ -32,5 +34,9 @@ public class FoodDetailInteractorImpl implements FoodDetailInteractor {
     private FoodDao retrieveFoodDao() {
         GreenDaoHelper daoHelper = new GreenDaoHelper();
         return daoHelper.getFoodDao();
+    }
+
+    private void deleteFoodPicture(String foodPicture) {
+        PictureUtils.deletePicture(foodPicture);
     }
 }

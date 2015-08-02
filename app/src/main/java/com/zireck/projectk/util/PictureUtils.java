@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.File;
@@ -15,6 +16,7 @@ public class PictureUtils {
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
     public static final String FILE_EXTENSION = ".jpg";
     private static final String FOLDER_NAME = "Project K";
+    public static final String TEMP_PICTURE_NAME = "temp" + FILE_EXTENSION;
 
     public PictureUtils() {
 
@@ -90,5 +92,17 @@ public class PictureUtils {
         }
 
         return false;
+    }
+
+    public static boolean renamePictureTo(String fileName, String newFileName) {
+        if (checkIfPictureExists(fileName) && !TextUtils.isEmpty(newFileName)) {
+            return getPictureFile(fileName).renameTo(getPictureFile(newFileName));
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean renameTempPictureTo(String fileName) {
+        return renamePictureTo(PictureUtils.TEMP_PICTURE_NAME, fileName);
     }
 }

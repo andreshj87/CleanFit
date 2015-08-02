@@ -25,7 +25,10 @@ public class AddFoodPresenterImpl implements AddFoodPresenter {
     protected Context mContext;
     private AddFoodView mView;
 
-    private boolean mAdded;
+    //private boolean mAdded;
+
+    //private String mCurrentPictureName;
+    //private String mNewPictureName;
 
     public AddFoodPresenterImpl() {
 
@@ -35,11 +38,11 @@ public class AddFoodPresenterImpl implements AddFoodPresenter {
         mContext = context;
         mView = view;
 
-        mAdded = false;
+        //mAdded = false;
     }
 
     @Override
-    public void validateData(String name, String brand, boolean isDrink, String calories, String fats, String carboydrates, String proteins, String pictureFileName) {
+    public void validateData(String name, String brand, boolean isDrink, String calories, String fats, String carboydrates, String proteins) {
         boolean error = false;
 
         if (TextUtils.isEmpty(name)) {
@@ -81,13 +84,13 @@ public class AddFoodPresenterImpl implements AddFoodPresenter {
             food.setFats(Double.valueOf(fats));
             food.setCarbohydrates(Double.valueOf(carboydrates));
             food.setProteins(Double.valueOf(proteins));
-            food.setPicture(pictureFileName);
+            food.setPicture(consolidateNewPicture());
 
             GreenDaoHelper greenDaoHelper = new GreenDaoHelper();
             FoodDao foodDao = greenDaoHelper.getFoodDao();
             foodDao.insert(food);
 
-            mAdded = true;
+            //mAdded = true;
 
             mView.foodSuccessfullyAdded();
         }
@@ -104,49 +107,72 @@ public class AddFoodPresenterImpl implements AddFoodPresenter {
 
     @Override
     public void startCamera(Context context) {
-        String fileName = PictureUtils.generateFileName();
-        mView.setPictureNewName(fileName);
+        //String fileName = PictureUtils.generateFileName();
+        //mView.setPictureNewName(fileName);
+        //mNewPictureName = fileName;
 
-        Intent intent = PictureUtils.getIntentForCameraLaunch(fileName);
+        Intent intent = PictureUtils.getIntentForCameraLaunch(PictureUtils.TEMP_PICTURE_NAME);
         mView.startIntentForCameraLaunch(intent, PictureUtils.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
     }
 
     @Override
     public void receivePicture() {
-        if (TextUtils.isEmpty(mView.getPictureNewName())) {
+        //if (TextUtils.isEmpty(mView.getPictureNewName())) {
+        /*if (TextUtils.isEmpty(mNewPictureName)) {
             return;
-        }
+        }*/
 
-        if (!TextUtils.isEmpty(mView.getPictureCurrentName())) {
+        //if (!TextUtils.isEmpty(mView.getPictureCurrentName())) {
+        /*if (!TextUtils.isEmpty(mCurrentPictureName)) {
             deleteCurrentPicture();
-        }
+        }*/
 
-        Uri pictureUri = PictureUtils.getPhotoFileUri(mView.getPictureNewName());
-        Picasso.with(mContext).load(pictureUri).fit().centerCrop().into(mView.getPictureImageView());
+        //Uri pictureUri = PictureUtils.getPhotoFileUri(mView.getPictureNewName());
+        Uri pictureUri = PictureUtils.getPhotoFileUri(PictureUtils.TEMP_PICTURE_NAME);
+        //Picasso.with(mContext).load(pictureUri).fit().centerCrop().into(mView.getPictureImageView());
+        Picasso.Builder picassoBuilder = new Picasso.Builder(mContext);
+        picassoBuilder.listener(new Picasso.Listener() {
+            @Override
+            public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
+                exception.printStackTrace();
+            }
+        });
+        Picasso picasso = picassoBuilder.build();
+        picasso.load(pictureUri).fit().centerCrop().into(mView.getPictureImageView());
 
-        mView.setPictureCurrentName(mView.getPictureNewName());
-        mView.setPictureNewName("");
+        //mView.setPictureCurrentName(mView.getPictureNewName());
+        //mCurrentPictureName = mNewPictureName;
+        //mView.setPictureNewName("");
+        //mNewPictureName = "";
 
         mView.showDeletePictureLayout();
     }
 
     @Override
     public void doNotReceivePicture() {
-        mView.setPictureNewName("");
+        //mView.setPictureNewName("");
+        //mNewPictureName = "";
 
-        if (!TextUtils.isEmpty(mView.getPictureCurrentName())) {
+        //if (!TextUtils.isEmpty(mView.getPictureCurrentName())) {
+        /*if (!TextUtils.isEmpty(mCurrentPictureName)) {
             mView.showDeletePictureLayout();
         } else {
             mView.hideDeletePictureLayout();
-        }
+        }*/
     }
 
     @Override
     public void deleteCurrentPicture() {
-        PictureUtils.deletePicture(mView.getPictureCurrentName());
-        mView.setPictureCurrentName("");
+        PictureUtils.deletePicture(PictureUtils.TEMP_PICTURE_NAME);
         mView.deletePicture();
         mView.hideDeletePictureLayout();
+
+        //PictureUtils.deletePicture(mView.getPictureCurrentName());
+        //PictureUtils.deletePicture(mCurrentPictureName);
+        //mView.setPictureCurrentName("");
+        //mCurrentPictureName = "";
+        //mView.deletePicture();
+        //mView.hideDeletePictureLayout();
     }
 
     @Override
@@ -191,13 +217,6 @@ public class AddFoodPresenterImpl implements AddFoodPresenter {
         }
     }
 
-    @Override
-    public void onStop() {
-        if (mView != null && !mAdded) {
-            deleteCurrentPicture();
-        }
-    }
-
     private void activateIcon(MaterialIconView icon) {
         icon.setColorResource(R.color.icon_activated);
     }
@@ -213,4 +232,14 @@ public class AddFoodPresenterImpl implements AddFoodPresenter {
         mView.getIconNutrients().setColorResource(R.color.icon_deactivated);
     }
 
+    private String consolidateNewPicture() {
+        String pictureName = PictureUtils.generateFileName();
+        if (!PictureUtils.renameTempPictureTo(pictureName)) {
+            /*throw new IllegalArgumentException(
+                    "Picture origin must exists and Picture destiny must be a non-empty string");*/
+            System.out.println("k9d3 exception lanzado...");
+        }
+
+        return pictureName;
+    }
 }

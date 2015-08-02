@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.zireck.projectk.R;
 import com.zireck.projectk.listener.OnEditFoodFinishedListener;
@@ -92,14 +93,14 @@ public class EditFoodFragment extends AddFoodFragment implements EditFoodView {
     public void onStart() {
         super.onStart();
 
-        mPresenter.loadPicture();
+        //mPresenter.loadPicture();
     }
 
     @Override
     public void onStop() {
         super.onStop();
         System.out.println("k9d3 EditFoodFragment.onStop()");
-        mPresenter.onStop();
+        //mPresenter.onStop();
     }
 
     @Override
@@ -130,6 +131,11 @@ public class EditFoodFragment extends AddFoodFragment implements EditFoodView {
     @OnClick(R.id.button_delete_picture)
     public void onDeletePictureClick() {
         mPresenter.deleteCurrentPicture();
+    }
+
+    @Override
+    public ImageView getPictureImageView() {
+        return mFoodPicture;
     }
 
     @Override
@@ -217,9 +223,14 @@ public class EditFoodFragment extends AddFoodFragment implements EditFoodView {
         String fats = mFoodFatsEditText.getText().toString();
         String carbohydrates = mFoodCarbohydratesEditText.getText().toString();
         String proteins = mFoodProteinsEditText.getText().toString();
-        String pictureFileName = getPictureCurrentName();
+        //String pictureFileName = getPictureCurrentName();
 
-        mPresenter.validateData(name, brand, isDrink, calories, fats, carbohydrates, proteins, pictureFileName);
+        mPresenter.validateData(name, brand, isDrink, calories, fats, carbohydrates, proteins);
     }
 
+    @Override
+    public void deletePicture() {
+        mFoodPicture.setImageBitmap(null);
+        mFoodPicture.setImageDrawable(null);
+    }
 }
