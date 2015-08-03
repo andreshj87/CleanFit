@@ -9,7 +9,6 @@ import android.widget.EditText;
 import com.squareup.picasso.Picasso;
 import com.zireck.projectk.R;
 import com.zireck.projectk.interactor.AddFoodInteractor;
-import com.zireck.projectk.interactor.AddFoodInteractorImpl;
 import com.zireck.projectk.listener.OnAddFoodInteractorFinishedListener;
 import com.zireck.projectk.model.Food;
 import com.zireck.projectk.util.MathUtils;
@@ -18,6 +17,8 @@ import com.zireck.projectk.view.AddFoodView;
 
 import net.steamcrafted.materialiconlib.MaterialIconView;
 
+import javax.inject.Inject;
+
 /**
  * Created by Zireck on 24/07/2015.
  */
@@ -25,16 +26,20 @@ public class AddFoodPresenterImpl implements AddFoodPresenter, OnAddFoodInteract
 
     protected Context mContext;
     private AddFoodView mView;
-    private AddFoodInteractor mInteractor;
+    @Inject AddFoodInteractor mInteractor;
 
     public AddFoodPresenterImpl() {
 
     }
 
-    public AddFoodPresenterImpl(Context context, AddFoodView view) {
+    @Inject
+    public AddFoodPresenterImpl(Context context, AddFoodView view, AddFoodInteractor interactor) {
+        System.out.println("k9d3 YESSSSSSSSSSSSSSSS");
         mContext = context;
         mView = view;
-        mInteractor = new AddFoodInteractorImpl();
+
+        //mInteractor = new AddFoodInteractorImpl();
+        mInteractor = interactor;
     }
 
     @Override

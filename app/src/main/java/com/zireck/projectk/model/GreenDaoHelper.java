@@ -2,7 +2,7 @@ package com.zireck.projectk.model;
 
 import android.database.sqlite.SQLiteDatabase;
 
-import com.zireck.projectk.application.MainApplication;
+import com.zireck.projectk.application.App;
 
 /**
  * Created by Zireck on 16/07/2015.
@@ -19,7 +19,7 @@ public class GreenDaoHelper {
     }
 
     private void setUpGreenDao() {
-        mHelper = new DaoMaster.DevOpenHelper(MainApplication.getInstance(), "projectk", null);
+        mHelper = new DaoMaster.DevOpenHelper(App.getInstance(), "projectk", null);
         mDatabase = mHelper.getWritableDatabase();
         mDaoMaster = new DaoMaster(mDatabase);
         mDaoSession = mDaoMaster.newSession();

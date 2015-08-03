@@ -19,18 +19,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zireck.projectk.R;
+import com.zireck.projectk.application.App;
 import com.zireck.projectk.helper.LimitedDecimalsInputFilter;
 import com.zireck.projectk.listener.OnAddFoodFinishedListener;
+import com.zireck.projectk.module.AddFoodModule;
 import com.zireck.projectk.presenter.AddFoodPresenter;
-import com.zireck.projectk.presenter.AddFoodPresenterImpl;
 import com.zireck.projectk.util.PictureUtils;
 import com.zireck.projectk.util.SnackbarUtils;
 import com.zireck.projectk.view.AddFoodView;
 
 import net.steamcrafted.materialiconlib.MaterialIconView;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.OnClick;
+import dagger.ObjectGraph;
 
 /**
  * Created by Zireck on 24/07/2015.
@@ -69,7 +73,9 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
     @Bind(R.id.food_proteins_edit_text) EditText mFoodProteinsEditText;
 
     private OnAddFoodFinishedListener mCallback;
-    private AddFoodPresenter mPresenter;
+    @Inject AddFoodPresenter mPresenter;
+
+    ObjectGraph objectGraph;
 
     @Override
     public void onAttach(Activity activity) {
@@ -94,7 +100,7 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
 
         hideKeyboard();
 
-        mPresenter = new AddFoodPresenterImpl(getActivity(), this);
+        //mPresenter = new AddFoodPresenterImpl(getActivity(), this);
 
         //initEditTextFocusListeners();
         initEditTextFocusListenersWeird();
@@ -102,6 +108,19 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
         applyDecimalFilters();
 
         initDrinkCheckBox();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        objectGraph = ((App) getActivity().getApplication()).createScopedGraph(new AddFoodModule(this));
+        objectGraph.inject(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        objectGraph = null;
     }
 
     @Override
