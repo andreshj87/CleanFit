@@ -34,7 +34,7 @@ public class AddFoodModule {
     }
 
     @Provides @Singleton
-    public AddFoodPresenter providePresenter(Context context, AddFoodView addFoodView, AddFoodInteractor interactor) {
-        return new AddFoodPresenterImpl(context, addFoodView, interactor);
+    public AddFoodPresenter providePresenter(Context context, AddFoodView view, AddFoodInteractor interactor) {
+        return new AddFoodPresenterImpl(context, view, interactor);
     }
 }

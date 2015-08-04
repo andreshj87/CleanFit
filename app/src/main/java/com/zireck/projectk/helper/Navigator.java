@@ -8,6 +8,8 @@ import com.zireck.projectk.activity.AddFoodActivity;
 import com.zireck.projectk.activity.EditFoodActivity;
 import com.zireck.projectk.activity.FoodDetailActivity;
 
+import javax.inject.Inject;
+
 /**
  * Class created to handle all the navigation between activities. This class knows how to open
  * every activity in the application and provides to the client code different methods to start
@@ -17,12 +19,13 @@ import com.zireck.projectk.activity.FoodDetailActivity;
  */
 public class Navigator {
 
-    private final Context mActivityContext;
+    @Inject Context mActivityContext;
 
     public static final int ADD_FOOD_REQUEST = 1;
     public static final int EDIT_FOOD_REQUEST = 2;
     public static final int DELETE_FOOD_REQUEST = 999;
 
+    @Inject
     public Navigator(Context activityContext) {
         mActivityContext = activityContext;
     }

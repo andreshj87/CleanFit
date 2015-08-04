@@ -9,12 +9,13 @@ import android.text.TextUtils;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.zireck.projectk.interactor.EditFoodInteractor;
-import com.zireck.projectk.interactor.EditFoodInteractorImpl;
 import com.zireck.projectk.listener.OnEditFoodInteractorFinishedListener;
 import com.zireck.projectk.model.Food;
 import com.zireck.projectk.util.MathUtils;
 import com.zireck.projectk.util.PictureUtils;
 import com.zireck.projectk.view.EditFoodView;
+
+import javax.inject.Inject;
 
 /**
  * Created by Zireck on 31/07/2015.
@@ -23,17 +24,18 @@ public class EditFoodPresenterImpl extends AddFoodPresenterImpl implements EditF
 
     private Context mContext;
     private EditFoodView mView;
-    private EditFoodInteractor mInteractor;
+    @Inject EditFoodInteractor mInteractor;
 
     private long mFoodId;
     private Food mFood;
 
     private boolean mGetNewPicture;
 
-    public EditFoodPresenterImpl(Context context, EditFoodView view) {
+    @Inject
+    public EditFoodPresenterImpl(Context context, EditFoodView view, EditFoodInteractor interactor) {
         mContext = context;
         mView = view;
-        mInteractor = new EditFoodInteractorImpl();
+        mInteractor = interactor;
 
         mGetNewPicture = false;
     }

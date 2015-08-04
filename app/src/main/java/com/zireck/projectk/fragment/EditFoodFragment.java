@@ -12,11 +12,16 @@ import android.widget.ImageView;
 
 import com.zireck.projectk.R;
 import com.zireck.projectk.listener.OnEditFoodFinishedListener;
+import com.zireck.projectk.module.EditFoodModule;
 import com.zireck.projectk.presenter.EditFoodPresenter;
-import com.zireck.projectk.presenter.EditFoodPresenterImpl;
 import com.zireck.projectk.util.PictureUtils;
 import com.zireck.projectk.util.SnackbarUtils;
 import com.zireck.projectk.view.EditFoodView;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.OnClick;
 
@@ -28,7 +33,7 @@ public class EditFoodFragment extends AddFoodFragment implements EditFoodView {
     private static final String EXTRA_FOOD_ID = "food_id";
 
     private OnEditFoodFinishedListener mCallback;
-    private EditFoodPresenter mPresenter;
+    @Inject EditFoodPresenter mPresenter;
 
     public static EditFoodFragment newInstance(long foodId) {
         Bundle bundle = new Bundle();
@@ -61,9 +66,15 @@ public class EditFoodFragment extends AddFoodFragment implements EditFoodView {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mPresenter = new EditFoodPresenterImpl(getActivity(), this);
         mPresenter.mapExtras(getArguments());
         mPresenter.getFood();
+    }
+
+    @Override
+    protected List<Object> getModules() {
+        List<Object> modules = new LinkedList<Object>(super.getModules());
+        modules.add(new EditFoodModule(this));
+        return modules;
     }
 
     @Override

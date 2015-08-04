@@ -34,11 +34,8 @@ public class AddFoodPresenterImpl implements AddFoodPresenter, OnAddFoodInteract
 
     @Inject
     public AddFoodPresenterImpl(Context context, AddFoodView view, AddFoodInteractor interactor) {
-        System.out.println("k9d3 YESSSSSSSSSSSSSSSS");
         mContext = context;
         mView = view;
-
-        //mInteractor = new AddFoodInteractorImpl();
         mInteractor = interactor;
     }
 

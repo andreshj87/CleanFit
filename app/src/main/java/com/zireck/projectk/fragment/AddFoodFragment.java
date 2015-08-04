@@ -19,7 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zireck.projectk.R;
-import com.zireck.projectk.application.App;
 import com.zireck.projectk.helper.LimitedDecimalsInputFilter;
 import com.zireck.projectk.listener.OnAddFoodFinishedListener;
 import com.zireck.projectk.module.AddFoodModule;
@@ -30,11 +29,13 @@ import com.zireck.projectk.view.AddFoodView;
 
 import net.steamcrafted.materialiconlib.MaterialIconView;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import dagger.ObjectGraph;
 
 /**
  * Created by Zireck on 24/07/2015.
@@ -75,8 +76,6 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
     private OnAddFoodFinishedListener mCallback;
     @Inject AddFoodPresenter mPresenter;
 
-    ObjectGraph objectGraph;
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -100,8 +99,6 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
 
         hideKeyboard();
 
-        //mPresenter = new AddFoodPresenterImpl(getActivity(), this);
-
         //initEditTextFocusListeners();
         initEditTextFocusListenersWeird();
 
@@ -111,16 +108,10 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        objectGraph = ((App) getActivity().getApplication()).createScopedGraph(new AddFoodModule(this));
-        objectGraph.inject(this);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        objectGraph = null;
+    protected List<Object> getModules() {
+        LinkedList<Object> modules = new LinkedList<Object>();
+        modules.add(new AddFoodModule(this));
+        return modules;
     }
 
     @Override
