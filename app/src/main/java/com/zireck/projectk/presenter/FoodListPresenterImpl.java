@@ -7,26 +7,28 @@ import android.widget.TextView;
 import com.zireck.projectk.R;
 import com.zireck.projectk.helper.Navigator;
 import com.zireck.projectk.interactor.FoodListInteractor;
-import com.zireck.projectk.interactor.FoodListInteractorImpl;
 import com.zireck.projectk.listener.OnFoodListFinishedListener;
 import com.zireck.projectk.model.Food;
 import com.zireck.projectk.view.FoodListView;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * Created by Zireck on 22/07/2015.
  */
 public class FoodListPresenterImpl implements FoodListPresenter, OnFoodListFinishedListener {
 
-    private Navigator mNavigator;
     private FoodListView mView;
-    private FoodListInteractor mInteractor;
+    @Inject FoodListInteractor mInteractor;
+    @Inject Navigator mNavigator;
 
-    public FoodListPresenterImpl(Context context, FoodListView view) {
-        mNavigator = new Navigator(context);
+    @Inject
+    public FoodListPresenterImpl(Context context, FoodListView view, FoodListInteractor interactor, Navigator navigator) {
         mView = view;
-        mInteractor = new FoodListInteractorImpl();
+        mInteractor = interactor;
+        mNavigator = navigator;
     }
 
     @Override

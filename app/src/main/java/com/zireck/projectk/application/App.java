@@ -2,7 +2,7 @@ package com.zireck.projectk.application;
 
 import android.app.Application;
 
-import com.zireck.projectk.module.AppModule;
+import com.zireck.projectk.dagger.AppModule;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.zireck.projectk.module;
+package com.zireck.projectk.dagger;
 
 import com.zireck.projectk.interactor.AddFoodInteractor;
 import com.zireck.projectk.interactor.AddFoodInteractorImpl;

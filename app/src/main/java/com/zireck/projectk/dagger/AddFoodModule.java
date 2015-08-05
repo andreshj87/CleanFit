@@ -1,4 +1,4 @@
-package com.zireck.projectk.module;
+package com.zireck.projectk.dagger;
 
 import android.content.Context;
 
@@ -18,7 +18,8 @@ import dagger.Provides;
  */
 @Module(
         injects = AddFoodFragment.class,
-        addsTo = AppModule.class
+        addsTo = ActivityModule.class,
+        complete = false
 )
 public class AddFoodModule {
 

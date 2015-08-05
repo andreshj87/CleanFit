@@ -23,16 +23,23 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by Zireck on 16/07/2015.
  */
-public class FoodRepositoryRecyclerAdapter extends RecyclerView.Adapter<FoodRepositoryRecyclerAdapter.ViewHolder> {
+public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHolder> {
+
+    public static final int ITEM_LAYOUT = R.layout.fragment_food_list_item;
 
     private Context mContext;
     private List<Food> mFoodItems;
     private int mLayout;
 
-    public FoodRepositoryRecyclerAdapter(Context context, List<Food> items, int layout) {
+    public FoodListAdapter(Context context, List<Food> items, int layout) {
         mContext = context;
         mFoodItems = items;
         mLayout = layout;
+    }
+
+    public void setFoodItems(List<Food> items) {
+        mFoodItems = items;
+        notifyDataSetChanged();
     }
 
     @Override

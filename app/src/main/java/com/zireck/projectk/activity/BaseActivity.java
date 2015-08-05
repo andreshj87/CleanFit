@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.zireck.projectk.application.App;
-import com.zireck.projectk.module.ActivityModule;
+import com.zireck.projectk.dagger.ActivityModule;
 
 import java.util.LinkedList;
 import java.util.List;

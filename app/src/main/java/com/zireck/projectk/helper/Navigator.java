@@ -1,7 +1,6 @@
 package com.zireck.projectk.helper;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 
 import com.zireck.projectk.activity.AddFoodActivity;
@@ -19,22 +18,22 @@ import javax.inject.Inject;
  */
 public class Navigator {
 
-    @Inject Context mActivityContext;
+    @Inject Activity mActivity;
 
     public static final int ADD_FOOD_REQUEST = 1;
     public static final int EDIT_FOOD_REQUEST = 2;
     public static final int DELETE_FOOD_REQUEST = 999;
 
     @Inject
-    public Navigator(Context activityContext) {
-        mActivityContext = activityContext;
+    public Navigator(Activity activity) {
+        mActivity = activity;
     }
 
     /**
      * Open AddFoodActivity
      */
     public void openAddFoodActivity() {
-        Intent intent = AddFoodActivity.getLaunchIntent(mActivityContext);
+        Intent intent = AddFoodActivity.getLaunchIntent(mActivity);
         startActivityForResult(intent, ADD_FOOD_REQUEST);
     }
 
@@ -43,7 +42,8 @@ public class Navigator {
      * @param foodId
      */
     public void openFoodDetailActivity(final long foodId) {
-        Intent intent = FoodDetailActivity.getLaunchIntent(mActivityContext, foodId);
+        System.out.println("openFoodDetailActivity");
+        Intent intent = FoodDetailActivity.getLaunchIntent(mActivity, foodId);
         startActivityForResult(intent, DELETE_FOOD_REQUEST);
     }
 
@@ -52,17 +52,19 @@ public class Navigator {
      * @param foodId
      */
     public void openEditFoodActivity(final long foodId) {
-        Intent intent = EditFoodActivity.getLaunchIntent(mActivityContext, foodId);
+        Intent intent = EditFoodActivity.getLaunchIntent(mActivity, foodId);
         startActivityForResult(intent, EDIT_FOOD_REQUEST);
     }
 
     private void startActivity(Intent intent) {
-        mActivityContext.startActivity(intent);
+        mActivity.startActivity(intent);
     }
 
     private void startActivityForResult(Intent intent, final int request) {
-        if (mActivityContext instanceof Activity) {
-            ((Activity) mActivityContext).startActivityForResult(intent, request);
+        if (mActivity != null) {
+            mActivity.startActivityForResult(intent, request);
+        } else {
+            throw new NullPointerException("Activity can't be null");
         }
     }
 }

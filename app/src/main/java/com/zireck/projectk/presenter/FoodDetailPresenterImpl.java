@@ -3,7 +3,6 @@ package com.zireck.projectk.presenter;
 import android.os.Bundle;
 
 import com.zireck.projectk.interactor.FoodDetailInteractor;
-import com.zireck.projectk.interactor.FoodDetailInteractorImpl;
 import com.zireck.projectk.listener.OnFoodDetailInteractorFinishedListener;
 import com.zireck.projectk.model.Food;
 import com.zireck.projectk.util.MathUtils;
@@ -11,6 +10,8 @@ import com.zireck.projectk.view.FoodDetailView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import lecho.lib.hellocharts.model.PieChartData;
 import lecho.lib.hellocharts.model.SliceValue;
@@ -24,11 +25,13 @@ public class FoodDetailPresenterImpl implements FoodDetailPresenter, OnFoodDetai
     private Food mFood;
 
     private FoodDetailView mView;
-    private FoodDetailInteractor mInteractor;
+    @Inject FoodDetailInteractor mInteractor;
 
-    public FoodDetailPresenterImpl(FoodDetailView view) {
+    @Inject
+    public FoodDetailPresenterImpl(FoodDetailView view, FoodDetailInteractor interactor) {
         mView = view;
-        mInteractor = new FoodDetailInteractorImpl();
+        //mInteractor = new FoodDetailInteractorImpl();
+        mInteractor = interactor;
     }
 
     @Override

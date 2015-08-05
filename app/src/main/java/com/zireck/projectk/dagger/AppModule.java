@@ -1,4 +1,4 @@
-package com.zireck.projectk.module;
+package com.zireck.projectk.dagger;
 
 import android.content.Context;
 

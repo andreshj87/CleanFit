@@ -25,10 +25,8 @@ public class FoodRepositoryFragmentPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                //return FoodRepositoryFoodListFragment.newInstance();
                 return FoodListFragment.newInstance(FoodListFragment.TAG_FOOD);
             case 1:
-                //return FoodRepositoryDrinkListFragment.newInstance();
                 return FoodListFragment.newInstance(FoodListFragment.TAG_DRINK);
             default:
                 return null;

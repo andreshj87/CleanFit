@@ -13,14 +13,19 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.zireck.projectk.R;
+import com.zireck.projectk.dagger.FoodDetailModule;
 import com.zireck.projectk.helper.Navigator;
 import com.zireck.projectk.listener.FoodDetailCallback;
 import com.zireck.projectk.presenter.FoodDetailPresenter;
-import com.zireck.projectk.presenter.FoodDetailPresenterImpl;
 import com.zireck.projectk.view.FoodDetailView;
 
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
 import net.steamcrafted.materialiconlib.MaterialIconView;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import lecho.lib.hellocharts.model.PieChartData;
@@ -30,12 +35,12 @@ import lecho.lib.hellocharts.view.PieChartView;
  * Created by Zireck on 29/07/2015.
  */
 public class FoodDetailFragment extends BaseFragment implements FoodDetailView {
+
     private static final String EXTRA_FOOD_ID = "food_id";
 
-    private Navigator mNavigator;
-
     private FoodDetailCallback mCallback;
-    private FoodDetailPresenter mPresenter;
+    @Inject FoodDetailPresenter mPresenter;
+    @Inject Navigator mNavigator;
 
     @Bind(R.id.food_name) TextView mFoodName;
     @Bind(R.id.food_brand) TextView mFoodBrand;
@@ -80,11 +85,7 @@ public class FoodDetailFragment extends BaseFragment implements FoodDetailView {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mNavigator = new Navigator(getActivity());
-
         setFoodBrandIcon();
-
-        mPresenter = new FoodDetailPresenterImpl(this);
         mPresenter.mapExtras(getArguments());
     }
 
@@ -92,6 +93,13 @@ public class FoodDetailFragment extends BaseFragment implements FoodDetailView {
     public void onStart() {
         super.onStart();
         mPresenter.getFood();
+    }
+
+    @Override
+    protected List<Object> getModules() {
+        List<Object> modules = new LinkedList<Object>();
+        modules.add(new FoodDetailModule(this));
+        return modules;
     }
 
     @Override

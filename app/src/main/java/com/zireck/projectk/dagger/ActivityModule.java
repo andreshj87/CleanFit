@@ -1,4 +1,4 @@
-package com.zireck.projectk.module;
+package com.zireck.projectk.dagger;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,6 +7,9 @@ import com.zireck.projectk.activity.AddFoodActivity;
 import com.zireck.projectk.activity.EditFoodActivity;
 import com.zireck.projectk.activity.FoodDetailActivity;
 import com.zireck.projectk.activity.MainActivity;
+import com.zireck.projectk.helper.Navigator;
+
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -29,14 +32,24 @@ import dagger.Provides;
 )
 public final class ActivityModule {
 
-    private final Activity activity;
+    private final Activity mActivity;
 
     public ActivityModule(Activity activity) {
-        this.activity = activity;
+        mActivity = activity;
     }
 
     @Provides @ActivityContext
-    Context provideActivityContext() {
-        return activity;
+    public Context provideActivityContext() {
+        return mActivity;
+    }
+
+    @Provides @Singleton
+    public Activity provideActivity() {
+        return mActivity;
+    }
+
+    @Provides @Singleton
+    public Navigator provideNavigator() {
+        return new Navigator(mActivity);
     }
 }

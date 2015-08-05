@@ -12,7 +12,7 @@ import android.widget.ImageView;
 
 import com.zireck.projectk.R;
 import com.zireck.projectk.listener.OnEditFoodFinishedListener;
-import com.zireck.projectk.module.EditFoodModule;
+import com.zireck.projectk.dagger.EditFoodModule;
 import com.zireck.projectk.presenter.EditFoodPresenter;
 import com.zireck.projectk.util.PictureUtils;
 import com.zireck.projectk.util.SnackbarUtils;

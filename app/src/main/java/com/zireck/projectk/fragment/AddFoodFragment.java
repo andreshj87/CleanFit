@@ -21,7 +21,7 @@ import android.widget.TextView;
 import com.zireck.projectk.R;
 import com.zireck.projectk.helper.LimitedDecimalsInputFilter;
 import com.zireck.projectk.listener.OnAddFoodFinishedListener;
-import com.zireck.projectk.module.AddFoodModule;
+import com.zireck.projectk.dagger.AddFoodModule;
 import com.zireck.projectk.presenter.AddFoodPresenter;
 import com.zireck.projectk.util.PictureUtils;
 import com.zireck.projectk.util.SnackbarUtils;
@@ -98,12 +98,9 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
         super.onViewCreated(view, savedInstanceState);
 
         hideKeyboard();
-
         //initEditTextFocusListeners();
         initEditTextFocusListenersWeird();
-
         applyDecimalFilters();
-
         initDrinkCheckBox();
     }
 
