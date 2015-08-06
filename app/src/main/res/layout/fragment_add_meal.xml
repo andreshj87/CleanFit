@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <fr.ganfra.materialspinner.MaterialSpinner
+            android:id="@+id/spinner_food"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:ms_multiline="false"
+            app:ms_hint="Food"
+            app:ms_baseColor="@color/primary"
+            app:ms_highlightColor="@color/primary_dark"
+            app:ms_errorColor="@color/red"
+            app:ms_arrowColor="@color/primary"
+            app:ms_alignLabels="false" />
+
+        <Button
+            android:id="@+id/button_meal_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="04/08/2015 15:30"
+            android:textColor="@color/primary_text"
+            style="?borderlessButtonStyle"/>
+
+        <Button
+            android:id="@+id/button_meal_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Breakfast"
+            android:textColor="@color/primary_text"
+            style="?borderlessButtonStyle"/>
+
+        <Button
+            android:id="@+id/button_meal_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="250gr"
+            android:textColor="@color/primary_text"
+            style="?borderlessButtonStyle"/>
+
+        <EditText
+            android:visibility="gone"
+            android:id="@+id/meal_grams"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="grams"/>
+
+    </LinearLayout>
+
+</ScrollView>

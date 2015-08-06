@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.zireck.projectk.activity.AddFoodActivity;
+import com.zireck.projectk.activity.AddMealActivity;
 import com.zireck.projectk.activity.EditFoodActivity;
 import com.zireck.projectk.activity.FoodDetailActivity;
 
@@ -24,6 +25,8 @@ public class Navigator {
     public static final int EDIT_FOOD_REQUEST = 2;
     public static final int DELETE_FOOD_REQUEST = 999;
 
+    public static final int ADD_MEAL_REQUEST = 4;
+
     @Inject
     public Navigator(Activity activity) {
         mActivity = activity;
@@ -42,7 +45,6 @@ public class Navigator {
      * @param foodId
      */
     public void openFoodDetailActivity(final long foodId) {
-        System.out.println("openFoodDetailActivity");
         Intent intent = FoodDetailActivity.getLaunchIntent(mActivity, foodId);
         startActivityForResult(intent, DELETE_FOOD_REQUEST);
     }
@@ -54,6 +56,14 @@ public class Navigator {
     public void openEditFoodActivity(final long foodId) {
         Intent intent = EditFoodActivity.getLaunchIntent(mActivity, foodId);
         startActivityForResult(intent, EDIT_FOOD_REQUEST);
+    }
+
+    /**
+     * Open AddMealActivity
+     */
+    public void openAddMealActivity() {
+        Intent intent = AddMealActivity.getLaunchIntent(mActivity);
+        startActivityForResult(intent, ADD_MEAL_REQUEST);
     }
 
     private void startActivity(Intent intent) {

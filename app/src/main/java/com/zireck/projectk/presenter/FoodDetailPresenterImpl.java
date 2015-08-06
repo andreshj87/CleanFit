@@ -120,7 +120,7 @@ public class FoodDetailPresenterImpl implements FoodDetailPresenter, OnFoodDetai
         values.add(new SliceValue((float) food.getProteinsPercent(), mView.getProteinsColor()));
         PieChartData pieChartData = new PieChartData(values);
         pieChartData.setHasCenterCircle(true);
-        pieChartData.setHasLabels(true);
+        pieChartData.setHasLabels(false);
         mView.setPieChartData(pieChartData);
     }
 

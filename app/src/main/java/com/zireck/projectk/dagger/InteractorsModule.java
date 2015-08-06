@@ -2,6 +2,8 @@ package com.zireck.projectk.dagger;
 
 import com.zireck.projectk.interactor.AddFoodInteractor;
 import com.zireck.projectk.interactor.AddFoodInteractorImpl;
+import com.zireck.projectk.interactor.AddMealInteractor;
+import com.zireck.projectk.interactor.AddMealInteractorImpl;
 import com.zireck.projectk.interactor.EditFoodInteractor;
 import com.zireck.projectk.interactor.EditFoodInteractorImpl;
 import com.zireck.projectk.interactor.FoodDetailInteractor;
@@ -36,5 +38,10 @@ public class InteractorsModule {
     @Provides
     public FoodListInteractor provideFoodListInteractor() {
         return new FoodListInteractorImpl();
+    }
+
+    @Provides
+    public AddMealInteractor provideAddMealInteractor() {
+        return new AddMealInteractorImpl();
     }
 }

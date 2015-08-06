@@ -92,8 +92,8 @@
 
         <lecho.lib.hellocharts.view.PieChartView
             android:id="@+id/pie_chart"
-            android:layout_width="175dp"
-            android:layout_height="175dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_marginEnd="24dp"
             android:layout_marginRight="24dp"
             android:layout_gravity="center_horizontal"/>

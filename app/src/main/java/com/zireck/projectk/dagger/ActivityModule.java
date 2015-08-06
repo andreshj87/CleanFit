@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.zireck.projectk.activity.AddFoodActivity;
+import com.zireck.projectk.activity.AddMealActivity;
 import com.zireck.projectk.activity.EditFoodActivity;
 import com.zireck.projectk.activity.FoodDetailActivity;
 import com.zireck.projectk.activity.MainActivity;
@@ -26,7 +27,8 @@ import dagger.Provides;
                 MainActivity.class,
                 AddFoodActivity.class,
                 EditFoodActivity.class,
-                FoodDetailActivity.class
+                FoodDetailActivity.class,
+                AddMealActivity.class
         },
         library = true
 )

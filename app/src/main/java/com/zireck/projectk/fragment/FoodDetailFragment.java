@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.vstechlab.easyfonts.EasyFonts;
 import com.zireck.projectk.R;
 import com.zireck.projectk.dagger.FoodDetailModule;
 import com.zireck.projectk.helper.Navigator;
@@ -87,6 +88,9 @@ public class FoodDetailFragment extends BaseFragment implements FoodDetailView {
 
         setFoodBrandIcon();
         mPresenter.mapExtras(getArguments());
+
+        mFoodName.setTypeface(EasyFonts.robotoLight(getActivity()));
+        mFoodCalories.setTypeface(EasyFonts.robotoLight(getActivity()));
     }
 
     @Override
