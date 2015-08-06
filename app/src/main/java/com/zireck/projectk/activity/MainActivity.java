@@ -20,12 +20,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
 
+import com.github.clans.fab.FloatingActionMenu;
 import com.zireck.projectk.R;
 import com.zireck.projectk.fragment.FoodListFragment;
 import com.zireck.projectk.fragment.FoodRepositoryFragment;
+import com.zireck.projectk.fragment.HomeFragment;
 import com.zireck.projectk.helper.Navigator;
 import com.zireck.projectk.listener.OnFoodRepositoryTabChangeListener;
 import com.zireck.projectk.util.SnackbarUtils;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -34,7 +38,8 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
 
     private static final String NAVIGATION_VIEW_SELECTED_ITEM = "NavigationViewSelectedItem";
 
-    private Navigator mNavigator;
+    @Inject
+    Navigator mNavigator;
 
     @Bind(R.id.navigation_view) NavigationView mNavigationView;
     @Bind(R.id.appBarLayout) AppBarLayout mAppBarLayout;
@@ -45,12 +50,19 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
     @Bind(R.id.fab) FloatingActionButton mFloatingActionButton;
     private ActionBarDrawerToggle mDrawerToggle;
 
+    @Bind(R.id.fab_menu)
+    FloatingActionMenu mFabMenu;
+    @Bind(R.id.fab_food)
+    com.github.clans.fab.FloatingActionButton mFabFood;
+    @Bind(R.id.fab_meal)
+    com.github.clans.fab.FloatingActionButton mFabMeal;
+    @Bind(R.id.fab_barcode)
+    com.github.clans.fab.FloatingActionButton mFabBarcode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        mNavigator = new Navigator(this);
 
         initActionBar();
 
@@ -156,6 +168,11 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
         }
     }
 
+    @OnClick(R.id.fab_food)
+    public void onClickFabFood() {
+        mNavigator.openAddFoodActivity();
+    }
+
     private void showFAB() {
         mFloatingActionButton.show();
     }
@@ -200,8 +217,8 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
 
         switch (menuItem.getItemId()) {
             case R.id.drawer_home:
-                fragment = FoodRepositoryFragment.newInstance();
-                showFAB();
+                fragment = HomeFragment.newInstance();
+                //showFAB();
                 break;
             case R.id.drawer_food:
                 fragment = FoodListFragment.newInstance(FoodListFragment.TAG_FOOD);

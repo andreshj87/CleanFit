@@ -36,4 +36,13 @@
     <color name="fats">#E57373</color>
     <color name="carbohydrates">#4FC3F7</color>
     <color name="proteins">#AED581</color>
+
+    <color name="fab_black_semi_transparent">#B2000000</color>
+    <color name="fab_half_black">#808080</color>
+    <color name="fab_white">#fafafa</color>
+    <color name="fab_white_pressed">#f1f1f1</color>
+
+    <color name="md_lightgreen_700">#689F38</color>
+    <color name="md_lightblue_700">#0288D1</color>
+    <color name="md_brown_700">#5D4037</color>
 </resources>

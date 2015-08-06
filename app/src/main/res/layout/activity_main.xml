@@ -1,6 +1,7 @@
 <android.support.v4.widget.DrawerLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:fab="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
@@ -37,7 +38,51 @@
             android:elevation="4dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
+        <com.github.clans.fab.FloatingActionMenu
+            android:id="@+id/fab_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            fab:menu_fab_size="normal"
+            fab:menu_showShadow="true"
+            fab:menu_shadowColor="#66000000"
+            fab:menu_shadowRadius="4dp"
+            fab:menu_shadowXOffset="1dp"
+            fab:menu_shadowYOffset="3dp"
+            fab:menu_colorNormal="#DA4336"
+            fab:menu_colorPressed="#E75043"
+            fab:menu_colorRipple="#99FFFFFF"
+            fab:menu_animationDelayPerItem="50">
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fab_barcode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_barcode_white_24dp"
+                fab:fab_size="normal"
+                fab:fab_label="Scan Barcode" />
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fab_meal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_food_white_24dp"
+                fab:fab_size="normal"
+                fab:fab_label="Add Meal" />
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fab_food"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_food_apple_white_24dp"
+                fab:fab_size="normal"
+                fab:fab_label="Add Food" />
+
+        </com.github.clans.fab.FloatingActionMenu>
+
         <android.support.design.widget.FloatingActionButton
+            android:visibility="gone"
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
