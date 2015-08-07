@@ -1,5 +1,6 @@
 package com.zireck.projectk.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -9,8 +10,30 @@ import java.util.Locale;
  * Created by Zireck on 14/07/2015.
  */
 public class DateUtils {
+
+    public static final String DEFAULT_DATETIME_PATTERN = "yyyy/MM/d H:mm";
+    public static final String DEFAULT_DATE_PATTERN = "yyyy/MM/d";
+    public static final String DEFAULT_TIME_PATTERN = "H:mm";
+
+    public static Date getDateTimeFromText(String text) throws ParseException {
+        return getItFromText(DEFAULT_DATETIME_PATTERN, text);
+    }
+
+    public static Date getDateFromText(String text) throws ParseException {
+        return getItFromText(DEFAULT_DATE_PATTERN, text);
+    }
+
+    public static Date getTimeFromText(String text) throws ParseException {
+        return getItFromText(DEFAULT_TIME_PATTERN, text);
+    }
+
+    private static Date getItFromText(final String pattern, String text) throws ParseException {
+        return new SimpleDateFormat(pattern).parse(text);
+    }
+
     public static String getFormattedMealDate(Date date) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DEFAULT_DATETIME_PATTERN, Locale.getDefault());
         return dateFormat.format(date);
     }
 

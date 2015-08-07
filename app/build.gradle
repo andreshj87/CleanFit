@@ -44,4 +44,7 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:1.3.0'
     compile 'com.github.lecho:hellocharts-library:1.5.5@aar'
     compile 'com.github.clans:fab:1.5.5'
+    compile 'com.wdullaer:materialdatetimepicker:1.4.2'
+    compile 'com.afollestad:material-dialogs:0.7.8.1'
+    compile 'com.code-troopers.betterpickers:library:2.0.0'
 }

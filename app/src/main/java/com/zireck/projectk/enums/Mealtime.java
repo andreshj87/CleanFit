@@ -25,4 +25,25 @@ public enum Mealtime {
     public String getStringValue() {
         return stringValue;
     }
+
+    public static String[] getValues() {
+        String[] values = new String[Mealtime.values().length];
+
+        Mealtime[] mealtimes = Mealtime.values();
+        for (int i=0; i<values.length; i++) {
+            values[i] = mealtimes[i].getStringValue();
+        }
+
+        return values;
+    }
+
+    public static int getIntValueForString(String string) {
+        for (int i=0; i<getValues().length; i++) {
+            if (getValues()[i].equalsIgnoreCase(string)) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
 }

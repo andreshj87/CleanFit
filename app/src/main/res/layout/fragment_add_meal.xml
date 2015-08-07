@@ -6,15 +6,21 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/root_layout"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+        android:layout_height="match_parent">
 
         <fr.ganfra.materialspinner.MaterialSpinner
             android:id="@+id/spinner_food"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             app:ms_multiline="false"
             app:ms_hint="Food"
             app:ms_baseColor="@color/primary"
@@ -23,37 +29,218 @@
             app:ms_arrowColor="@color/primary"
             app:ms_alignLabels="false" />
 
-        <Button
-            android:id="@+id/button_meal_date"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/layout_date"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="04/08/2015 15:30"
-            android:textColor="@color/primary_text"
-            style="?borderlessButtonStyle"/>
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            style="?borderlessButtonStyle">
 
-        <Button
-            android:id="@+id/button_meal_time"
-            android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/icon_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"/>
+
+            <TextView
+                android:id="@+id/text_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_time"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Breakfast"
-            android:textColor="@color/primary_text"
-            style="?borderlessButtonStyle"/>
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            style="?borderlessButtonStyle">
 
-        <Button
-            android:id="@+id/button_meal_amount"
-            android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/icon_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"/>
+
+            <TextView
+                android:id="@+id/text_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_daily"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="250gr"
-            android:textColor="@color/primary_text"
-            style="?borderlessButtonStyle"/>
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            style="?borderlessButtonStyle">
 
-        <EditText
-            android:visibility="gone"
-            android:id="@+id/meal_grams"
+            <ImageView
+                android:id="@+id/icon_daily"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"/>
+
+            <TextView
+                android:id="@+id/text_daily"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            style="?borderlessButtonStyle">
+
+            <ImageView
+                android:id="@+id/icon_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"/>
+
+            <TextView
+                android:id="@+id/text_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/nutrients"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="grams"/>
+            android:layout_marginBottom="4dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
+            android:text="Energy &amp; Nutrients (per 100gr)"
+            android:textColor="@color/primary_dark"
+            android:textStyle="bold"
+            android:textAllCaps="true"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@color/primary"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <net.steamcrafted.materialiconlib.MaterialIconView
+                android:id="@+id/food_calories_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:scaleType="center"
+                app:materialIcon="fire"
+                app:materialIconColor="@color/icon_deactivated"
+                app:materialIconSize="24dp"/>
+
+            <TextView
+                android:id="@+id/meal_calories"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="4dp"
+                android:gravity="center"
+                android:text="250 kcal"
+                android:textColor="@color/white"
+                android:background="@color/calories"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <net.steamcrafted.materialiconlib.MaterialIconView
+                android:id="@+id/meal_nutrients_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:scaleType="center"
+                app:materialIcon="poll"
+                app:materialIconColor="@color/icon_deactivated"
+                app:materialIconSize="24dp"/>
+
+            <TextView
+                android:id="@+id/meal_fats"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="4dp"
+                android:gravity="center"
+                android:text="12 fats"
+                android:textColor="@color/white"
+                android:background="@color/fats"/>
+
+            <TextView
+                android:id="@+id/meal_carbohydrates"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="4dp"
+                android:gravity="center"
+                android:text="34 carbs"
+                android:textColor="@color/white"
+                android:background="@color/carbohydrates"/>
+
+            <TextView
+                android:id="@+id/meal_proteins"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="4dp"
+                android:gravity="center"
+                android:text="18 proteins"
+                android:textColor="@color/white"
+                android:background="@color/proteins"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -9,6 +9,14 @@ import java.util.regex.Pattern;
  */
 public class MathUtils {
 
+    public static String getTwoDigitsString(int number) {
+        return ((number < 10) ? "0" : "") + number;
+    }
+
+    public static int getAmountFromText(String text) {
+        return Integer.parseInt(text.replace("gr", "").replace("ml", "").trim());
+    }
+
     public static String betterFormatDouble(double value) {
         NumberFormat numberFormat = new DecimalFormat("###.##");
         return numberFormat.format(value);

@@ -5,11 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+import com.vstechlab.easyfonts.EasyFonts;
 import com.zireck.projectk.R;
 import com.zireck.projectk.model.Food;
+import com.zireck.projectk.util.PictureUtils;
 
 import java.util.List;
 
@@ -27,6 +31,7 @@ public class FoodSpinnerAdapter extends BaseAdapter {
 
     private List<Food> mFoods;
 
+    @Bind(R.id.food_picture) ImageView mFoodPicture;
     @Bind(R.id.food_name) TextView mFoodName;
     @Bind(R.id.food_brand) TextView mFoodBrand;
 
@@ -74,6 +79,9 @@ public class FoodSpinnerAdapter extends BaseAdapter {
         Food food = getItem(position);
         mFoodName.setText(food.getName());
         mFoodBrand.setText(food.getBrand());
+
+        Picasso.with(mContext).load(PictureUtils.getPhotoFileUri(food.getPicture())).fit().centerCrop().into(mFoodPicture);
+        mFoodName.setTypeface(EasyFonts.robotoLight(mContext));
 
         return row;
     }

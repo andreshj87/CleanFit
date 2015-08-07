@@ -45,4 +45,7 @@
     <color name="md_lightgreen_700">#689F38</color>
     <color name="md_lightblue_700">#0288D1</color>
     <color name="md_brown_700">#5D4037</color>
+
+    <color name="mdtp_accent_color">@color/primary</color>
+    <color name="mdtp_accent_color_dark">@color/primary_dark</color>
 </resources>
