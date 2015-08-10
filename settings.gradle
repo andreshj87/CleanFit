@@ -1,4 +1,1 @@
-include ':data'
-include ':domain'
-include ':presentation'
-include ':projectkdaogenerator'
+include ':data', ':domain', ':presentation', ':projectkdaogenerator'
