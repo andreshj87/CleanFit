@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ProjectK.iml" filepath="$PROJECT_DIR$/ProjectK.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/data/data.iml" filepath="$PROJECT_DIR$/data/data.iml" />
+      <module fileurl="file://$PROJECT_DIR$/domain/domain.iml" filepath="$PROJECT_DIR$/domain/domain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/presentation.iml" filepath="$PROJECT_DIR$/app/presentation.iml" />
       <module fileurl="file://$PROJECT_DIR$/projectkdaogenerator/projectkdaogenerator.iml" filepath="$PROJECT_DIR$/projectkdaogenerator/projectkdaogenerator.iml" />
     </modules>
   </component>

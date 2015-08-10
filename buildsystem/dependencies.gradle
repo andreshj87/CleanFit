@@ -1,0 +1,84 @@
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+ext {
+    // Android
+    androidBuildToolsVersion = "23.0.0 rc3"
+    androidMinSdkVersion = 14
+    androidTargetSdkVersion = 21
+    androidCompileSdkVersion = 21
+
+    // Libraries
+    designVersion = '22.2.1'
+    appCompatVersion = '22.2.1'
+    recyclerViewVersion = '22.2.1'
+    cardViewVersion = '22.2.1'
+
+    daggerVersion = '1.2.+'
+
+    butterKnifeVersion = '7.0.1'
+    picassoVersion = '2.4.0'
+    easyFontsVersion = '1.0.0'
+
+    fabVersion = '1.5.5'
+    circleImageViewVersion = '1.3.0'
+    betterPickersVersion = '2.0.0'
+    helloChartsVersion = '1.5.5@aar'
+
+    materialSpinnerVersion = '1.1.0'
+    materialMenuToolBarVersion = '1.5.4'
+    materialTabStripVersion = '1.1.0'
+    materialIconLibVersion = '1.0.3'
+    materialDateTimePickerVersion = '1.4.2'
+    materialDialogsVersion = '0.7.8.1'
+
+    // Testing
+
+
+    presentationDependencies = [
+            design:                 "com.android.support:design:${designVersion}",
+            appCompat:              "com.android.support:appcompat-v7:${appCompatVersion}",
+            recyclerView:           "com.android.support:recyclerview-v7:${recyclerViewVersion}",
+            cardView:               "com.android.support:cardview-v7:${cardViewVersion}",
+            daggerCompiler:         "com.squareup.dagger:dagger-compiler:${daggerVersion}",
+            dagger:                 "com.squareup.dagger:dagger:${daggerVersion}",
+            butterKnife:            "com.jakewharton:butterknife:${butterKnifeVersion}",
+            picasso:                "com.squareup.picasso:picasso:${picassoVersion}",
+            easyFonts:              "com.vstechlab.easyfonts:easyfonts:${easyFontsVersion}",
+            fab:                    "com.github.clans:fab:${fabVersion}",
+            circleImageView:        "de.hdodenhof:circleimageview:${circleImageViewVersion}",
+            betterPickers:          "com.code-troopers.betterpickers:library:${betterPickersVersion}",
+            helloCharts:            "com.github.lecho:hellocharts-library:${helloChartsVersion}",
+            materialSpinner:        "com.github.ganfra:material-spinner:${materialSpinnerVersion}",
+            materialMenuToolbar:    "com.balysv.materialmenu:material-menu-toolbar:${materialMenuToolBarVersion}",
+            materialTabStrip:       "com.jpardogo.materialtabstrip:library:${materialTabStripVersion}",
+            materialIconLib:        "net.steamcrafted:materialiconlib:${materialIconLibVersion}",
+            materialDateTimePicker: "com.wdullaer:materialdatetimepicker:${materialDateTimePickerVersion}",
+            materialDialogs:        "com.afollestad:material-dialogs:${materialDialogsVersion}",
+    ]
+
+    presentationTestDependencies = [
+
+    ]
+
+    domainDependencies = [
+            daggerCompiler:         "com.squareup.dagger:dagger-compiler:${daggerVersion}",
+            dagger:                 "com.squareup.dagger:dagger:${daggerVersion}",
+    ]
+
+    domainTestDependencies = [
+
+    ]
+
+    dataDependencies = [
+            daggerCompiler:         "com.squareup.dagger:dagger-compiler:${daggerVersion}",
+            dagger:                 "com.squareup.dagger:dagger:${daggerVersion}",
+    ]
+
+    dataTestDependencies = [
+
+    ]
+}

@@ -1,1 +1,4 @@
-include ':app', ':projectkdaogenerator'
+include ':data'
+include ':domain'
+include ':presentation'
+include ':projectkdaogenerator'
