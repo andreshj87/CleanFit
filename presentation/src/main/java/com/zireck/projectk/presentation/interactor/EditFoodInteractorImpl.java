@@ -1,9 +1,7 @@
 package com.zireck.projectk.presentation.interactor;
 
 import com.zireck.projectk.presentation.listener.OnEditFoodInteractorFinishedListener;
-import com.zireck.projectk.presentation.model.Food;
-import com.zireck.projectk.presentation.model.FoodDao;
-import com.zireck.projectk.data.util.GreenDaoUtils;
+import com.zireck.projectk.presentation.model.FoodModel;
 
 /**
  * Created by Zireck on 31/07/2015.
@@ -16,15 +14,16 @@ public class EditFoodInteractorImpl implements EditFoodInteractor {
     }
 
     @Override
-    public void updateFood(OnEditFoodInteractorFinishedListener listener, Food food) {
-        GreenDaoUtils.getFoodDao().update(food);
+    public void updateFood(OnEditFoodInteractorFinishedListener listener, FoodModel food) {
+        //GreenDaoUtils.getFoodDao().update(food);
         listener.onFoodUpdated();
     }
 
-    private Food retrieveFood(long foodId) {
+    private FoodModel retrieveFood(long foodId) {
+        /*
         FoodDao foodDao = GreenDaoUtils.getFoodDao();
         Food food = foodDao.queryBuilder().where(FoodDao.Properties.Id.eq(foodId)).unique();
-
-        return food;
+*/
+        return new FoodModel(55);
     }
 }

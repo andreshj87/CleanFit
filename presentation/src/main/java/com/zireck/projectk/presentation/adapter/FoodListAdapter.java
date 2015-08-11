@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.zireck.projectk.R;
-import com.zireck.projectk.data.entity.Food;
-import com.zireck.projectk.data.util.MathUtils;
-import com.zireck.projectk.data.util.PictureUtils;
+import com.zireck.projectk.presentation.model.FoodModel;
+import com.zireck.projectk.presentation.util.MathUtils;
+import com.zireck.projectk.presentation.util.PictureUtils;
 
 import java.util.List;
 
@@ -28,16 +28,16 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
     public static final int ITEM_LAYOUT = R.layout.fragment_food_list_item;
 
     private Context mContext;
-    private List<Food> mFoodItems;
+    private List<FoodModel> mFoodItems;
     private int mLayout;
 
-    public FoodListAdapter(Context context, List<Food> items, int layout) {
+    public FoodListAdapter(Context context, List<FoodModel> items, int layout) {
         mContext = context;
         mFoodItems = items;
         mLayout = layout;
     }
 
-    public void setFoodItems(List<Food> items) {
+    public void setFoodItems(List<FoodModel> items) {
         mFoodItems = items;
         notifyDataSetChanged();
     }
@@ -50,7 +50,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Food food = mFoodItems.get(position);
+        FoodModel food = mFoodItems.get(position);
 
         holder.foodId.setText(String.valueOf(food.getId()));
 

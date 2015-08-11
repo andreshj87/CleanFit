@@ -1,12 +1,13 @@
 package com.zireck.projectk.presentation.presenter;
 
 import com.google.common.base.Strings;
-import com.zireck.projectk.data.enums.Mealtime;
+import com.zireck.projectk.presentation.enumeration.Mealtime;
 import com.zireck.projectk.presentation.interactor.AddMealInteractor;
+import com.zireck.projectk.presentation.interactor.AddMealInteractorImpl;
 import com.zireck.projectk.presentation.listener.OnAddMealInteractorFinishedListener;
-import com.zireck.projectk.presentation.model.Food;
-import com.zireck.projectk.data.util.DateUtils;
-import com.zireck.projectk.data.util.MathUtils;
+import com.zireck.projectk.presentation.model.FoodModel;
+import com.zireck.projectk.presentation.util.DateUtils;
+import com.zireck.projectk.presentation.util.MathUtils;
 import com.zireck.projectk.presentation.view.AddMealView;
 
 import java.text.ParseException;
@@ -15,32 +16,29 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import javax.inject.Inject;
-
 /**
  * Created by Zireck on 06/08/2015.
  */
 public class AddMealPresenterImpl implements AddMealPresenter, OnAddMealInteractorFinishedListener {
 
     private AddMealView mView;
-    @Inject AddMealInteractor mInteractor;
+    private AddMealInteractor mInteractor;
 
     private Date mCurrentDate;
     private Date mCurrentTime;
 
     private String mCurrentMeasure = "GR";
 
-    @Inject
-    public AddMealPresenterImpl(AddMealView view, AddMealInteractor interactor) {
+    public AddMealPresenterImpl(AddMealView view) {
         mView = view;
-        mInteractor = interactor;
+        mInteractor = new AddMealInteractorImpl();
 
         mInteractor.getFoods(this);
 
     }
 
     @Override
-    public void onGetFoodsFinished(List<Food> foods) {
+    public void onGetFoodsFinished(List<FoodModel> foods) {
         mView.setSpinnerFoodItems(foods);
     }
 
@@ -50,13 +48,13 @@ public class AddMealPresenterImpl implements AddMealPresenter, OnAddMealInteract
     }
 
     @Override
-    public void setFood(Food food) {
+    public void setFood(FoodModel food) {
         if (food == null) {
             setEnergyAndNutrientsToZero();
             return;
         }
 
-        if (food.getIsDrink()) {
+        if (food.isDrink()) {
             mCurrentMeasure = "ML";
             mView.setMl();
             mView.setAmountText(MathUtils.getAmountFromText(mView.getAmount()) + "ml");
@@ -91,7 +89,7 @@ public class AddMealPresenterImpl implements AddMealPresenter, OnAddMealInteract
         }
 
         try {
-            mCurrentDate = DateUtils.getDateFromText(year + "/" + (monthOfYear+1) + "/" + dayOfMonth);
+            mCurrentDate = DateUtils.getDateFromText(year + "/" + (monthOfYear + 1) + "/" + dayOfMonth);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -138,7 +136,7 @@ public class AddMealPresenterImpl implements AddMealPresenter, OnAddMealInteract
     }
 
     @Override
-    public void validateData(Food food, String date, String time, String daily, String amount) {
+    public void validateData(FoodModel food, String date, String time, String daily, String amount) {
         boolean error = false;
 
         if (food == null) {
@@ -193,7 +191,7 @@ public class AddMealPresenterImpl implements AddMealPresenter, OnAddMealInteract
         }
     }
 
-    private void updateEnergyAndNutrients(Food food, int amount) {
+    private void updateEnergyAndNutrients(FoodModel food, int amount) {
         if (food == null || amount < 0) {
             setEnergyAndNutrientsToZero();
             return;

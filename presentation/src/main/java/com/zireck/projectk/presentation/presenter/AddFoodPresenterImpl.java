@@ -9,15 +9,14 @@ import android.widget.EditText;
 import com.squareup.picasso.Picasso;
 import com.zireck.projectk.R;
 import com.zireck.projectk.presentation.interactor.AddFoodInteractor;
+import com.zireck.projectk.presentation.interactor.AddFoodInteractorImpl;
 import com.zireck.projectk.presentation.listener.OnAddFoodInteractorFinishedListener;
-import com.zireck.projectk.presentation.model.Food;
-import com.zireck.projectk.data.util.MathUtils;
-import com.zireck.projectk.data.util.PictureUtils;
+import com.zireck.projectk.presentation.model.FoodModel;
+import com.zireck.projectk.presentation.util.MathUtils;
+import com.zireck.projectk.presentation.util.PictureUtils;
 import com.zireck.projectk.presentation.view.AddFoodView;
 
 import net.steamcrafted.materialiconlib.MaterialIconView;
-
-import javax.inject.Inject;
 
 /**
  * Created by Zireck on 24/07/2015.
@@ -26,17 +25,16 @@ public class AddFoodPresenterImpl implements AddFoodPresenter, OnAddFoodInteract
 
     protected Context mContext;
     private AddFoodView mView;
-    @Inject AddFoodInteractor mInteractor;
+    private AddFoodInteractor mInteractor;
 
     public AddFoodPresenterImpl() {
 
     }
 
-    @Inject
-    public AddFoodPresenterImpl(Context context, AddFoodView view, AddFoodInteractor interactor) {
+    public AddFoodPresenterImpl(Context context, AddFoodView view) {
         mContext = context;
         mView = view;
-        mInteractor = interactor;
+        mInteractor = new AddFoodInteractorImpl();
     }
 
     @Override
@@ -74,7 +72,7 @@ public class AddFoodPresenterImpl implements AddFoodPresenter, OnAddFoodInteract
         }
 
         if (!error) {
-            Food food = new Food();
+            FoodModel food = new FoodModel(88);
             food.setName(name);
             food.setBrand(brand);
             food.setIsDrink(isDrink);

@@ -7,8 +7,9 @@ import android.widget.TextView;
 import com.zireck.projectk.R;
 import com.zireck.projectk.presentation.helper.Navigator;
 import com.zireck.projectk.presentation.interactor.FoodListInteractor;
+import com.zireck.projectk.presentation.interactor.FoodListInteractorImpl;
 import com.zireck.projectk.presentation.listener.OnFoodListFinishedListener;
-import com.zireck.projectk.presentation.model.Food;
+import com.zireck.projectk.presentation.model.FoodModel;
 import com.zireck.projectk.presentation.view.FoodListView;
 
 import java.util.List;
@@ -20,15 +21,16 @@ import javax.inject.Inject;
  */
 public class FoodListPresenterImpl implements FoodListPresenter, OnFoodListFinishedListener {
 
+    private Context mContext;
     private FoodListView mView;
-    @Inject FoodListInteractor mInteractor;
+    private FoodListInteractor mInteractor;
     @Inject Navigator mNavigator;
 
-    @Inject
-    public FoodListPresenterImpl(Context context, FoodListView view, FoodListInteractor interactor, Navigator navigator) {
+    public FoodListPresenterImpl(Context context, FoodListView view) {
+        mContext = context;
         mView = view;
-        mInteractor = interactor;
-        mNavigator = navigator;
+        mInteractor = new FoodListInteractorImpl();
+        mNavigator = new Navigator();
     }
 
     @Override
@@ -44,11 +46,11 @@ public class FoodListPresenterImpl implements FoodListPresenter, OnFoodListFinis
     public void onItemClick(View view, int position) {
         TextView foodId = (TextView) view.findViewById(R.id.food_id);
         long id = Long.valueOf(foodId.getText().toString());
-        mNavigator.openFoodDetailActivity(id);
+        mNavigator.openFoodDetailActivity(mContext, id);
     }
 
     @Override
-    public void onFinished(List<Food> items) {
+    public void onFinished(List<FoodModel> items) {
         mView.setFoodItems(items);
     }
 }

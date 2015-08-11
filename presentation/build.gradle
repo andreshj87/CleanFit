@@ -52,6 +52,11 @@ dependencies {
     provided presentationDependencies.daggerCompiler
     compile presentationDependencies.dagger
 
+    compile presentationDependencies.rxJava
+    compile presentationDependencies.rxAndroid
+
+    provided presentationDependencies.javaxAnnotation
+
     compile presentationDependencies.butterKnife
     compile presentationDependencies.picasso
     compile presentationDependencies.easyFonts

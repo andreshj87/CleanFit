@@ -21,18 +21,13 @@ import android.widget.TextView;
 import com.zireck.projectk.R;
 import com.zireck.projectk.presentation.helper.LimitedDecimalsInputFilter;
 import com.zireck.projectk.presentation.listener.OnAddFoodFinishedListener;
-import com.zireck.projectk.presentation.dagger.AddFoodModule;
 import com.zireck.projectk.presentation.presenter.AddFoodPresenter;
-import com.zireck.projectk.data.util.PictureUtils;
-import com.zireck.projectk.data.util.SnackbarUtils;
+import com.zireck.projectk.presentation.presenter.AddFoodPresenterImpl;
+import com.zireck.projectk.presentation.util.PictureUtils;
+import com.zireck.projectk.presentation.util.SnackbarUtils;
 import com.zireck.projectk.presentation.view.AddFoodView;
 
 import net.steamcrafted.materialiconlib.MaterialIconView;
-
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -74,7 +69,7 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
     @Bind(R.id.food_proteins_edit_text) EditText mFoodProteinsEditText;
 
     private OnAddFoodFinishedListener mCallback;
-    @Inject AddFoodPresenter mPresenter;
+    private AddFoodPresenter mPresenter;
 
     @Override
     public void onAttach(Activity activity) {
@@ -97,18 +92,13 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mPresenter = new AddFoodPresenterImpl(getActivity(), this);
+
         hideKeyboard();
         //initEditTextFocusListeners();
         initEditTextFocusListenersWeird();
         applyDecimalFilters();
         initDrinkCheckBox();
-    }
-
-    @Override
-    protected List<Object> getModules() {
-        LinkedList<Object> modules = new LinkedList<Object>();
-        modules.add(new AddFoodModule(this));
-        return modules;
     }
 
     @Override

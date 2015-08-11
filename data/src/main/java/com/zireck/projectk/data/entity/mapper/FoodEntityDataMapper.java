@@ -6,6 +6,7 @@ import com.zireck.projectk.domain.Food;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Mapper class used to transform {@link FoodEntity}, in the data layer, to {@link Food} in the
@@ -41,27 +42,27 @@ public class FoodEntityDataMapper {
     }
 
     /**
-     * Transforms a Collection of {@link FoodEntity} into a Collection of {@link Food}.
+     * Transforms a Collection of {@link FoodEntity} into a List of {@link Food}.
      *
      * @param foodEntityCollection {@link FoodEntity} Collection to be transformed.
      * @return List of {@link Food}.
      */
-    public Collection<Food> transform(Collection<FoodEntity> foodEntityCollection) {
-        Collection<Food> foodsCollection;
+    public List<Food> transform(Collection<FoodEntity> foodEntityCollection) {
+        List<Food> foodsList;
 
         if (foodEntityCollection != null && !foodEntityCollection.isEmpty()) {
-            foodsCollection = new ArrayList<Food>();
+            foodsList = new ArrayList<Food>();
             Food food;
             for (FoodEntity foodEntity : foodEntityCollection) {
                 food = transform(foodEntity);
                 if (food != null) {
-                    foodsCollection.add(food);
+                    foodsList.add(food);
                 }
             }
         } else {
-            foodsCollection = Collections.emptyList();
+            foodsList = Collections.emptyList();
         }
 
-        return foodsCollection;
+        return foodsList;
     }
 }

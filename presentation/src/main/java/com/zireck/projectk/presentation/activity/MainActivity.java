@@ -27,7 +27,7 @@ import com.zireck.projectk.presentation.fragment.FoodRepositoryFragment;
 import com.zireck.projectk.presentation.fragment.HomeFragment;
 import com.zireck.projectk.presentation.helper.Navigator;
 import com.zireck.projectk.presentation.listener.OnFoodRepositoryTabChangeListener;
-import com.zireck.projectk.data.util.SnackbarUtils;
+import com.zireck.projectk.presentation.util.SnackbarUtils;
 
 import javax.inject.Inject;
 
@@ -38,8 +38,7 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
 
     private static final String NAVIGATION_VIEW_SELECTED_ITEM = "NavigationViewSelectedItem";
 
-    @Inject
-    Navigator mNavigator;
+    @Inject Navigator mNavigator;
 
     @Bind(R.id.navigation_view) NavigationView mNavigationView;
     @Bind(R.id.appBarLayout) AppBarLayout mAppBarLayout;
@@ -161,7 +160,7 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         if (fragment != null) {
             if (fragment instanceof FoodRepositoryFragment) {
-                mNavigator.openAddFoodActivity();
+                mNavigator.openAddFoodActivity(this);
             } else {
                 SnackbarUtils.showShortMessage(mCoordinatorLayout, "Nothing!");
             }
@@ -170,7 +169,7 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
 
     @OnClick(R.id.fab_food)
     public void onClickFabFood() {
-        mNavigator.openAddFoodActivity();
+        mNavigator.openAddFoodActivity(this);
     }
 
     @OnClick(R.id.fab_meal)

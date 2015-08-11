@@ -9,16 +9,14 @@ import android.view.View;
 
 import com.zireck.projectk.R;
 import com.zireck.projectk.presentation.adapter.FoodListAdapter;
-import com.zireck.projectk.presentation.dagger.FoodListModule;
 import com.zireck.projectk.presentation.helper.RecyclerItemClickListener;
-import com.zireck.projectk.presentation.model.Food;
+import com.zireck.projectk.presentation.model.FoodModel;
 import com.zireck.projectk.presentation.presenter.FoodListPresenter;
+import com.zireck.projectk.presentation.presenter.FoodListPresenterImpl;
 import com.zireck.projectk.presentation.view.FoodListView;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import butterknife.Bind;
 
@@ -36,9 +34,8 @@ public class FoodListFragment extends BaseFragment implements FoodListView {
 
     @Bind(R.id.food_list) RecyclerView mRecyclerView;
 
-    @Inject FoodListPresenter mPresenter;
-    @Inject
-    FoodListAdapter mAdapter;
+    private FoodListPresenter mPresenter;
+    private FoodListAdapter mAdapter;
 
     public static FoodListFragment newInstance(int tag) {
         Bundle bundle = new Bundle();
@@ -53,6 +50,10 @@ public class FoodListFragment extends BaseFragment implements FoodListView {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mPresenter = new FoodListPresenterImpl(getActivity(), this);
+        mAdapter = new FoodListAdapter(getActivity(), new ArrayList<FoodModel>(), FoodListAdapter.ITEM_LAYOUT);
+
         retrieveFoodTag(savedInstanceState);
         initRecyclerView();
     }
@@ -64,19 +65,12 @@ public class FoodListFragment extends BaseFragment implements FoodListView {
     }
 
     @Override
-    protected List<Object> getModules() {
-        List<Object> modules = new LinkedList<Object>();
-        modules.add(new FoodListModule(this));
-        return modules;
-    }
-
-    @Override
     protected int getFragmentLayout() {
         return R.layout.fragment_food_list;
     }
 
     @Override
-    public void setFoodItems(List<Food> items) {
+    public void setFoodItems(List<FoodModel> items) {
         mAdapter.setFoodItems(items);
         mRecyclerView.setAdapter(mAdapter);
     }

@@ -1,10 +1,9 @@
 package com.zireck.projectk.presentation.interactor;
 
 import com.zireck.projectk.presentation.listener.OnFoodListFinishedListener;
-import com.zireck.projectk.presentation.model.Food;
-import com.zireck.projectk.presentation.model.FoodDao;
-import com.zireck.projectk.data.util.GreenDaoUtils;
+import com.zireck.projectk.presentation.model.FoodModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,10 +20,11 @@ public class FoodListInteractorImpl implements FoodListInteractor {
         listener.onFinished(retrieveFood(true));
     }
 
-    private List<Food> retrieveFood(boolean isDrink) {
+    private List<FoodModel> retrieveFood(boolean isDrink) {
+        /*
         FoodDao foodDao = GreenDaoUtils.getFoodDao();
         List<Food> foodList = foodDao.queryBuilder().where(FoodDao.Properties.IsDrink.eq(isDrink)).list();
-
-        return foodList;
+*/
+        return new ArrayList<FoodModel>();
     }
 }

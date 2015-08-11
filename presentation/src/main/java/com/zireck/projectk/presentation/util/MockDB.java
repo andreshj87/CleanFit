@@ -1,19 +1,11 @@
 package com.zireck.projectk.presentation.util;
 
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-
-import com.zireck.projectk.presentation.model.DaoMaster;
-import com.zireck.projectk.presentation.model.DaoSession;
-import com.zireck.projectk.presentation.model.Food;
-import com.zireck.projectk.presentation.model.FoodDao;
-
 /**
  * Created by Zireck on 16/07/2015.
  */
 @Deprecated
 public class MockDB {
-
+/*
     private Context mContext;
     private DaoSession mDaoSession;
 
@@ -61,5 +53,5 @@ public class MockDB {
         foodDao.insert(cereales);
         foodDao.insert(leche);
         foodDao.insert(chocolate);
-    }
+    }*/
 }

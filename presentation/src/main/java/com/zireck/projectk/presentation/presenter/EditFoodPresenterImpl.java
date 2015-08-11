@@ -9,13 +9,12 @@ import android.text.TextUtils;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.zireck.projectk.presentation.interactor.EditFoodInteractor;
+import com.zireck.projectk.presentation.interactor.EditFoodInteractorImpl;
 import com.zireck.projectk.presentation.listener.OnEditFoodInteractorFinishedListener;
-import com.zireck.projectk.presentation.model.Food;
-import com.zireck.projectk.data.util.MathUtils;
-import com.zireck.projectk.data.util.PictureUtils;
+import com.zireck.projectk.presentation.model.FoodModel;
+import com.zireck.projectk.presentation.util.MathUtils;
+import com.zireck.projectk.presentation.util.PictureUtils;
 import com.zireck.projectk.presentation.view.EditFoodView;
-
-import javax.inject.Inject;
 
 /**
  * Created by Zireck on 31/07/2015.
@@ -24,18 +23,17 @@ public class EditFoodPresenterImpl extends AddFoodPresenterImpl implements EditF
 
     private Context mContext;
     private EditFoodView mView;
-    @Inject EditFoodInteractor mInteractor;
+    private EditFoodInteractor mInteractor;
 
     private long mFoodId;
-    private Food mFood;
+    private FoodModel mFood;
 
     private boolean mGetNewPicture;
 
-    @Inject
-    public EditFoodPresenterImpl(Context context, EditFoodView view, EditFoodInteractor interactor) {
+    public EditFoodPresenterImpl(Context context, EditFoodView view) {
         mContext = context;
         mView = view;
-        mInteractor = interactor;
+        mInteractor = new EditFoodInteractorImpl();
 
         mGetNewPicture = false;
     }
@@ -183,14 +181,14 @@ public class EditFoodPresenterImpl extends AddFoodPresenterImpl implements EditF
     }
 
     @Override
-    public void onGetFoodFinished(Food food) {
+    public void onGetFoodFinished(FoodModel food) {
         mFood = food;
 
         loadPicture();
 
         mView.setFoodName(food.getName());
         mView.setFoodBrand(food.getBrand());
-        mView.setIsDrink(food.getIsDrink());
+        mView.setIsDrink(food.isDrink());
         mView.setFoodCalories(MathUtils.formatDouble(food.getCalories()));
         mView.setFoodFats(MathUtils.betterFormatDouble(food.getFats()));
         mView.setFoodCarbohydrates(MathUtils.betterFormatDouble(food.getCarbohydrates()));

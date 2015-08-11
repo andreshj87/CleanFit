@@ -3,15 +3,14 @@ package com.zireck.projectk.presentation.presenter;
 import android.os.Bundle;
 
 import com.zireck.projectk.presentation.interactor.FoodDetailInteractor;
+import com.zireck.projectk.presentation.interactor.FoodDetailInteractorImpl;
 import com.zireck.projectk.presentation.listener.OnFoodDetailInteractorFinishedListener;
-import com.zireck.projectk.presentation.model.Food;
-import com.zireck.projectk.data.util.MathUtils;
+import com.zireck.projectk.presentation.model.FoodModel;
+import com.zireck.projectk.presentation.util.MathUtils;
 import com.zireck.projectk.presentation.view.FoodDetailView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import lecho.lib.hellocharts.model.PieChartData;
 import lecho.lib.hellocharts.model.SliceValue;
@@ -22,16 +21,15 @@ import lecho.lib.hellocharts.model.SliceValue;
 public class FoodDetailPresenterImpl implements FoodDetailPresenter, OnFoodDetailInteractorFinishedListener {
 
     private long mFoodId;
-    private Food mFood;
+    private FoodModel mFood;
 
     private FoodDetailView mView;
-    @Inject FoodDetailInteractor mInteractor;
+    private FoodDetailInteractor mInteractor;
 
-    @Inject
-    public FoodDetailPresenterImpl(FoodDetailView view, FoodDetailInteractor interactor) {
+    public FoodDetailPresenterImpl(FoodDetailView view) {
         mView = view;
         //mInteractor = new FoodDetailInteractorImpl();
-        mInteractor = interactor;
+        mInteractor = new FoodDetailInteractorImpl();
     }
 
     @Override
@@ -73,7 +71,7 @@ public class FoodDetailPresenterImpl implements FoodDetailPresenter, OnFoodDetai
     }
 
     @Override
-    public void onGetFoodFinished(Food food) {
+    public void onGetFoodFinished(FoodModel food) {
         if (food == null) {
             throw new NullPointerException("Food is null");
         }
@@ -86,7 +84,7 @@ public class FoodDetailPresenterImpl implements FoodDetailPresenter, OnFoodDetai
         mView.foodDeleted();
     }
 
-    private void loadFood(Food food) {
+    private void loadFood(FoodModel food) {
         mFood = food;
 
         mView.setFoodPicture(food.getPicture());
@@ -94,7 +92,7 @@ public class FoodDetailPresenterImpl implements FoodDetailPresenter, OnFoodDetai
         mView.setFoodName(food.getName());
         mView.setFoodBrand(food.getBrand());
 
-        if (!food.getIsDrink()) {
+        if (!food.isDrink()) {
             mView.setNutrientsDescription("Energy & Nutrients (per 100gr)");
         } else {
             mView.setNutrientsDescription("Energy & Nutrients (per 100ml)");
@@ -113,7 +111,7 @@ public class FoodDetailPresenterImpl implements FoodDetailPresenter, OnFoodDetai
         setChartData(food);
     }
 
-    private void setChartData(Food food) {
+    private void setChartData(FoodModel food) {
         List<SliceValue> values = new ArrayList<SliceValue>();
         values.add(new SliceValue((float) food.getFatsPercent(), mView.getFatsColor()));
         values.add(new SliceValue((float) food.getCarbohydratesPercent(), mView.getCarbohydrtesColor()));

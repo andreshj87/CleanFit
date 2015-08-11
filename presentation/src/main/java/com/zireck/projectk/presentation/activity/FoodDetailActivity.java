@@ -13,7 +13,7 @@ import com.squareup.picasso.Picasso;
 import com.zireck.projectk.R;
 import com.zireck.projectk.presentation.fragment.FoodDetailFragment;
 import com.zireck.projectk.presentation.listener.FoodDetailCallback;
-import com.zireck.projectk.data.util.PictureUtils;
+import com.zireck.projectk.presentation.util.PictureUtils;
 
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
 import net.steamcrafted.materialiconlib.MaterialIconView;

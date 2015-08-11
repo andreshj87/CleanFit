@@ -1,6 +1,6 @@
 package com.zireck.projectk.presentation.presenter;
 
-import com.zireck.projectk.presentation.model.Food;
+import com.zireck.projectk.presentation.model.FoodModel;
 
 import java.util.Date;
 
@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public interface AddMealPresenter {
     public void initialize();
-    public void setFood(Food food);
+    public void setFood(FoodModel food);
     public void setDate(int year, int monthOfYear, int dayOfMonth);
     public void setTime(int hour, int minute);
     public void setAmount(int amount);
@@ -18,5 +18,5 @@ public interface AddMealPresenter {
     public Date getCurrentTime();
     public String getCurrentMeasure();
 
-    public void validateData(Food food, String date, String time, String daily, String amount);
+    public void validateData(FoodModel food, String date, String time, String daily, String amount);
 }

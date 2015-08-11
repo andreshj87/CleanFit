@@ -1,14 +1,11 @@
 package com.zireck.projectk.presentation.util;
 
-import com.zireck.projectk.data.GreenDaoHelper;
-import com.zireck.projectk.data.entity.FoodDao;
-import com.zireck.projectk.data.entity.MealDao;
-
 /**
  * Created by Zireck on 03/08/2015.
  */
+@Deprecated
 public class GreenDaoUtils {
-
+/*
     public static GreenDaoHelper getGreenDaoHelper() {
         return new GreenDaoHelper();
     }
@@ -20,4 +17,6 @@ public class GreenDaoUtils {
     public static MealDao getMealDao() {
         return getGreenDaoHelper().getMealDao();
     }
+
+    */
 }

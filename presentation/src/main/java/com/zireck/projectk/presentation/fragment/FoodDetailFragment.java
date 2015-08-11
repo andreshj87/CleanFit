@@ -14,19 +14,14 @@ import android.widget.TextView;
 
 import com.vstechlab.easyfonts.EasyFonts;
 import com.zireck.projectk.R;
-import com.zireck.projectk.presentation.dagger.FoodDetailModule;
 import com.zireck.projectk.presentation.helper.Navigator;
 import com.zireck.projectk.presentation.listener.FoodDetailCallback;
 import com.zireck.projectk.presentation.presenter.FoodDetailPresenter;
+import com.zireck.projectk.presentation.presenter.FoodDetailPresenterImpl;
 import com.zireck.projectk.presentation.view.FoodDetailView;
 
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
 import net.steamcrafted.materialiconlib.MaterialIconView;
-
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.inject.Inject;
 
 import butterknife.Bind;
 import lecho.lib.hellocharts.model.PieChartData;
@@ -40,8 +35,8 @@ public class FoodDetailFragment extends BaseFragment implements FoodDetailView {
     private static final String EXTRA_FOOD_ID = "food_id";
 
     private FoodDetailCallback mCallback;
-    @Inject FoodDetailPresenter mPresenter;
-    @Inject Navigator mNavigator;
+    private FoodDetailPresenter mPresenter;
+    private Navigator mNavigator;
 
     @Bind(R.id.food_name) TextView mFoodName;
     @Bind(R.id.food_brand) TextView mFoodBrand;
@@ -87,6 +82,9 @@ public class FoodDetailFragment extends BaseFragment implements FoodDetailView {
         super.onViewCreated(view, savedInstanceState);
 
         setFoodBrandIcon();
+
+        mNavigator = new Navigator();
+        mPresenter = new FoodDetailPresenterImpl(this);
         mPresenter.mapExtras(getArguments());
 
         mFoodName.setTypeface(EasyFonts.robotoLight(getActivity()));
@@ -97,13 +95,6 @@ public class FoodDetailFragment extends BaseFragment implements FoodDetailView {
     public void onStart() {
         super.onStart();
         mPresenter.getFood();
-    }
-
-    @Override
-    protected List<Object> getModules() {
-        List<Object> modules = new LinkedList<Object>();
-        modules.add(new FoodDetailModule(this));
-        return modules;
     }
 
     @Override
@@ -122,7 +113,7 @@ public class FoodDetailFragment extends BaseFragment implements FoodDetailView {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_edit:
-                mNavigator.openEditFoodActivity(mPresenter.getFoodId());
+                mNavigator.openEditFoodActivity(getActivity(), mPresenter.getFoodId());
                 break;
             case R.id.action_delete:
                 showDeleteDialog();

@@ -16,7 +16,7 @@ public class GreenDaoHelper {
     }
 
     private void setUpGreenDao() {
-        mHelper = new DaoMaster.DevOpenHelper(App.getInstance(), "projectk", null);
+        mHelper = new DaoMaster.DevOpenHelper(AndroidApplication.getInstance(), "projectk", null);
         mDatabase = mHelper.getWritableDatabase();
         mDaoMaster = new DaoMaster(mDatabase);
         mDaoSession = mDaoMaster.newSession();

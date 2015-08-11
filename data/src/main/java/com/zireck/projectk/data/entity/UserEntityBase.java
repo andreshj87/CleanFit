@@ -1,10 +1,5 @@
 package com.zireck.projectk.data.entity;
 
-import com.zireck.projectk.data.enums.ActivityFactor;
-import com.zireck.projectk.data.enums.Gender;
-import com.zireck.projectk.data.enums.MeasurementSystem;
-import com.zireck.projectk.data.util.DateUtils;
-
 import java.util.Date;
 
 /**
@@ -28,7 +23,7 @@ public abstract class UserEntityBase {
     public abstract void setBurn(Double burn);
     public abstract Double getGain();
     public abstract void setGain(Double gain);
-
+/*
     public void calculateAll() {
         calculateAge();
         calculateBmr();
@@ -94,4 +89,5 @@ public abstract class UserEntityBase {
             throw new IllegalStateException("Illegal State for Gaining Calories");
         }
     }
+    */
 }

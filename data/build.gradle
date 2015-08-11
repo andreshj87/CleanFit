@@ -33,5 +33,9 @@ dependencies {
     compile files('libs/greendao-1.3.7.jar')
 
     provided dataDependencies.daggerCompiler
+    provided dataDependencies.javaxAnnotation
+
     compile dataDependencies.dagger
+    compile dataDependencies.rxJava
+    compile dataDependencies.rxAndroid
 }

@@ -1,6 +1,6 @@
 package com.zireck.projectk.presentation.view;
 
-import com.zireck.projectk.presentation.model.Food;
+import com.zireck.projectk.presentation.model.FoodModel;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import java.util.List;
  * Created by Zireck on 06/08/2015.
  */
 public interface AddMealView {
-    public void setSpinnerFoodItems(List<Food> foodItems);
+    public void setSpinnerFoodItems(List<FoodModel> foodItems);
 
     public void setDateText(String date);
     public void setTimeText(String time);
@@ -18,7 +18,7 @@ public interface AddMealView {
     public void setCarbohydratesText(String carbohydrates);
     public void setProteinsText(String proteins);
 
-    public Food getFood();
+    public FoodModel getFood();
     public String getAmount();
 
     public void setFoodError();

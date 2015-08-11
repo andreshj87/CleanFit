@@ -1,10 +1,8 @@
 package com.zireck.projectk.presentation.interactor;
 
 import com.zireck.projectk.presentation.listener.OnFoodDetailInteractorFinishedListener;
-import com.zireck.projectk.presentation.model.Food;
-import com.zireck.projectk.presentation.model.FoodDao;
-import com.zireck.projectk.data.util.GreenDaoUtils;
-import com.zireck.projectk.data.util.PictureUtils;
+import com.zireck.projectk.presentation.model.FoodModel;
+import com.zireck.projectk.presentation.util.PictureUtils;
 
 /**
  * Created by Zireck on 29/07/2015.
@@ -16,18 +14,19 @@ public class FoodDetailInteractorImpl implements FoodDetailInteractor {
     }
 
     @Override
-    public void deleteFood(OnFoodDetailInteractorFinishedListener listener, Food food) {
+    public void deleteFood(OnFoodDetailInteractorFinishedListener listener, FoodModel food) {
         deleteFoodPicture(food.getPicture());
 
-        GreenDaoUtils.getFoodDao().delete(food);
+        //GreenDaoUtils.getFoodDao().delete(food);
         listener.onDeleteFoodFinished();
     }
 
-    private Food retrieveFood(long foodId) {
+    private FoodModel retrieveFood(long foodId) {
+        /*
         FoodDao foodDao = GreenDaoUtils.getFoodDao();
         Food food = foodDao.queryBuilder().where(FoodDao.Properties.Id.eq(foodId)).unique();
-
-        return food;
+*/
+        return new FoodModel(44);
     }
 
     private void deleteFoodPicture(String foodPicture) {

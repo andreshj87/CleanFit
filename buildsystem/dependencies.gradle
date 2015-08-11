@@ -17,7 +17,12 @@ ext {
     recyclerViewVersion = '22.2.1'
     cardViewVersion = '22.2.1'
 
-    daggerVersion = '1.2.+'
+    daggerVersion = '2.0'
+
+    rxJavaVersion = '1.0.13'
+    rxAndroidVersion = '1.0.1'
+
+    javaxAnnotationVersion = '10.0-b28'
 
     butterKnifeVersion = '7.0.1'
     picassoVersion = '2.4.0'
@@ -43,8 +48,11 @@ ext {
             appCompat:              "com.android.support:appcompat-v7:${appCompatVersion}",
             recyclerView:           "com.android.support:recyclerview-v7:${recyclerViewVersion}",
             cardView:               "com.android.support:cardview-v7:${cardViewVersion}",
-            daggerCompiler:         "com.squareup.dagger:dagger-compiler:${daggerVersion}",
-            dagger:                 "com.squareup.dagger:dagger:${daggerVersion}",
+            daggerCompiler:         "com.google.dagger:dagger-compiler:${daggerVersion}",
+            dagger:                 "com.google.dagger:dagger:${daggerVersion}",
+            rxJava:                 "io.reactivex:rxjava:${rxJavaVersion}",
+            rxAndroid:              "io.reactivex:rxandroid:${rxAndroidVersion}",
+            javaxAnnotation:    "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
             butterKnife:            "com.jakewharton:butterknife:${butterKnifeVersion}",
             picasso:                "com.squareup.picasso:picasso:${picassoVersion}",
             easyFonts:              "com.vstechlab.easyfonts:easyfonts:${easyFontsVersion}",
@@ -65,8 +73,10 @@ ext {
     ]
 
     domainDependencies = [
-            daggerCompiler:         "com.squareup.dagger:dagger-compiler:${daggerVersion}",
-            dagger:                 "com.squareup.dagger:dagger:${daggerVersion}",
+            daggerCompiler:         "com.google.dagger:dagger-compiler:${daggerVersion}",
+            dagger:                 "com.google.dagger:dagger:${daggerVersion}",
+            rxJava:                 "io.reactivex:rxjava:${rxJavaVersion}",
+            javaxAnnotation:    "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
     ]
 
     domainTestDependencies = [
@@ -74,8 +84,11 @@ ext {
     ]
 
     dataDependencies = [
-            daggerCompiler:         "com.squareup.dagger:dagger-compiler:${daggerVersion}",
-            dagger:                 "com.squareup.dagger:dagger:${daggerVersion}",
+            daggerCompiler:         "com.google.dagger:dagger-compiler:${daggerVersion}",
+            dagger:                 "com.google.dagger:dagger:${daggerVersion}",
+            rxJava:                 "io.reactivex:rxjava:${rxJavaVersion}",
+            rxAndroid:              "io.reactivex:rxandroid:${rxAndroidVersion}",
+            javaxAnnotation:    "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
     ]
 
     dataTestDependencies = [

@@ -12,8 +12,8 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.vstechlab.easyfonts.EasyFonts;
 import com.zireck.projectk.R;
-import com.zireck.projectk.presentation.model.Food;
-import com.zireck.projectk.data.util.PictureUtils;
+import com.zireck.projectk.presentation.model.FoodModel;
+import com.zireck.projectk.presentation.util.PictureUtils;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class FoodSpinnerAdapter extends BaseAdapter {
 
     private Context mContext;
 
-    private List<Food> mFoods;
+    private List<FoodModel> mFoods;
 
     @Bind(R.id.food_picture) ImageView mFoodPicture;
     @Bind(R.id.food_name) TextView mFoodName;
@@ -53,7 +53,7 @@ public class FoodSpinnerAdapter extends BaseAdapter {
     }
 
     @Override
-    public Food getItem(int position) {
+    public FoodModel getItem(int position) {
         return mFoods.get(position);
     }
 
@@ -67,7 +67,7 @@ public class FoodSpinnerAdapter extends BaseAdapter {
         return getCustomView(position, convertView, parent);
     }
 
-    public void setFoods(List<Food> foods) {
+    public void setFoods(List<FoodModel> foods) {
         mFoods = foods;
         notifyDataSetChanged();
     }
@@ -76,7 +76,7 @@ public class FoodSpinnerAdapter extends BaseAdapter {
         View row = LayoutInflater.from(mContext).inflate(FoodSpinnerAdapter.SPINNER_ITEM_LAYOUT, parent, false);
         ButterKnife.bind(this, row);
 
-        Food food = getItem(position);
+        FoodModel food = getItem(position);
         mFoodName.setText(food.getName());
         mFoodBrand.setText(food.getBrand());
 

@@ -17,12 +17,12 @@ import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import com.zireck.projectk.R;
 import com.zireck.projectk.presentation.adapter.FoodSpinnerAdapter;
-import com.zireck.projectk.presentation.dagger.AddMealModule;
-import com.zireck.projectk.data.enums.Mealtime;
-import com.zireck.projectk.presentation.model.Food;
+import com.zireck.projectk.presentation.enumeration.Mealtime;
+import com.zireck.projectk.presentation.model.FoodModel;
 import com.zireck.projectk.presentation.presenter.AddMealPresenter;
-import com.zireck.projectk.data.util.MathUtils;
-import com.zireck.projectk.data.util.SnackbarUtils;
+import com.zireck.projectk.presentation.presenter.AddMealPresenterImpl;
+import com.zireck.projectk.presentation.util.MathUtils;
+import com.zireck.projectk.presentation.util.SnackbarUtils;
 import com.zireck.projectk.presentation.view.AddMealView;
 
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
@@ -30,10 +30,7 @@ import net.steamcrafted.materialiconlib.MaterialIconView;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -76,8 +73,8 @@ public class AddMealFragment extends BaseFragment implements AddMealView,
     @Bind(R.id.meal_carbohydrates) TextView mMealCarbohydrates;
     @Bind(R.id.meal_proteins) TextView mMealProteins;
 
-    @Inject FoodSpinnerAdapter mAdapter;
-    @Inject AddMealPresenter mPresenter;
+    private FoodSpinnerAdapter mAdapter;
+    private AddMealPresenter mPresenter;
 
     private DatePickerDialog mDatePickerDialog;
     private TimePickerDialog mTimePickerDialog;
@@ -95,14 +92,10 @@ public class AddMealFragment extends BaseFragment implements AddMealView,
         mTextDaily.setText("Breakfast");
         mTextAmount.setText("100gr");
 
+        mPresenter = new AddMealPresenterImpl(this);
         mPresenter.initialize();
-    }
 
-    @Override
-    protected List<Object> getModules() {
-        List<Object> modules = new LinkedList<Object>();
-        modules.add(new AddMealModule(this));
-        return modules;
+        mAdapter = new FoodSpinnerAdapter(getActivity(), FoodSpinnerAdapter.SPINNER_ITEM_LAYOUT);
     }
 
     @Override
@@ -111,7 +104,7 @@ public class AddMealFragment extends BaseFragment implements AddMealView,
     }
 
     @Override
-    public void setSpinnerFoodItems(List<Food> foodItems) {
+    public void setSpinnerFoodItems(List<FoodModel> foodItems) {
         mAdapter.setFoods(foodItems);
     }
 
@@ -151,7 +144,7 @@ public class AddMealFragment extends BaseFragment implements AddMealView,
     }
 
     @Override
-    public Food getFood() {
+    public FoodModel getFood() {
         int actualPosition = mSpinnerFood.getSelectedItemPosition() - 1;
         if (actualPosition < 0) {
             return null;
@@ -344,7 +337,7 @@ public class AddMealFragment extends BaseFragment implements AddMealView,
                     return;
                 }
 
-                mPresenter.setFood((Food) mSpinnerFood.getItemAtPosition(position + 1));
+                mPresenter.setFood((FoodModel) mSpinnerFood.getItemAtPosition(position + 1));
             }
 
             @Override
