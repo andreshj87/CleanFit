@@ -30,6 +30,8 @@ dependencies {
 
     compile project(':domain')
 
+    compile files('libs/greendao-1.3.7.jar')
+
     provided dataDependencies.daggerCompiler
     compile dataDependencies.dagger
 }

@@ -1,1 +1,1 @@
-include ':data', ':domain', ':presentation', ':projectkdaogenerator'
+include ':data', ':domain', ':presentation', ':greendaogenerator'
