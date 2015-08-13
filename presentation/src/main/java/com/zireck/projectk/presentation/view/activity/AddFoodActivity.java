@@ -1,4 +1,4 @@
-package com.zireck.projectk.presentation.activity;
+package com.zireck.projectk.presentation.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.zireck.projectk.R;
+import com.zireck.projectk.presentation.dagger.HasComponent;
+import com.zireck.projectk.presentation.dagger.component.DaggerFoodComponent;
+import com.zireck.projectk.presentation.dagger.component.FoodComponent;
 import com.zireck.projectk.presentation.listener.OnAddFoodFinishedListener;
 
 import butterknife.Bind;
@@ -16,7 +19,9 @@ import butterknife.Bind;
 /**
  * Created by Zireck on 24/07/2015.
  */
-public class AddFoodActivity extends BaseActivity implements OnAddFoodFinishedListener {
+public class AddFoodActivity extends BaseActivity implements OnAddFoodFinishedListener, HasComponent<FoodComponent> {
+
+    private FoodComponent mFoodComponent;
 
     @Bind(R.id.toolbar) Toolbar mToolbar;
 
@@ -32,6 +37,7 @@ public class AddFoodActivity extends BaseActivity implements OnAddFoodFinishedLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_food);
 
+        initInjector();
         initActionBar();
     }
 
@@ -75,6 +81,13 @@ public class AddFoodActivity extends BaseActivity implements OnAddFoodFinishedLi
         finish();
     }
 
+    private void initInjector() {
+        mFoodComponent = DaggerFoodComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .activityModule(getActivityModule())
+                .build();
+    }
+
     protected void initActionBar() {
         mToolbar.setNavigationIcon(R.drawable.ic_close_white_24dp);
 
@@ -85,5 +98,10 @@ public class AddFoodActivity extends BaseActivity implements OnAddFoodFinishedLi
             actionBar.setDisplayShowHomeEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    @Override
+    public FoodComponent getComponent() {
+        return mFoodComponent;
     }
 }

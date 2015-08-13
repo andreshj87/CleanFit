@@ -1,6 +1,5 @@
 package com.zireck.projectk.presentation.presenter;
 
-import com.google.common.base.Strings;
 import com.zireck.projectk.presentation.enumeration.Mealtime;
 import com.zireck.projectk.presentation.interactor.AddMealInteractor;
 import com.zireck.projectk.presentation.interactor.AddMealInteractorImpl;
@@ -8,6 +7,7 @@ import com.zireck.projectk.presentation.listener.OnAddMealInteractorFinishedList
 import com.zireck.projectk.presentation.model.FoodModel;
 import com.zireck.projectk.presentation.util.DateUtils;
 import com.zireck.projectk.presentation.util.MathUtils;
+import com.zireck.projectk.presentation.util.StringUtils;
 import com.zireck.projectk.presentation.view.AddMealView;
 
 import java.text.ParseException;
@@ -33,18 +33,23 @@ public class AddMealPresenterImpl implements AddMealPresenter, OnAddMealInteract
         mView = view;
         mInteractor = new AddMealInteractorImpl();
 
-        mInteractor.getFoods(this);
-
+        //mInteractor.getFoods(this);
     }
 
     @Override
     public void onGetFoodsFinished(List<FoodModel> foods) {
-        mView.setSpinnerFoodItems(foods);
+        /*if (foods == null) {
+            throw new IllegalArgumentException("Foods cannot be null.");
+        }*/
+
+        if (foods != null) {
+            mView.setSpinnerFoodItems(foods);
+        }
     }
 
     @Override
     public void initialize() {
-        updateEnergyAndNutrients(mView.getFood(), MathUtils.getAmountFromText(mView.getAmount()));
+        //updateEnergyAndNutrients(mView.getFood(), MathUtils.getAmountFromText(mView.getAmount()));
     }
 
     @Override
@@ -144,22 +149,22 @@ public class AddMealPresenterImpl implements AddMealPresenter, OnAddMealInteract
             error = true;
         }
 
-        if (Strings.isNullOrEmpty(date)) {
+        if (StringUtils.isNullOrEmpty(date)) {
             mView.setDateError();
             error = true;
         }
 
-        if (Strings.isNullOrEmpty(time)) {
+        if (StringUtils.isNullOrEmpty(time)) {
             mView.setTimeError();
             error = true;
         }
 
-        if (Strings.isNullOrEmpty(daily)) {
+        if (StringUtils.isNullOrEmpty(daily)) {
             mView.setDailyError();
             error = true;
         }
 
-        if (Strings.isNullOrEmpty(amount)) {
+        if (StringUtils.isNullOrEmpty(amount)) {
             mView.setAmountError();
             error = true;
         }

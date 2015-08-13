@@ -1,4 +1,4 @@
-package com.zireck.projectk.presentation.activity;
+package com.zireck.projectk.presentation.view.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,7 +7,7 @@ import android.view.View;
 import com.zireck.projectk.presentation.AndroidApplication;
 import com.zireck.projectk.presentation.dagger.component.ApplicationComponent;
 import com.zireck.projectk.presentation.dagger.module.ActivityModule;
-import com.zireck.projectk.presentation.helper.Navigator;
+import com.zireck.projectk.presentation.navigation.Navigator;
 
 import javax.inject.Inject;
 
@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Zireck on 16/07/2015.
  */
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     @Inject Navigator mNavigator;
 
@@ -24,20 +24,18 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getApplicationComponent().inject(this);
-
-        //injectDependencies();
     }
 
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
-        injectViews();
+        bindViews();
     }
 
     @Override
     public void setContentView(View view) {
         super.setContentView(view);
-        injectViews();
+        bindViews();
     }
 
     protected ApplicationComponent getApplicationComponent() {
@@ -49,10 +47,10 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     * Replace every field annotated with ButterKnife annotations like @InjectView with the proper
+     * Replace every field annotated with ButterKnife annotations like @Bind with the proper
      * value.
      */
-    private void injectViews() {
+    private void bindViews() {
         ButterKnife.bind(this);
     }
 }

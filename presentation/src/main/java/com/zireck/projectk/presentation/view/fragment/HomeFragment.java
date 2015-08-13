@@ -1,4 +1,4 @@
-package com.zireck.projectk.presentation.fragment;
+package com.zireck.projectk.presentation.view.fragment;
 
 import com.zireck.projectk.R;
 

@@ -1,4 +1,4 @@
-package com.zireck.projectk.presentation.activity;
+package com.zireck.projectk.presentation.view.activity;
 
 import android.content.Context;
 import android.content.Intent;

@@ -1,4 +1,4 @@
-package com.zireck.projectk.presentation.fragment;
+package com.zireck.projectk.presentation.view.fragment;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.vstechlab.easyfonts.EasyFonts;
 import com.zireck.projectk.R;
-import com.zireck.projectk.presentation.helper.Navigator;
+import com.zireck.projectk.presentation.navigation.Navigator;
 import com.zireck.projectk.presentation.listener.FoodDetailCallback;
 import com.zireck.projectk.presentation.presenter.FoodDetailPresenter;
 import com.zireck.projectk.presentation.presenter.FoodDetailPresenterImpl;

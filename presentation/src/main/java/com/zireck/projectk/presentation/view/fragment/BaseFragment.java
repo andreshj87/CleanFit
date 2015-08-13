@@ -1,4 +1,4 @@
-package com.zireck.projectk.presentation.fragment;
+package com.zireck.projectk.presentation.view.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,12 +16,6 @@ import butterknife.ButterKnife;
  */
 public abstract class BaseFragment extends Fragment {
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -31,7 +25,13 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        injectViews(view);
+        bindViews(view);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbindViews();
     }
 
     /**
@@ -41,6 +41,7 @@ public abstract class BaseFragment extends Fragment {
      */
     protected abstract int getFragmentLayout();
 
+    @SuppressWarnings("unchecked")
     protected <C> C getComponent(Class<C> componentType) {
         return componentType.cast(((HasComponent<C>) getActivity()).getComponent());
     }
@@ -51,7 +52,11 @@ public abstract class BaseFragment extends Fragment {
      *
      * @param view to extract each widget injected in the fragment.
      */
-    private void injectViews(final View view) {
+    private void bindViews(final View view) {
         ButterKnife.bind(this, view);
+    }
+
+    private void unbindViews() {
+        ButterKnife.unbind(this);
     }
 }

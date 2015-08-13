@@ -1,4 +1,4 @@
-package com.zireck.projectk.presentation.adapter;
+package com.zireck.projectk.presentation.view.adapter;
 
 import android.content.Context;
 import android.net.Uri;
@@ -14,6 +14,7 @@ import com.zireck.projectk.presentation.model.FoodModel;
 import com.zireck.projectk.presentation.util.MathUtils;
 import com.zireck.projectk.presentation.util.PictureUtils;
 
+import java.util.Collection;
 import java.util.List;
 
 import butterknife.Bind;
@@ -23,34 +24,41 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by Zireck on 16/07/2015.
  */
-public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHolder> {
+public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodViewHolder> {
 
     public static final int ITEM_LAYOUT = R.layout.fragment_food_list_item;
 
     private Context mContext;
-    private List<FoodModel> mFoodItems;
+    private List<FoodModel> mFoodsCollection;
     private int mLayout;
 
-    public FoodListAdapter(Context context, List<FoodModel> items, int layout) {
+    public FoodListAdapter(Context context, List<FoodModel> foodsCollection, int layout) {
         mContext = context;
-        mFoodItems = items;
+        mFoodsCollection = foodsCollection;
         mLayout = layout;
     }
 
-    public void setFoodItems(List<FoodModel> items) {
-        mFoodItems = items;
+    public void setFoodsCollection(Collection<FoodModel> foodsCollection) {
+        validateFoodsCollection(foodsCollection);
+        mFoodsCollection = (List<FoodModel>) foodsCollection;
         notifyDataSetChanged();
     }
 
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(mLayout, parent, false);
-        return new ViewHolder(view);
+    private void validateFoodsCollection(Collection<FoodModel> foodsCollection) {
+        if (foodsCollection == null) {
+            throw new IllegalArgumentException("The food list cannot be null.");
+        }
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        FoodModel food = mFoodItems.get(position);
+    public FoodViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(mLayout, parent, false);
+        return new FoodViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(FoodViewHolder holder, int position) {
+        final FoodModel food = mFoodsCollection.get(position);
 
         holder.foodId.setText(String.valueOf(food.getId()));
 
@@ -66,17 +74,17 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return mFoodItems.size();
+        return (mFoodsCollection != null) ? mFoodsCollection.size() : 0;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class FoodViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.food_id) TextView foodId;
         @Bind(R.id.food_picture) CircleImageView foodPicture;
         @Bind(R.id.food_name) TextView foodName;
         @Bind(R.id.food_brand) TextView foodBrand;
         @Bind(R.id.food_calories) TextView foodCalories;
 
-        public ViewHolder(View itemView) {
+        public FoodViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

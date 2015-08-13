@@ -7,12 +7,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
+import javax.inject.Inject;
+
 /**
  * Mapper class used to transform {@link Food}, in the domain layer, to {@link FoodModel} in the
  * presentation layer.
  */
 public class FoodModelDataMapper {
 
+    @Inject
     public FoodModelDataMapper() {
 
     }

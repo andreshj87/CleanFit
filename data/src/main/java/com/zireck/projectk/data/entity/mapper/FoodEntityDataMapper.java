@@ -8,12 +8,15 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * Mapper class used to transform {@link FoodEntity}, in the data layer, to {@link Food} in the
  * domain layer.
  */
 public class FoodEntityDataMapper {
 
+    @Inject
     public FoodEntityDataMapper() {
 
     }

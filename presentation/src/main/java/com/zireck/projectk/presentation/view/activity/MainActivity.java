@@ -1,4 +1,4 @@
-package com.zireck.projectk.presentation.activity;
+package com.zireck.projectk.presentation.view.activity;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -22,23 +22,24 @@ import android.widget.RelativeLayout;
 
 import com.github.clans.fab.FloatingActionMenu;
 import com.zireck.projectk.R;
-import com.zireck.projectk.presentation.fragment.FoodListFragment;
-import com.zireck.projectk.presentation.fragment.FoodRepositoryFragment;
-import com.zireck.projectk.presentation.fragment.HomeFragment;
-import com.zireck.projectk.presentation.helper.Navigator;
+import com.zireck.projectk.presentation.dagger.HasComponent;
+import com.zireck.projectk.presentation.dagger.component.DaggerFoodComponent;
+import com.zireck.projectk.presentation.dagger.component.FoodComponent;
+import com.zireck.projectk.presentation.view.fragment.FoodListFragment;
+import com.zireck.projectk.presentation.view.fragment.FoodRepositoryFragment;
+import com.zireck.projectk.presentation.view.fragment.HomeFragment;
+import com.zireck.projectk.presentation.navigation.Navigator;
 import com.zireck.projectk.presentation.listener.OnFoodRepositoryTabChangeListener;
 import com.zireck.projectk.presentation.util.SnackbarUtils;
-
-import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 
-public class MainActivity extends BaseActivity implements OnFoodRepositoryTabChangeListener {
+public class MainActivity extends BaseActivity implements OnFoodRepositoryTabChangeListener, HasComponent<FoodComponent> {
 
     private static final String NAVIGATION_VIEW_SELECTED_ITEM = "NavigationViewSelectedItem";
 
-    @Inject Navigator mNavigator;
+    private FoodComponent mFoodComponent;
 
     @Bind(R.id.navigation_view) NavigationView mNavigationView;
     @Bind(R.id.appBarLayout) AppBarLayout mAppBarLayout;
@@ -62,6 +63,8 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        initInjector();
 
         initActionBar();
 
@@ -187,6 +190,13 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
         mFloatingActionButton.hide();
     }
 
+    private void initInjector() {
+        mFoodComponent = DaggerFoodComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .activityModule(getActivityModule())
+                .build();
+    }
+
     private void initActionBar() {
         setSupportActionBar(mToolbar);
         final ActionBar actionBar = getSupportActionBar();
@@ -275,4 +285,8 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
         menu.getItem(position).setChecked(true);
     }
 
+    @Override
+    public FoodComponent getComponent() {
+        return mFoodComponent;
+    }
 }

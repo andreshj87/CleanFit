@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".presentation.activity.MainActivity"
+            android:name=".presentation.view.activity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.ActionBar.WithDrawer"
             android:configChanges="keyboardHidden|orientation|screenSize">
@@ -23,11 +23,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".presentation.activity.FoodDetailActivity" android:label="Food Detail" android:theme="@style/AppTheme.ActionBar" android:configChanges="keyboardHidden|orientation|screenSize" />
-        <activity android:name=".presentation.activity.AddFoodActivity" android:label="Add Food" android:theme="@style/AppTheme.ActionBar" android:configChanges="keyboardHidden|orientation|screenSize" />
-        <activity android:name=".presentation.activity.EditFoodActivity" android:label="Edit Food" android:theme="@style/AppTheme.ActionBar" android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity android:name=".presentation.view.activity.FoodDetailActivity" android:label="Food Detail" android:theme="@style/AppTheme.ActionBar" android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity android:name=".presentation.view.activity.AddFoodActivity" android:label="Add Food" android:theme="@style/AppTheme.ActionBar" android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity android:name=".presentation.view.activity.EditFoodActivity" android:label="Edit Food" android:theme="@style/AppTheme.ActionBar" android:configChanges="keyboardHidden|orientation|screenSize" />
 
-        <activity android:name=".presentation.activity.AddMealActivity" android:label="Add Meal" android:theme="@style/AppTheme.ActionBar" android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity android:name=".presentation.view.activity.AddMealActivity" android:label="Add Meal" android:theme="@style/AppTheme.ActionBar" android:configChanges="keyboardHidden|orientation|screenSize" />
     </application>
 
 </manifest>

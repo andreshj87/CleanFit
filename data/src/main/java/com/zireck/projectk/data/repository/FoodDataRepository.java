@@ -8,6 +8,8 @@ import com.zireck.projectk.domain.repository.FoodRepository;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import rx.Observable;
 import rx.functions.Func1;
 
@@ -18,6 +20,13 @@ public class FoodDataRepository implements FoodRepository {
 
     private FoodDataStore mFoodDataStore;
     private FoodEntityDataMapper mFoodEntityDataMapper;
+
+    @Inject
+    public FoodDataRepository(FoodDataStore foodDataStore,
+                              FoodEntityDataMapper foodEntityDataMapper) {
+        mFoodDataStore = foodDataStore;
+        mFoodEntityDataMapper = foodEntityDataMapper;
+    }
 
     @Override
     public Observable<Food> food(int foodId) {

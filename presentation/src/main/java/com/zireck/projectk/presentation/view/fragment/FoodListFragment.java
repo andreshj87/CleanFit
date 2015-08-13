@@ -1,4 +1,4 @@
-package com.zireck.projectk.presentation.fragment;
+package com.zireck.projectk.presentation.view.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,15 +8,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.zireck.projectk.R;
-import com.zireck.projectk.presentation.adapter.FoodListAdapter;
+import com.zireck.projectk.presentation.view.adapter.FoodListAdapter;
+import com.zireck.projectk.presentation.dagger.component.FoodComponent;
 import com.zireck.projectk.presentation.helper.RecyclerItemClickListener;
 import com.zireck.projectk.presentation.model.FoodModel;
 import com.zireck.projectk.presentation.presenter.FoodListPresenter;
-import com.zireck.projectk.presentation.presenter.FoodListPresenterImpl;
 import com.zireck.projectk.presentation.view.FoodListView;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 
@@ -34,8 +36,10 @@ public class FoodListFragment extends BaseFragment implements FoodListView {
 
     @Bind(R.id.food_list) RecyclerView mRecyclerView;
 
-    private FoodListPresenter mPresenter;
+    //private OldFoodListPresenter mPresenter;
     private FoodListAdapter mAdapter;
+
+    @Inject FoodListPresenter mFoodListPresenter;
 
     public static FoodListFragment newInstance(int tag) {
         Bundle bundle = new Bundle();
@@ -51,17 +55,40 @@ public class FoodListFragment extends BaseFragment implements FoodListView {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mPresenter = new FoodListPresenterImpl(getActivity(), this);
+        initRecyclerView();
+
+        //mPresenter = new OldFoodListPresenterImpl(getActivity(), this);
         mAdapter = new FoodListAdapter(getActivity(), new ArrayList<FoodModel>(), FoodListAdapter.ITEM_LAYOUT);
 
         retrieveFoodTag(savedInstanceState);
-        initRecyclerView();
+
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        initialize();
+        loadFoodList();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.onResume();
+        //mPresenter.onResume();
+        mFoodListPresenter.resume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mFoodListPresenter.pause();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mFoodListPresenter.destroy();
     }
 
     @Override
@@ -70,9 +97,10 @@ public class FoodListFragment extends BaseFragment implements FoodListView {
     }
 
     @Override
-    public void setFoodItems(List<FoodModel> items) {
-        mAdapter.setFoodItems(items);
-        mRecyclerView.setAdapter(mAdapter);
+    public void renderFoodList(Collection<FoodModel> foodModelsCollection) {
+        if (foodModelsCollection != null) {
+            mAdapter.setFoodsCollection(foodModelsCollection);
+        }
     }
 
     @Override
@@ -101,6 +129,15 @@ public class FoodListFragment extends BaseFragment implements FoodListView {
         }
     }
 
+    private void initialize() {
+        getComponent(FoodComponent.class).inject(this);
+        mFoodListPresenter.setView(this);
+    }
+
+    private void loadFoodList() {
+        mFoodListPresenter.initialize();
+    }
+
     private void initRecyclerView() {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -108,9 +145,12 @@ public class FoodListFragment extends BaseFragment implements FoodListView {
         mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                mPresenter.onItemClick(view, position);
+                //mPresenter.onItemClick(view, position);
             }
         }));
+
+        mAdapter = new FoodListAdapter(getActivity(), new ArrayList<FoodModel>(), FoodListAdapter.ITEM_LAYOUT);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
 }

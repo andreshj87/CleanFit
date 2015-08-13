@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     def globalConfiguration = rootProject.extensions.getByName("ext")
@@ -32,7 +33,7 @@ dependencies {
 
     compile files('libs/greendao-1.3.7.jar')
 
-    provided dataDependencies.daggerCompiler
+    apt dataDependencies.daggerCompiler
     provided dataDependencies.javaxAnnotation
 
     compile dataDependencies.dagger

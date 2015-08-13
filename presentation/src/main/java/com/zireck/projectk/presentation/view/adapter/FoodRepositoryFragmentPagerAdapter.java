@@ -1,4 +1,4 @@
-package com.zireck.projectk.presentation.adapter;
+package com.zireck.projectk.presentation.view.adapter;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.zireck.projectk.R;
-import com.zireck.projectk.presentation.fragment.FoodListFragment;
+import com.zireck.projectk.presentation.view.fragment.FoodListFragment;
 
 /**
  * Created by Zireck on 20/07/2015.

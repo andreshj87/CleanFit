@@ -1,4 +1,4 @@
-package com.zireck.projectk.presentation.fragment;
+package com.zireck.projectk.presentation.view.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,11 +16,9 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import com.zireck.projectk.R;
-import com.zireck.projectk.presentation.adapter.FoodSpinnerAdapter;
+import com.zireck.projectk.presentation.view.adapter.FoodSpinnerAdapter;
 import com.zireck.projectk.presentation.enumeration.Mealtime;
 import com.zireck.projectk.presentation.model.FoodModel;
-import com.zireck.projectk.presentation.presenter.AddMealPresenter;
-import com.zireck.projectk.presentation.presenter.AddMealPresenterImpl;
 import com.zireck.projectk.presentation.util.MathUtils;
 import com.zireck.projectk.presentation.util.SnackbarUtils;
 import com.zireck.projectk.presentation.view.AddMealView;
@@ -29,7 +27,6 @@ import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
 import net.steamcrafted.materialiconlib.MaterialIconView;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -74,7 +71,7 @@ public class AddMealFragment extends BaseFragment implements AddMealView,
     @Bind(R.id.meal_proteins) TextView mMealProteins;
 
     private FoodSpinnerAdapter mAdapter;
-    private AddMealPresenter mPresenter;
+    //private AddMealPresenter mPresenter;
 
     private DatePickerDialog mDatePickerDialog;
     private TimePickerDialog mTimePickerDialog;
@@ -92,10 +89,8 @@ public class AddMealFragment extends BaseFragment implements AddMealView,
         mTextDaily.setText("Breakfast");
         mTextAmount.setText("100gr");
 
-        mPresenter = new AddMealPresenterImpl(this);
-        mPresenter.initialize();
-
-        mAdapter = new FoodSpinnerAdapter(getActivity(), FoodSpinnerAdapter.SPINNER_ITEM_LAYOUT);
+        //mPresenter = new AddMealPresenterImpl(this);
+        //mPresenter.initialize();
     }
 
     @Override
@@ -208,6 +203,7 @@ public class AddMealFragment extends BaseFragment implements AddMealView,
     public void onDateClick() {
         int year, month, dayOfMonth;
 
+        /*
         Date currentDate = mPresenter.getCurrentDate();
         if (currentDate != null) {
             Calendar currentCalendar = Calendar.getInstance();
@@ -230,12 +226,14 @@ public class AddMealFragment extends BaseFragment implements AddMealView,
         );
 
         mDatePickerDialog.show(getActivity().getFragmentManager(), "Datepickerdialog");
+        */
     }
 
     @OnClick(R.id.layout_time)
     public void onTimeClick() {
         int hourOfDay, minute;
 
+        /*
         Date currentTime = mPresenter.getCurrentTime();
         if (currentTime != null) {
             Calendar currentCalendar = Calendar.getInstance();
@@ -256,7 +254,7 @@ public class AddMealFragment extends BaseFragment implements AddMealView,
                 true
         );
 
-        mTimePickerDialog.show(getActivity().getFragmentManager(), "Timepickerdialog");
+        mTimePickerDialog.show(getActivity().getFragmentManager(), "Timepickerdialog");*/
     }
 
     @OnClick(R.id.layout_daily)
@@ -290,25 +288,25 @@ public class AddMealFragment extends BaseFragment implements AddMealView,
                 .setPlusMinusVisibility(View.INVISIBLE)
                 .setDecimalVisibility(View.INVISIBLE)
                 .setCurrentNumber(MathUtils.getAmountFromText(mTextAmount.getText().toString()))
-                .setLabelText(mPresenter.getCurrentMeasure());
+                .setLabelText("ml"); // TODO
 
         mNumberPickerBuilder.show();
     }
 
     @Override
     public void onDateSet(DatePickerDialog datePickerDialog, int year, int monthOfYear, int dayOfMonth) {
-        mPresenter.setDate(year, monthOfYear, dayOfMonth);
+        //mPresenter.setDate(year, monthOfYear, dayOfMonth);
     }
 
     @Override
     public void onTimeSet(RadialPickerLayout radialPickerLayout, int hourOfDay, int minute) {
-        mPresenter.setTime(hourOfDay, minute);
+        //mPresenter.setTime(hourOfDay, minute);
     }
 
     @Override
     public void onDialogNumberSet(int reference, int number, double decimal, boolean isNegative,
                                   double fullNumber) {
-        mPresenter.setAmount(number);
+        //mPresenter.setAmount(number);
     }
 
     private void initIcons() {
@@ -328,21 +326,22 @@ public class AddMealFragment extends BaseFragment implements AddMealView,
     }
 
     private void initSpinner() {
+        mAdapter = new FoodSpinnerAdapter(getActivity(), FoodSpinnerAdapter.SPINNER_ITEM_LAYOUT);
         mSpinnerFood.setAdapter(mAdapter);
         mSpinnerFood.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position < 0) {
-                    mPresenter.setFood(null);
+                    //mPresenter.setFood(null);
                     return;
                 }
 
-                mPresenter.setFood((FoodModel) mSpinnerFood.getItemAtPosition(position + 1));
+                //mPresenter.setFood((FoodModel) mSpinnerFood.getItemAtPosition(position + 1));
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                mPresenter.setFood(null);
+                //mPresenter.setFood(null);
             }
         });
     }
@@ -350,7 +349,7 @@ public class AddMealFragment extends BaseFragment implements AddMealView,
     private void initDateTime() {
         Calendar now = Calendar.getInstance();
         now.get(Calendar.DATE);
-        mPresenter.setDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
-        mPresenter.setTime(now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE));
+        //mPresenter.setDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
+        //mPresenter.setTime(now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE));
     }
 }

@@ -1,11 +1,86 @@
 package com.zireck.projectk.presentation.presenter;
 
-import android.view.View;
+import android.support.annotation.NonNull;
+
+import com.zireck.projectk.domain.Food;
+import com.zireck.projectk.domain.interactor.DefaultSubscriber;
+import com.zireck.projectk.domain.interactor.Interactor;
+import com.zireck.projectk.presentation.dagger.PerActivity;
+import com.zireck.projectk.presentation.mapper.FoodModelDataMapper;
+import com.zireck.projectk.presentation.model.FoodModel;
+import com.zireck.projectk.presentation.view.FoodListView;
+
+import java.util.Collection;
+import java.util.List;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
- * Created by Zireck on 22/07/2015.
+ * Created by Zireck on 13/08/2015.
  */
-public interface FoodListPresenter {
-    public void onResume();
-    public void onItemClick(View view, int position);
+@PerActivity
+public class FoodListPresenter implements Presenter {
+
+    private FoodListView mView;
+
+    private final Interactor mGetFoodListInteractor;
+    private final FoodModelDataMapper mFoodModelDataMapper;
+
+    @Inject
+    public FoodListPresenter(@Named("foodList") Interactor getFoodListInteractor,
+                             FoodModelDataMapper foodModelDataMapper) {
+        mGetFoodListInteractor = getFoodListInteractor;
+        mFoodModelDataMapper = foodModelDataMapper;
+    }
+
+    public void setView(@NonNull FoodListView view) {
+        mView = view;
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void destroy() {
+        mGetFoodListInteractor.unsubscribe();
+    }
+
+    public void initialize() {
+        getFoodList();
+    }
+
+    private void showFoodsCollectionInView(Collection<Food> foodsCollection) {
+        final Collection<FoodModel> foodModelsCollection =
+                mFoodModelDataMapper.transform(foodsCollection);
+        mView.renderFoodList(foodModelsCollection);
+    }
+
+    private void getFoodList() {
+        mGetFoodListInteractor.execute(new FoodListSubscriber());
+    }
+
+    private final class FoodListSubscriber extends DefaultSubscriber<List<Food>> {
+        @Override
+        public void onCompleted() {
+
+        }
+
+        @Override
+        public void onError(Throwable e) {
+
+        }
+
+        @Override
+        public void onNext(List<Food> foods) {
+            showFoodsCollectionInView(foods);
+        }
+    }
 }

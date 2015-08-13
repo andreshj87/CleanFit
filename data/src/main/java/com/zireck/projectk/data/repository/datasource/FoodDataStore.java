@@ -4,6 +4,8 @@ import com.zireck.projectk.data.entity.FoodEntity;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import rx.Observable;
 import rx.Subscriber;
 
@@ -11,6 +13,11 @@ import rx.Subscriber;
  * Created by Zireck on 11/08/2015.
  */
 public class FoodDataStore {
+
+    @Inject
+    public FoodDataStore() {
+
+    }
 
     public Observable<FoodEntity> foodEntityDetails(final int foodId) {
         return Observable.create(new Observable.OnSubscribe<FoodEntity>() {

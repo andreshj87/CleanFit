@@ -1,4 +1,4 @@
-package com.zireck.projectk.presentation.adapter;
+package com.zireck.projectk.presentation.view.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -15,6 +15,7 @@ import com.zireck.projectk.R;
 import com.zireck.projectk.presentation.model.FoodModel;
 import com.zireck.projectk.presentation.util.PictureUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -37,6 +38,7 @@ public class FoodSpinnerAdapter extends BaseAdapter {
 
     public FoodSpinnerAdapter(Context context, int resource) {
         mContext = context;
+        mFoods = new ArrayList<FoodModel>();
     }
 
     @Override
@@ -49,7 +51,11 @@ public class FoodSpinnerAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mFoods.size();
+        if (mFoods == null) {
+            return 0;
+        } else {
+            return mFoods.size();
+        }
     }
 
     @Override
@@ -68,8 +74,10 @@ public class FoodSpinnerAdapter extends BaseAdapter {
     }
 
     public void setFoods(List<FoodModel> foods) {
-        mFoods = foods;
-        notifyDataSetChanged();
+        if (foods != null) {
+            mFoods = foods;
+            notifyDataSetChanged();
+        }
     }
 
     public View getCustomView(int position, View convertView, ViewGroup parent) {

@@ -2,8 +2,14 @@ package com.zireck.projectk.presentation.dagger.module;
 
 import android.content.Context;
 
+import com.zireck.projectk.data.executor.JobExecutor;
+import com.zireck.projectk.data.repository.FoodDataRepository;
+import com.zireck.projectk.domain.executor.PostExecutionThread;
+import com.zireck.projectk.domain.executor.ThreadExecutor;
+import com.zireck.projectk.domain.repository.FoodRepository;
 import com.zireck.projectk.presentation.AndroidApplication;
-import com.zireck.projectk.presentation.helper.Navigator;
+import com.zireck.projectk.presentation.UIThread;
+import com.zireck.projectk.presentation.navigation.Navigator;
 
 import javax.inject.Singleton;
 
@@ -32,4 +38,18 @@ public class ApplicationModule {
         return new Navigator();
     }
 
+    @Provides @Singleton
+    ThreadExecutor provideThreadExecutor(JobExecutor jobExecutor) {
+        return jobExecutor;
+    }
+
+    @Provides @Singleton
+    PostExecutionThread providePostExecutionThread(UIThread uiThread) {
+        return uiThread;
+    }
+
+    @Provides @Singleton
+    FoodRepository provideFoodRepository(FoodDataRepository foodDataRepository) {
+        return foodDataRepository;
+    }
 }

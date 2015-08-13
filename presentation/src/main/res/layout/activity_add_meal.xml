@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/fragment_add_meal"
-        class="com.zireck.projectk.presentation.fragment.AddMealFragment"
+        class="com.zireck.projectk.presentation.view.fragment.AddMealFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>

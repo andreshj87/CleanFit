@@ -1,4 +1,4 @@
-package com.zireck.projectk.presentation.activity;
+package com.zireck.projectk.presentation.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
 
 import com.zireck.projectk.R;
-import com.zireck.projectk.presentation.fragment.EditFoodFragment;
+import com.zireck.projectk.presentation.view.fragment.EditFoodFragment;
 import com.zireck.projectk.presentation.listener.OnEditFoodFinishedListener;
 
 /**

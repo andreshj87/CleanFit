@@ -1,4 +1,4 @@
-package com.zireck.projectk.presentation.activity;
+package com.zireck.projectk.presentation.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +11,7 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 import com.zireck.projectk.R;
-import com.zireck.projectk.presentation.fragment.FoodDetailFragment;
+import com.zireck.projectk.presentation.view.fragment.FoodDetailFragment;
 import com.zireck.projectk.presentation.listener.FoodDetailCallback;
 import com.zireck.projectk.presentation.util.PictureUtils;
 

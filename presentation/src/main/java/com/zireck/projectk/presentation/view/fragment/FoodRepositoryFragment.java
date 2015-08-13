@@ -1,4 +1,4 @@
-package com.zireck.projectk.presentation.fragment;
+package com.zireck.projectk.presentation.view.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import android.view.View;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.zireck.projectk.R;
-import com.zireck.projectk.presentation.adapter.FoodRepositoryFragmentPagerAdapter;
+import com.zireck.projectk.presentation.view.adapter.FoodRepositoryFragmentPagerAdapter;
 import com.zireck.projectk.presentation.listener.OnFoodRepositoryTabChangeListener;
 
 import butterknife.Bind;

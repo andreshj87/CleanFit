@@ -2,13 +2,13 @@ package com.zireck.projectk.presentation.view;
 
 import com.zireck.projectk.presentation.model.FoodModel;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Created by Zireck on 22/07/2015.
  */
 public interface FoodListView {
-    public void setFoodItems(List<FoodModel> foodItems);
+    public void renderFoodList(Collection<FoodModel> foodItems);
     public int getCurrentTag();
     public int getFoodTag();
     public int getDrinkTag();

@@ -1,32 +1,17 @@
 package com.zireck.projectk.presentation.presenter;
 
-import android.content.Context;
-import android.view.View;
-import android.widget.TextView;
-
-import com.zireck.projectk.R;
-import com.zireck.projectk.presentation.helper.Navigator;
-import com.zireck.projectk.presentation.interactor.FoodListInteractor;
-import com.zireck.projectk.presentation.interactor.FoodListInteractorImpl;
-import com.zireck.projectk.presentation.listener.OnFoodListFinishedListener;
-import com.zireck.projectk.presentation.model.FoodModel;
-import com.zireck.projectk.presentation.view.FoodListView;
-
-import java.util.List;
-
-import javax.inject.Inject;
-
 /**
  * Created by Zireck on 22/07/2015.
  */
-public class FoodListPresenterImpl implements FoodListPresenter, OnFoodListFinishedListener {
+/*
+public class OldFoodListPresenterImpl implements OldFoodListPresenter, OnFoodListFinishedListener {
 
     private Context mContext;
     private FoodListView mView;
     private FoodListInteractor mInteractor;
     @Inject Navigator mNavigator;
 
-    public FoodListPresenterImpl(Context context, FoodListView view) {
+    public OldFoodListPresenterImpl(Context context, FoodListView view) {
         mContext = context;
         mView = view;
         mInteractor = new FoodListInteractorImpl();
@@ -51,6 +36,6 @@ public class FoodListPresenterImpl implements FoodListPresenter, OnFoodListFinis
 
     @Override
     public void onFinished(List<FoodModel> items) {
-        mView.setFoodItems(items);
+        mView.renderFoodList(items);
     }
-}
+}*/
