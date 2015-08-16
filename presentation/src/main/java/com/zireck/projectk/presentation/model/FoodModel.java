@@ -1,9 +1,12 @@
 package com.zireck.projectk.presentation.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Class that represents a food in the presentation layer.
  */
-public class FoodModel {
+public class FoodModel implements Parcelable {
 
     private final long id;
     private String name;
@@ -17,6 +20,18 @@ public class FoodModel {
 
     public FoodModel(long id) {
         this.id = id;
+    }
+
+    protected FoodModel(Parcel in) {
+        id = in.readLong();
+        name = in.readString();
+        brand = in.readString();
+        isDrink = in.readByte() != 0x00;
+        calories = in.readDouble();
+        fats = in.readDouble();
+        carbohydrates = in.readDouble();
+        proteins = in.readDouble();
+        picture = in.readString();
     }
 
     public long getId() {
@@ -131,4 +146,36 @@ public class FoodModel {
         double nutrientsTotalAmount = this.getFats() + this.getCarbohydrates() + this.getProteins();
         return (nutrient * 100) / nutrientsTotalAmount;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(name);
+        dest.writeString(brand);
+        dest.writeByte((byte) (isDrink ? 0x01 : 0x00));
+        dest.writeDouble(calories);
+        dest.writeDouble(fats);
+        dest.writeDouble(carbohydrates);
+        dest.writeDouble(proteins);
+        dest.writeString(picture);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<FoodModel> CREATOR = new Parcelable.Creator<FoodModel>() {
+        @Override
+        public FoodModel createFromParcel(Parcel in) {
+            return new FoodModel(in);
+        }
+
+        @Override
+        public FoodModel[] newArray(int size) {
+            return new FoodModel[size];
+        }
+    };
+
 }

@@ -59,14 +59,18 @@ public class FoodListPresenter implements Presenter {
         getFoodList();
     }
 
+    private void getFoodList() {
+        mGetFoodListInteractor.execute(new FoodListSubscriber());
+    }
+
     private void showFoodsCollectionInView(Collection<Food> foodsCollection) {
         final Collection<FoodModel> foodModelsCollection =
                 mFoodModelDataMapper.transform(foodsCollection);
         mView.renderFoodList(foodModelsCollection);
     }
 
-    private void getFoodList() {
-        mGetFoodListInteractor.execute(new FoodListSubscriber());
+    public void onItemClick(int position) {
+        mView.navigateToFoodDetails(position);
     }
 
     private final class FoodListSubscriber extends DefaultSubscriber<List<Food>> {

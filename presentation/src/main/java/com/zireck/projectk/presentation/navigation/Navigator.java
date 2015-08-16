@@ -3,6 +3,7 @@ package com.zireck.projectk.presentation.navigation;
 import android.app.Activity;
 import android.content.Intent;
 
+import com.zireck.projectk.presentation.model.FoodModel;
 import com.zireck.projectk.presentation.view.activity.AddFoodActivity;
 import com.zireck.projectk.presentation.view.activity.AddMealActivity;
 import com.zireck.projectk.presentation.view.activity.EditFoodActivity;
@@ -44,8 +45,17 @@ public class Navigator {
      * Open FoodDetailActivity using a foodId
      * @param foodId
      */
+    /*@Deprecated
     public void openFoodDetailActivity(Activity activity, final long foodId) {
         Intent intent = FoodDetailActivity.getLaunchIntent(activity, foodId);
+        startActivityForResult(activity, intent, DELETE_FOOD_REQUEST);
+    }*/
+
+    /**
+     * Open FoodDetailActivity using a FoodModel object.
+     */
+    public void openFoodDetailActivity(Activity activity, final FoodModel food) {
+        Intent intent = FoodDetailActivity.getLaunchIntent(activity, food);
         startActivityForResult(activity, intent, DELETE_FOOD_REQUEST);
     }
 

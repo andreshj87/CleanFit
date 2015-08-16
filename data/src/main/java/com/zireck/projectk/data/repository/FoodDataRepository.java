@@ -29,7 +29,7 @@ public class FoodDataRepository implements FoodRepository {
     }
 
     @Override
-    public Observable<Food> food(int foodId) {
+    public Observable<Food> food(long foodId) {
         return mFoodDataStore.foodEntityDetails(foodId).map(new Func1<FoodEntity, Food>() {
             @Override
             public Food call(FoodEntity foodEntity) {
@@ -66,5 +66,10 @@ public class FoodDataRepository implements FoodRepository {
                 return mFoodEntityDataMapper.transform(foodEntities);
             }
         });
+    }
+
+    @Override
+    public Observable<Void> deleteFood(final long foodId) {
+        return mFoodDataStore.deleteFood(foodId);
     }
 }

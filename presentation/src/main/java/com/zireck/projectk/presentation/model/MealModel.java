@@ -1,5 +1,8 @@
 package com.zireck.projectk.presentation.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.zireck.projectk.presentation.enumeration.Mealtime;
 import com.zireck.projectk.presentation.util.DateUtils;
 
@@ -8,7 +11,7 @@ import java.util.Date;
 /**
  * Class that represents a meal in the presentation layer.
  */
-public class MealModel {
+public class MealModel implements Parcelable {
 
     private final long id;
     private Date date;
@@ -23,6 +26,20 @@ public class MealModel {
 
     public MealModel(long id) {
         this.id = id;
+    }
+
+    protected MealModel(Parcel in) {
+        id = in.readLong();
+        long tmpDate = in.readLong();
+        date = tmpDate != -1 ? new Date(tmpDate) : null;
+        mealtime = in.readInt();
+        grams = in.readInt();
+        calories = in.readDouble();
+        fats = in.readDouble();
+        carbohydrates = in.readDouble();
+        proteins = in.readDouble();
+        foodId = in.readLong();
+        food = (FoodModel) in.readValue(FoodModel.class.getClassLoader());
     }
 
     public long getId() {
@@ -162,4 +179,36 @@ public class MealModel {
     public String getFormattedMealtime() {
         return Mealtime.values()[this.getMealtime()].getStringValue();
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeLong(date != null ? date.getTime() : -1L);
+        dest.writeInt(mealtime);
+        dest.writeInt(grams);
+        dest.writeDouble(calories);
+        dest.writeDouble(fats);
+        dest.writeDouble(carbohydrates);
+        dest.writeDouble(proteins);
+        dest.writeLong(foodId);
+        dest.writeValue(food);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<MealModel> CREATOR = new Parcelable.Creator<MealModel>() {
+        @Override
+        public MealModel createFromParcel(Parcel in) {
+            return new MealModel(in);
+        }
+
+        @Override
+        public MealModel[] newArray(int size) {
+            return new MealModel[size];
+        }
+    };
 }

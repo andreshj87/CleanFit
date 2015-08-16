@@ -68,8 +68,6 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodVi
     @Override
     public int getItemCount() {
         return (mFoodsCollection != null) ? mFoodsCollection.size() : 0;
-        //System.out.println("k9d3 item count = " + mFoodsCollection.size());
-        //return mFoodsCollection.size();
     }
 
     public static class FoodViewHolder extends RecyclerView.ViewHolder {
@@ -85,11 +83,13 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodVi
         }
     }
 
+    public FoodModel getItem(int position) {
+        return mFoodsCollection.get(position);
+    }
+
     public void setFoodsCollection(Collection<FoodModel> foodsCollection) {
         validateFoodsCollection(foodsCollection);
-        //mFoodsCollection.clear();
         mFoodsCollection = (List<FoodModel>) foodsCollection;
-        //mFoodsCollection.addAll(foodsCollection);
         notifyDataSetChanged();
     }
 

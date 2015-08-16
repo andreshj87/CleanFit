@@ -11,6 +11,7 @@ import com.zireck.projectk.R;
 import com.zireck.projectk.presentation.dagger.component.FoodComponent;
 import com.zireck.projectk.presentation.helper.RecyclerItemClickListener;
 import com.zireck.projectk.presentation.model.FoodModel;
+import com.zireck.projectk.presentation.navigation.Navigator;
 import com.zireck.projectk.presentation.presenter.DrinkListPresenter;
 import com.zireck.projectk.presentation.view.DrinkListView;
 import com.zireck.projectk.presentation.view.adapter.FoodListAdapter;
@@ -26,6 +27,8 @@ import butterknife.Bind;
  * Created by Zireck on 16/08/2015.
  */
 public class DrinkListFragment extends BaseFragment implements DrinkListView {
+
+    @Inject Navigator mNavigator;
 
     @Inject DrinkListPresenter mDrinkListPresenter;
     @Bind(R.id.food_list) RecyclerView mRecyclerView;
@@ -73,6 +76,19 @@ public class DrinkListFragment extends BaseFragment implements DrinkListView {
         return R.layout.fragment_food_list;
     }
 
+    @Override
+    public void renderDrinkList(Collection<FoodModel> drinkItems) {
+        if (drinkItems != null) {
+            mAdapter.setFoodsCollection(drinkItems);
+        }
+    }
+
+    @Override
+    public void navigateToFoodDetails(int position) {
+        FoodModel food = mAdapter.getItem(position);
+        mNavigator.openFoodDetailActivity(getActivity(), food);
+    }
+
     private void initialize() {
         getComponent(FoodComponent.class).inject(this);
         mDrinkListPresenter.setView(this);
@@ -82,13 +98,6 @@ public class DrinkListFragment extends BaseFragment implements DrinkListView {
         mDrinkListPresenter.initialize();
     }
 
-    @Override
-    public void renderDrinkList(Collection<FoodModel> drinkItems) {
-        if (drinkItems != null) {
-            mAdapter.setFoodsCollection(drinkItems);
-        }
-    }
-
     private void initRecyclerView() {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -96,7 +105,7 @@ public class DrinkListFragment extends BaseFragment implements DrinkListView {
         mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                //mPresenter.onItemClick(view, position);
+                mDrinkListPresenter.onItemClick(position);
             }
         }));
 

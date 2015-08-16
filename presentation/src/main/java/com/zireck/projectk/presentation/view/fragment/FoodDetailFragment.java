@@ -14,14 +14,17 @@ import android.widget.TextView;
 
 import com.vstechlab.easyfonts.EasyFonts;
 import com.zireck.projectk.R;
-import com.zireck.projectk.presentation.navigation.Navigator;
+import com.zireck.projectk.presentation.dagger.component.FoodComponent;
 import com.zireck.projectk.presentation.listener.FoodDetailCallback;
+import com.zireck.projectk.presentation.model.FoodModel;
+import com.zireck.projectk.presentation.navigation.Navigator;
 import com.zireck.projectk.presentation.presenter.FoodDetailPresenter;
-import com.zireck.projectk.presentation.presenter.FoodDetailPresenterImpl;
 import com.zireck.projectk.presentation.view.FoodDetailView;
 
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
 import net.steamcrafted.materialiconlib.MaterialIconView;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import lecho.lib.hellocharts.model.PieChartData;
@@ -33,10 +36,12 @@ import lecho.lib.hellocharts.view.PieChartView;
 public class FoodDetailFragment extends BaseFragment implements FoodDetailView {
 
     private static final String EXTRA_FOOD_ID = "food_id";
+    private static final String EXTRA_FOOD_OBJECT = "food_object";
 
     private FoodDetailCallback mCallback;
-    private FoodDetailPresenter mPresenter;
-    private Navigator mNavigator;
+    //private OldFoodDetailPresenter mPresenter;
+    @Inject FoodDetailPresenter mFoodDetailPresenter;
+    @Inject Navigator mNavigator;
 
     @Bind(R.id.food_name) TextView mFoodName;
     @Bind(R.id.food_brand) TextView mFoodBrand;
@@ -50,9 +55,9 @@ public class FoodDetailFragment extends BaseFragment implements FoodDetailView {
     @Bind(R.id.proteins_percent) TextView mProteinsPercent;
     @Bind(R.id.pie_chart) PieChartView mPieChart;
 
-    public static FoodDetailFragment newInstance(long foodId) {
+    public static FoodDetailFragment newInstance(FoodModel food) {
         Bundle bundle = new Bundle();
-        bundle.putLong(FoodDetailFragment.EXTRA_FOOD_ID, foodId);
+        bundle.putParcelable(EXTRA_FOOD_OBJECT, food);
 
         FoodDetailFragment foodDetailFragment = new FoodDetailFragment();
         foodDetailFragment.setArguments(bundle);
@@ -83,18 +88,33 @@ public class FoodDetailFragment extends BaseFragment implements FoodDetailView {
 
         setFoodBrandIcon();
 
-        mNavigator = new Navigator();
-        mPresenter = new FoodDetailPresenterImpl(this);
-        mPresenter.mapExtras(getArguments());
-
         mFoodName.setTypeface(EasyFonts.robotoLight(getActivity()));
         mFoodCalories.setTypeface(EasyFonts.robotoLight(getActivity()));
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        mPresenter.getFood();
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        initialize();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mFoodDetailPresenter.resume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mFoodDetailPresenter.pause();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mFoodDetailPresenter.destroy();
     }
 
     @Override
@@ -113,7 +133,7 @@ public class FoodDetailFragment extends BaseFragment implements FoodDetailView {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_edit:
-                mNavigator.openEditFoodActivity(getActivity(), mPresenter.getFoodId());
+                mNavigator.openEditFoodActivity(getActivity(), mFoodDetailPresenter.getFoodId());
                 break;
             case R.id.action_delete:
                 showDeleteDialog();
@@ -125,6 +145,11 @@ public class FoodDetailFragment extends BaseFragment implements FoodDetailView {
     @Override
     public String getFoodIdTag() {
         return FoodDetailFragment.EXTRA_FOOD_ID;
+    }
+
+    @Override
+    public String getFoodExtraKey() {
+        return FoodDetailFragment.EXTRA_FOOD_OBJECT;
     }
 
     @Override
@@ -209,6 +234,12 @@ public class FoodDetailFragment extends BaseFragment implements FoodDetailView {
         mNutrientsDescription.setText(description);
     }
 
+    private void initialize() {
+        getComponent(FoodComponent.class).inject(this);
+        mFoodDetailPresenter.setView(this);
+        mFoodDetailPresenter.mapExtras(getArguments());
+    }
+
     private void setFoodBrandIcon() {
         MaterialIconView icon = new MaterialIconView(getActivity());
         icon.setIcon(MaterialDrawableBuilder.IconValue.TAG_TEXT_OUTLINE);
@@ -240,7 +271,7 @@ public class FoodDetailFragment extends BaseFragment implements FoodDetailView {
         alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                mPresenter.deleteFood();
+                mFoodDetailPresenter.deleteFood();
             }
         });
         alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

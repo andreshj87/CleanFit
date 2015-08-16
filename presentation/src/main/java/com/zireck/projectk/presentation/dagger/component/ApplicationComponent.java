@@ -8,6 +8,7 @@ import com.zireck.projectk.domain.repository.FoodRepository;
 import com.zireck.projectk.presentation.view.activity.BaseActivity;
 import com.zireck.projectk.presentation.dagger.module.ApplicationModule;
 import com.zireck.projectk.presentation.navigation.Navigator;
+import com.zireck.projectk.presentation.view.activity.FoodDetailActivity;
 
 import javax.inject.Singleton;
 
@@ -20,6 +21,7 @@ import dagger.Component;
 @Component(modules = ApplicationModule.class)
 public interface ApplicationComponent {
     void inject(BaseActivity baseActivity);
+    void inject(FoodDetailActivity foodDetailActivity);
 
     // Exposed to sub-graphs.
     Context context();

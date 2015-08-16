@@ -15,7 +15,7 @@ public interface FoodRepository {
      *
      * @param foodId The food id used to retrieve food data.
      */
-    Observable<Food> food(final int foodId);
+    Observable<Food> food(final long foodId);
 
     /**
      * Get an {@link Observable} which will emit a List of all {@link Food}.
@@ -31,4 +31,10 @@ public interface FoodRepository {
      * Get an {@link Observable} which will emit a List of Drinks.
      */
     Observable<List<Food>> drinks();
+
+    /**
+     * Get an {@link Observable} which will notify the deletion of a {@link Food} object.
+     * @param foodId
+     */
+    Observable<Void> deleteFood(final long foodId);
 }

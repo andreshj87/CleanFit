@@ -11,6 +11,7 @@ import com.zireck.projectk.R;
 import com.zireck.projectk.presentation.dagger.component.FoodComponent;
 import com.zireck.projectk.presentation.helper.RecyclerItemClickListener;
 import com.zireck.projectk.presentation.model.FoodModel;
+import com.zireck.projectk.presentation.navigation.Navigator;
 import com.zireck.projectk.presentation.presenter.FoodListPresenter;
 import com.zireck.projectk.presentation.view.FoodListView;
 import com.zireck.projectk.presentation.view.adapter.FoodListAdapter;
@@ -26,6 +27,8 @@ import butterknife.Bind;
  * Created by Zireck on 22/07/2015.
  */
 public class FoodListFragment extends BaseFragment implements FoodListView {
+
+    @Inject Navigator mNavigator;
 
     @Inject FoodListPresenter mFoodListPresenter;
     @Bind(R.id.food_list) RecyclerView mRecyclerView;
@@ -80,6 +83,12 @@ public class FoodListFragment extends BaseFragment implements FoodListView {
         }
     }
 
+    @Override
+    public void navigateToFoodDetails(int position) {
+        FoodModel food = mAdapter.getItem(position);
+        mNavigator.openFoodDetailActivity(getActivity(), food);
+    }
+
     protected void initialize() {
         getComponent(FoodComponent.class).inject(this);
         mFoodListPresenter.setView(this);
@@ -96,7 +105,7 @@ public class FoodListFragment extends BaseFragment implements FoodListView {
         mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                //mPresenter.onItemClick(view, position);
+                mFoodListPresenter.onItemClick(position);
             }
         }));
 

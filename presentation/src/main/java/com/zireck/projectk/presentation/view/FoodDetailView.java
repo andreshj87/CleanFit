@@ -5,8 +5,9 @@ import lecho.lib.hellocharts.model.PieChartData;
 /**
  * Created by Zireck on 29/07/2015.
  */
-public interface FoodDetailView {
+public interface FoodDetailView extends View {
     public String getFoodIdTag();
+    String getFoodExtraKey();
     public void setFoodName(String foodName);
     public void setFoodBrand(String foodBrand);
     public void setFoodCalories(String foodCalories);

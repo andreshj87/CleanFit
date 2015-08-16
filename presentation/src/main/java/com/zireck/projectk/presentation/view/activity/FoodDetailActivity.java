@@ -11,6 +11,10 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 import com.zireck.projectk.R;
+import com.zireck.projectk.presentation.dagger.HasComponent;
+import com.zireck.projectk.presentation.dagger.component.DaggerFoodComponent;
+import com.zireck.projectk.presentation.dagger.component.FoodComponent;
+import com.zireck.projectk.presentation.model.FoodModel;
 import com.zireck.projectk.presentation.view.fragment.FoodDetailFragment;
 import com.zireck.projectk.presentation.listener.FoodDetailCallback;
 import com.zireck.projectk.presentation.util.PictureUtils;
@@ -23,11 +27,13 @@ import butterknife.Bind;
 /**
  * Created by Zireck on 29/07/2015.
  */
-public class FoodDetailActivity extends BaseActivity implements FoodDetailCallback {
+public class FoodDetailActivity extends BaseActivity implements FoodDetailCallback, HasComponent<FoodComponent> {
 
-    private static final String EXTRA_FOOD_ID = "food_id";
+    private static final String EXTRA_FOOD_OBJECT = "food_object";
 
-    private long mFoodId;
+    private FoodComponent mFoodComponent;
+
+    private FoodModel mFood;
 
     @Bind(R.id.food_image) ImageView mFoodImage;
     @Bind(R.id.fab) FloatingActionButton mFloatingActionButton;
@@ -35,13 +41,13 @@ public class FoodDetailActivity extends BaseActivity implements FoodDetailCallba
     /**
      * Generates the intent needed to launch this activity.
      */
-    public static Intent getLaunchIntent(final Context context, final long foodId) {
-        if (foodId < 0) {
+    public static Intent getLaunchIntent(final Context context, final FoodModel food) {
+        if (food == null) {
             FoodDetailActivity.throwIllegalArgumentException();
         }
 
         Intent intent = new Intent(context, FoodDetailActivity.class);
-        intent.putExtra(FoodDetailActivity.EXTRA_FOOD_ID, foodId);
+        intent.putExtra(FoodDetailActivity.EXTRA_FOOD_OBJECT, food);
 
         return intent;
     }
@@ -51,6 +57,7 @@ public class FoodDetailActivity extends BaseActivity implements FoodDetailCallba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_detail);
 
+        initInjector();
         mapExtras();
         initializeFragment();
 
@@ -86,28 +93,44 @@ public class FoodDetailActivity extends BaseActivity implements FoodDetailCallba
             throwIllegalArgumentException();
         }
 
-        mFoodId = extras.getLong(FoodDetailActivity.EXTRA_FOOD_ID);
-        if (mFoodId < 0) {
+        //mFoodId = extras.getLong(FoodDetailActivity.EXTRA_FOOD_ID);
+        mFood = extras.getParcelable(FoodDetailActivity.EXTRA_FOOD_OBJECT);
+        if (mFood == null) {
             throwIllegalArgumentException();
         }
+        /*if (mFoodId < 0) {
+            throwIllegalArgumentException();
+        }*/
     }
 
     private void initializeFragment() {
-        if (mFoodId < 0) {
+        if (mFood == null) {
             return;
         }
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, FoodDetailFragment.newInstance(mFoodId)).commit();
+        fragmentTransaction.replace(R.id.fragment_container, FoodDetailFragment.newInstance(mFood)).commit();
     }
 
     private static void throwIllegalArgumentException() {
         throw new IllegalArgumentException(
-                "FoodDetailActivity has to be launched using a valid Food identifier as extra");
+                "FoodDetailActivity has to be launched using a valid Food object as extra");
     }
 
     @Override
     public void setFoodPicture(String foodPicture) {
         Picasso.with(this).load(PictureUtils.getPhotoFileUri(foodPicture)).fit().centerCrop().into(mFoodImage);
+    }
+
+    private void initInjector() {
+        mFoodComponent = DaggerFoodComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .activityModule(getActivityModule())
+                .build();
+    }
+
+    @Override
+    public FoodComponent getComponent() {
+        return mFoodComponent;
     }
 }

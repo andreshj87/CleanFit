@@ -20,15 +20,14 @@ import rx.Subscriber;
  */
 public class FoodDataStore {
 
-    @Inject
-    Context mContext;
+    @Inject Context mContext;
 
     @Inject
     public FoodDataStore() {
 
     }
 
-    public Observable<FoodEntity> foodEntityDetails(final int foodId) {
+    public Observable<FoodEntity> foodEntityDetails(final long foodId) {
         return Observable.create(new Observable.OnSubscribe<FoodEntity>() {
             @Override
             public void call(Subscriber<? super FoodEntity> subscriber) {
@@ -95,6 +94,16 @@ public class FoodDataStore {
                 } else {
                     subscriber.onError(new Throwable());
                 }
+            }
+        });
+    }
+
+    public Observable<Void> deleteFood(final long foodId) {
+        return Observable.create(new Observable.OnSubscribe<Void>() {
+            @Override
+            public void call(Subscriber<? super Void> subscriber) {
+                FoodEntityDao foodEntityDao = initGreenDao();
+                foodEntityDao.deleteByKey(foodId);
             }
         });
     }

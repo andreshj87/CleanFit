@@ -59,14 +59,18 @@ public class DrinkListPresenter implements Presenter {
         getDrinkList();
     }
 
+    private void getDrinkList() {
+        mGetDrinkListInteractor.execute(new DrinkListSubscriber());
+    }
+
     private void showFoodsCollectionInView(Collection<Food> foodsCollection) {
         final Collection<FoodModel> foodModelsCollection =
                 mFoodModelDataMapper.transform(foodsCollection);
         mView.renderDrinkList(foodModelsCollection);
     }
 
-    private void getDrinkList() {
-        mGetDrinkListInteractor.execute(new DrinkListSubscriber());
+    public void onItemClick(int position) {
+        mView.navigateToFoodDetails(position);
     }
 
     private final class DrinkListSubscriber extends DefaultSubscriber<List<Food>> {
