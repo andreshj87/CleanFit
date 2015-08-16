@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.zireck.projectk.R;
+import com.zireck.projectk.presentation.view.fragment.DrinkListFragment;
 import com.zireck.projectk.presentation.view.fragment.FoodListFragment;
 
 /**
@@ -25,9 +26,9 @@ public class FoodRepositoryFragmentPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return FoodListFragment.newInstance(FoodListFragment.TAG_FOOD);
+                return FoodListFragment.newInstance();
             case 1:
-                return FoodListFragment.newInstance(FoodListFragment.TAG_DRINK);
+                return DrinkListFragment.newInstance();
             default:
                 return null;
         }

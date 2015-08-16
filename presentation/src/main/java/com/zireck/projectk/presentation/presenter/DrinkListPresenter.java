@@ -8,7 +8,7 @@ import com.zireck.projectk.domain.interactor.Interactor;
 import com.zireck.projectk.presentation.dagger.PerActivity;
 import com.zireck.projectk.presentation.mapper.FoodModelDataMapper;
 import com.zireck.projectk.presentation.model.FoodModel;
-import com.zireck.projectk.presentation.view.FoodListView;
+import com.zireck.projectk.presentation.view.DrinkListView;
 import com.zireck.projectk.presentation.view.View;
 
 import java.util.Collection;
@@ -18,26 +18,26 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
- * Created by Zireck on 13/08/2015.
+ * Created by Zireck on 16/08/2015.
  */
 @PerActivity
-public class FoodListPresenter implements Presenter {
+public class DrinkListPresenter implements Presenter {
 
-    private FoodListView mView;
+    private DrinkListView mView;
 
-    private final Interactor mGetFoodListInteractor;
+    private final Interactor mGetDrinkListInteractor;
     private final FoodModelDataMapper mFoodModelDataMapper;
 
     @Inject
-    public FoodListPresenter(@Named("foodList") Interactor getFoodListInteractor,
+    public DrinkListPresenter(@Named("drinkList") Interactor getDrinkListInteractor,
                              FoodModelDataMapper foodModelDataMapper) {
-        mGetFoodListInteractor = getFoodListInteractor;
+        mGetDrinkListInteractor = getDrinkListInteractor;
         mFoodModelDataMapper = foodModelDataMapper;
     }
 
     @Override
     public <T extends View> void setView(@NonNull T view) {
-        mView = ((FoodListView) view);
+        mView = ((DrinkListView) view);
     }
 
     @Override
@@ -52,24 +52,24 @@ public class FoodListPresenter implements Presenter {
 
     @Override
     public void destroy() {
-        mGetFoodListInteractor.unsubscribe();
+        mGetDrinkListInteractor.unsubscribe();
     }
 
     public void initialize() {
-        getFoodList();
+        getDrinkList();
     }
 
     private void showFoodsCollectionInView(Collection<Food> foodsCollection) {
         final Collection<FoodModel> foodModelsCollection =
                 mFoodModelDataMapper.transform(foodsCollection);
-        mView.renderFoodList(foodModelsCollection);
+        mView.renderDrinkList(foodModelsCollection);
     }
 
-    private void getFoodList() {
-        mGetFoodListInteractor.execute(new FoodListSubscriber());
+    private void getDrinkList() {
+        mGetDrinkListInteractor.execute(new DrinkListSubscriber());
     }
 
-    private final class FoodListSubscriber extends DefaultSubscriber<List<Food>> {
+    private final class DrinkListSubscriber extends DefaultSubscriber<List<Food>> {
         @Override
         public void onCompleted() {
         }

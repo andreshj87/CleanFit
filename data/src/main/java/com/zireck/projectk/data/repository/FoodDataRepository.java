@@ -39,8 +39,28 @@ public class FoodDataRepository implements FoodRepository {
     }
 
     @Override
-    public Observable<List<Food>> foods() {
+    public Observable<List<Food>> allFood() {
         return mFoodDataStore.foodEntityList().map(new Func1<List<FoodEntity>, List<Food>>() {
+            @Override
+            public List<Food> call(List<FoodEntity> foodEntities) {
+                return mFoodEntityDataMapper.transform(foodEntities);
+            }
+        });
+    }
+
+    @Override
+    public Observable<List<Food>> foods() {
+        return mFoodDataStore.foodList().map(new Func1<List<FoodEntity>, List<Food>>() {
+            @Override
+            public List<Food> call(List<FoodEntity> foodEntities) {
+                return mFoodEntityDataMapper.transform(foodEntities);
+            }
+        });
+    }
+
+    @Override
+    public Observable<List<Food>> drinks() {
+        return mFoodDataStore.drinkList().map(new Func1<List<FoodEntity>, List<Food>>() {
             @Override
             public List<Food> call(List<FoodEntity> foodEntities) {
                 return mFoodEntityDataMapper.transform(foodEntities);

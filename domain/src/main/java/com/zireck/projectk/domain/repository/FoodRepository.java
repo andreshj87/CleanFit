@@ -18,7 +18,17 @@ public interface FoodRepository {
     Observable<Food> food(final int foodId);
 
     /**
+     * Get an {@link Observable} which will emit a List of all {@link Food}.
+     */
+    Observable<List<Food>> allFood();
+
+    /**
      * Get an {@link Observable} which will emit a List of {@link Food}.
      */
     Observable<List<Food>> foods();
+
+    /**
+     * Get an {@link Observable} which will emit a List of Drinks.
+     */
+    Observable<List<Food>> drinks();
 }

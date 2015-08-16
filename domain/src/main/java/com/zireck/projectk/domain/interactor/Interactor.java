@@ -37,15 +37,15 @@ public abstract class Interactor {
     /**
      * Executes the current interactor.
      *
-     * @param InteractorSubscriber The object who will be listening to the observable built with
+     * @param interactorSubscriber The object who will be listening to the observable built with
      *                             {@link #buildInteractorObservable()}.
      */
     @SuppressWarnings("unchecked")
-    public void execute(Subscriber InteractorSubscriber) {
+    public void execute(Subscriber interactorSubscriber) {
         mSubscription = buildInteractorObservable()
                 .subscribeOn(Schedulers.from(mThreadExecutor))
                 .observeOn(mPostExecutionThread.getScheduler())
-                .subscribe(InteractorSubscriber);
+                .subscribe(interactorSubscriber);
     }
 
     /**

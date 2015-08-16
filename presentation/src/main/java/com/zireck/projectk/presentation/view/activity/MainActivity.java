@@ -25,12 +25,13 @@ import com.zireck.projectk.R;
 import com.zireck.projectk.presentation.dagger.HasComponent;
 import com.zireck.projectk.presentation.dagger.component.DaggerFoodComponent;
 import com.zireck.projectk.presentation.dagger.component.FoodComponent;
-import com.zireck.projectk.presentation.view.fragment.FoodListFragment;
-import com.zireck.projectk.presentation.view.fragment.FoodRepositoryFragment;
-import com.zireck.projectk.presentation.view.fragment.HomeFragment;
-import com.zireck.projectk.presentation.navigation.Navigator;
 import com.zireck.projectk.presentation.listener.OnFoodRepositoryTabChangeListener;
+import com.zireck.projectk.presentation.navigation.Navigator;
 import com.zireck.projectk.presentation.util.SnackbarUtils;
+import com.zireck.projectk.presentation.view.fragment.DrinkListFragment;
+import com.zireck.projectk.presentation.view.fragment.FoodCatalogFragment;
+import com.zireck.projectk.presentation.view.fragment.FoodListFragment;
+import com.zireck.projectk.presentation.view.fragment.HomeFragment;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -73,6 +74,48 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
         initDrawerToggle();
 
         selectNavigationViewFirstItem();
+
+        /*
+        DaoMaster.DevOpenHelper daoMaster = new DaoMaster.DevOpenHelper(this, "projectk", null);
+        SQLiteDatabase mDatabase = daoMaster.getWritableDatabase();
+        DaoMaster mDaoMaster = new DaoMaster(mDatabase);
+        DaoSession mDaoSession = mDaoMaster.newSession();
+        FoodEntityDao foodEntityDao = mDaoSession.getFoodEntityDao();
+
+        FoodEntity foodEntity = new FoodEntity();
+        foodEntity.setId((long) 5);
+        foodEntity.setName("Cafe");
+        foodEntity.setBrand("Capuchino");
+        foodEntity.setIsDrink(true);
+        foodEntity.setCalories(135);
+        foodEntity.setFats(12);
+        foodEntity.setCarbohydrates(31);
+        foodEntity.setProteins(8);
+
+        foodEntityDao.insert(foodEntity);
+
+        foodEntity.setId((long) 6);
+        foodEntity.setName("Leche");
+        foodEntity.setBrand("Asturiana");
+        foodEntity.setIsDrink(true);
+        foodEntity.setCalories(112);
+        foodEntity.setFats(22);
+        foodEntity.setCarbohydrates(35);
+        foodEntity.setProteins(19);
+
+        foodEntityDao.insert(foodEntity);
+
+        foodEntity.setId((long) 7);
+        foodEntity.setName("Arroz Redondo");
+        foodEntity.setBrand("Gallo");
+        foodEntity.setIsDrink(false);
+        foodEntity.setCalories(245);
+        foodEntity.setFats(15);
+        foodEntity.setCarbohydrates(47);
+        foodEntity.setProteins(27);
+
+        foodEntityDao.insert(foodEntity);*/
+
     }
 
     @Override
@@ -162,7 +205,7 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
     public void onClickFAB() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         if (fragment != null) {
-            if (fragment instanceof FoodRepositoryFragment) {
+            if (fragment instanceof FoodCatalogFragment) {
                 mNavigator.openAddFoodActivity(this);
             } else {
                 SnackbarUtils.showShortMessage(mCoordinatorLayout, "Nothing!");
@@ -237,13 +280,13 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
                 //showFAB();
                 break;
             case R.id.drawer_food:
-                fragment = FoodListFragment.newInstance(FoodListFragment.TAG_FOOD);
+                fragment = FoodListFragment.newInstance();
                 break;
             case R.id.drawer_drink:
-                fragment = FoodListFragment.newInstance(FoodListFragment.TAG_DRINK);
+                fragment = DrinkListFragment.newInstance();
                 break;
             case R.id.drawer_repository:
-                fragment = FoodRepositoryFragment.newInstance();
+                fragment = FoodCatalogFragment.newInstance();
                 showFAB();
                 break;
         }

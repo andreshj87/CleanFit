@@ -38,18 +38,6 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodVi
         mLayout = layout;
     }
 
-    public void setFoodsCollection(Collection<FoodModel> foodsCollection) {
-        validateFoodsCollection(foodsCollection);
-        mFoodsCollection = (List<FoodModel>) foodsCollection;
-        notifyDataSetChanged();
-    }
-
-    private void validateFoodsCollection(Collection<FoodModel> foodsCollection) {
-        if (foodsCollection == null) {
-            throw new IllegalArgumentException("The food list cannot be null.");
-        }
-    }
-
     @Override
     public FoodViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(mLayout, parent, false);
@@ -73,8 +61,15 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodVi
     }
 
     @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
     public int getItemCount() {
         return (mFoodsCollection != null) ? mFoodsCollection.size() : 0;
+        //System.out.println("k9d3 item count = " + mFoodsCollection.size());
+        //return mFoodsCollection.size();
     }
 
     public static class FoodViewHolder extends RecyclerView.ViewHolder {
@@ -87,6 +82,20 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodVi
         public FoodViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+    }
+
+    public void setFoodsCollection(Collection<FoodModel> foodsCollection) {
+        validateFoodsCollection(foodsCollection);
+        //mFoodsCollection.clear();
+        mFoodsCollection = (List<FoodModel>) foodsCollection;
+        //mFoodsCollection.addAll(foodsCollection);
+        notifyDataSetChanged();
+    }
+
+    private void validateFoodsCollection(Collection<FoodModel> foodsCollection) {
+        if (foodsCollection == null) {
+            throw new IllegalArgumentException("The food list cannot be null.");
         }
     }
 }

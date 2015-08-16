@@ -11,8 +11,8 @@ import com.zireck.projectk.R;
 import com.zireck.projectk.presentation.dagger.component.FoodComponent;
 import com.zireck.projectk.presentation.helper.RecyclerItemClickListener;
 import com.zireck.projectk.presentation.model.FoodModel;
-import com.zireck.projectk.presentation.presenter.FoodListPresenter;
-import com.zireck.projectk.presentation.view.FoodListView;
+import com.zireck.projectk.presentation.presenter.DrinkListPresenter;
+import com.zireck.projectk.presentation.view.DrinkListView;
 import com.zireck.projectk.presentation.view.adapter.FoodListAdapter;
 
 import java.util.ArrayList;
@@ -23,16 +23,16 @@ import javax.inject.Inject;
 import butterknife.Bind;
 
 /**
- * Created by Zireck on 22/07/2015.
+ * Created by Zireck on 16/08/2015.
  */
-public class FoodListFragment extends BaseFragment implements FoodListView {
+public class DrinkListFragment extends BaseFragment implements DrinkListView {
 
-    @Inject FoodListPresenter mFoodListPresenter;
+    @Inject DrinkListPresenter mDrinkListPresenter;
     @Bind(R.id.food_list) RecyclerView mRecyclerView;
     protected FoodListAdapter mAdapter;
 
-    public static FoodListFragment newInstance() {
-        return new FoodListFragment();
+    public static DrinkListFragment newInstance() {
+        return new DrinkListFragment();
     }
 
     @Override
@@ -47,25 +47,25 @@ public class FoodListFragment extends BaseFragment implements FoodListView {
         super.onActivityCreated(savedInstanceState);
 
         initialize();
-        loadFoodList();
+        loadDrinkList();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mFoodListPresenter.resume();
+        mDrinkListPresenter.resume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mFoodListPresenter.pause();
+        mDrinkListPresenter.pause();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mFoodListPresenter.destroy();
+        mDrinkListPresenter.destroy();
     }
 
     @Override
@@ -73,20 +73,20 @@ public class FoodListFragment extends BaseFragment implements FoodListView {
         return R.layout.fragment_food_list;
     }
 
-    @Override
-    public void renderFoodList(Collection<FoodModel> foodModelsCollection) {
-        if (foodModelsCollection != null) {
-            mAdapter.setFoodsCollection(foodModelsCollection);
-        }
-    }
-
-    protected void initialize() {
+    private void initialize() {
         getComponent(FoodComponent.class).inject(this);
-        mFoodListPresenter.setView(this);
+        mDrinkListPresenter.setView(this);
     }
 
-    protected void loadFoodList() {
-        mFoodListPresenter.initialize();
+    private void loadDrinkList() {
+        mDrinkListPresenter.initialize();
+    }
+
+    @Override
+    public void renderDrinkList(Collection<FoodModel> drinkItems) {
+        if (drinkItems != null) {
+            mAdapter.setFoodsCollection(drinkItems);
+        }
     }
 
     private void initRecyclerView() {
@@ -103,5 +103,4 @@ public class FoodListFragment extends BaseFragment implements FoodListView {
         mAdapter = new FoodListAdapter(getActivity(), new ArrayList<FoodModel>(), FoodListAdapter.ITEM_LAYOUT);
         mRecyclerView.setAdapter(mAdapter);
     }
-
 }

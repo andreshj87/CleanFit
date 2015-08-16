@@ -16,7 +16,7 @@ import butterknife.Bind;
 /**
  * Created by Zireck on 20/07/2015.
  */
-public class FoodRepositoryFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
+public class FoodCatalogFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
 
     private OnFoodRepositoryTabChangeListener mCallback;
 
@@ -24,8 +24,8 @@ public class FoodRepositoryFragment extends BaseFragment implements ViewPager.On
     @Bind(R.id.viewpager) ViewPager mViewPager;
     private FoodRepositoryFragmentPagerAdapter mAdapter;
 
-    public static FoodRepositoryFragment newInstance() {
-        return new FoodRepositoryFragment();
+    public static FoodCatalogFragment newInstance() {
+        return new FoodCatalogFragment();
     }
 
     @Override
@@ -48,7 +48,7 @@ public class FoodRepositoryFragment extends BaseFragment implements ViewPager.On
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.fragment_food_repository;
+        return R.layout.fragment_food_catalog;
     }
 
     @Override
@@ -71,9 +71,7 @@ public class FoodRepositoryFragment extends BaseFragment implements ViewPager.On
     private void initViewPager() {
         mAdapter = new FoodRepositoryFragmentPagerAdapter(getActivity(), getChildFragmentManager());
         mViewPager.setAdapter(mAdapter);
-
         mPagerSlidingTabStrip.setViewPager(mViewPager);
-
         mPagerSlidingTabStrip.setOnPageChangeListener(this);
     }
 }

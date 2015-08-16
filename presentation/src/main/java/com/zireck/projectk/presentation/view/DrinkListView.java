@@ -5,8 +5,8 @@ import com.zireck.projectk.presentation.model.FoodModel;
 import java.util.Collection;
 
 /**
- * Created by Zireck on 22/07/2015.
+ * Created by Zireck on 16/08/2015.
  */
-public interface FoodListView extends View {
-    void renderFoodList(Collection<FoodModel> foodItems);
+public interface DrinkListView extends View {
+    void renderDrinkList(Collection<FoodModel> drinkItems);
 }

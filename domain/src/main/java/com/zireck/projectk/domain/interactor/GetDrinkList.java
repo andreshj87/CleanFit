@@ -11,19 +11,19 @@ import rx.Observable;
 /**
  * Created by Zireck on 14/08/2015.
  */
-public class GetFoodList extends Interactor {
+public class GetDrinkList extends Interactor {
 
     private final FoodRepository mFoodRepository;
 
     @Inject
-    public GetFoodList(FoodRepository foodRepository, ThreadExecutor threadExecutor,
-                          PostExecutionThread postExecutionThread) {
+    public GetDrinkList(FoodRepository foodRepository, ThreadExecutor threadExecutor,
+                       PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
         mFoodRepository = foodRepository;
     }
 
     @Override
     protected Observable buildInteractorObservable() {
-        return mFoodRepository.foods();
+        return mFoodRepository.drinks();
     }
 }
