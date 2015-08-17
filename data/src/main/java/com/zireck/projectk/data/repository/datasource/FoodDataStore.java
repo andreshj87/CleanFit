@@ -119,8 +119,7 @@ public class FoodDataStore {
             @Override
             public void call(Subscriber<? super Void> subscriber) {
                 FoodEntityDao foodEntityDao = initGreenDao();
-                // TODO uncomment:
-                //foodEntityDao.update(food);
+                foodEntityDao.update(food);
 
                 subscriber.onCompleted();
             }

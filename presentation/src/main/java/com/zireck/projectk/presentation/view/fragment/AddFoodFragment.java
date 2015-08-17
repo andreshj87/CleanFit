@@ -391,7 +391,6 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
 
     protected void validateData() {
         String name = mFoodNameEditText.getText().toString();
-        System.out.println("k9d3 nombre: " + name);
         String brand = mFoodBrandEditText.getText().toString();
         boolean isDrink = mFoodIsDrinkCheckbox.isChecked();
         String calories = mFoodCaloriesEditText.getText().toString();

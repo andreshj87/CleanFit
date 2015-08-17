@@ -67,6 +67,8 @@ public class FoodDetailPresenter implements Presenter {
         }
     }
 
+
+
     private void throwIllegalArgumentException() {
         throw new IllegalArgumentException(
                 "FoodDetailFragment has to be launched using a valid Food object as extra");

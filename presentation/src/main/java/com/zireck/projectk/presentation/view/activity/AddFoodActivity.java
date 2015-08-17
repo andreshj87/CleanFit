@@ -76,7 +76,7 @@ public class AddFoodActivity extends BaseActivity implements OnAddFoodFinishedLi
         navigateBack(RESULT_CANCELED);
     }
 
-    protected void navigateBack(int result) {
+    private void navigateBack(int result) {
         Intent intent = new Intent();
         setResult(result, intent);
         finish();
@@ -90,7 +90,7 @@ public class AddFoodActivity extends BaseActivity implements OnAddFoodFinishedLi
                 .build();
     }
 
-    protected void initActionBar() {
+    private void initActionBar() {
         mToolbar.setNavigationIcon(R.drawable.ic_close_white_24dp);
 
         setSupportActionBar(mToolbar);

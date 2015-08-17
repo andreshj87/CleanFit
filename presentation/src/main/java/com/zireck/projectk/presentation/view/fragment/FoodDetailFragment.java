@@ -133,7 +133,7 @@ public class FoodDetailFragment extends BaseFragment implements FoodDetailView {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_edit:
-                mNavigator.openEditFoodActivity(getActivity(), mFoodDetailPresenter.getFoodId());
+                mNavigator.openEditFoodActivity(getActivity(), mFoodDetailPresenter.getFood());
                 break;
             case R.id.action_delete:
                 showDeleteDialog();

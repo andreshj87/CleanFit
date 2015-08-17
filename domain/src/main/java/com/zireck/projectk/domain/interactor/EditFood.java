@@ -14,15 +14,22 @@ import rx.Observable;
  */
 public class EditFood extends Interactor {
 
-    private final Food mFood;
+    private Food mFood;
     private final FoodRepository mFoodRepository;
 
     @Inject
-    public EditFood(final Food food, FoodRepository foodRepository, ThreadExecutor threadExecutor,
+    public EditFood(FoodRepository foodRepository, ThreadExecutor threadExecutor,
                       PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
-        mFood = food;
         mFoodRepository = foodRepository;
+    }
+
+    public void setFood(Food food) {
+        if (food == null) {
+            throw new IllegalArgumentException("Food object cannot be null.");
+        }
+
+        mFood = food;
     }
 
     @Override

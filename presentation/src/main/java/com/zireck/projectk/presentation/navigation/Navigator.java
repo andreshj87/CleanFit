@@ -61,10 +61,10 @@ public class Navigator {
 
     /**
      * Open EditFoodActivity
-     * @param foodId
+     * @param food
      */
-    public void openEditFoodActivity(Activity activity, final long foodId) {
-        Intent intent = EditFoodActivity.getLaunchIntent(activity, foodId);
+    public void openEditFoodActivity(Activity activity, final FoodModel food) {
+        Intent intent = EditFoodActivity.getLaunchIntent(activity, food);
         startActivityForResult(activity, intent, EDIT_FOOD_REQUEST);
     }
 

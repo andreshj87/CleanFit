@@ -69,10 +69,10 @@ public class FoodModule {
     }
 
     @Provides @PerActivity @Named("editFood")
-    Interactor provideEditFoodInteractor(FoodRepository foodRepository,
+    EditFood provideEditFoodInteractor(FoodRepository foodRepository,
                                          ThreadExecutor threadExecutor,
                                          PostExecutionThread postExecutionThread) {
-        return new EditFood(mFood, foodRepository, threadExecutor, postExecutionThread);
+        return new EditFood(foodRepository, threadExecutor, postExecutionThread);
     }
 
     @Provides @PerActivity @Named("deleteFood")
