@@ -7,6 +7,7 @@ import android.view.View;
 import com.zireck.projectk.presentation.AndroidApplication;
 import com.zireck.projectk.presentation.dagger.component.ApplicationComponent;
 import com.zireck.projectk.presentation.dagger.module.ActivityModule;
+import com.zireck.projectk.presentation.mapper.FoodModelDataMapper;
 import com.zireck.projectk.presentation.navigation.Navigator;
 
 import javax.inject.Inject;
@@ -19,6 +20,7 @@ import butterknife.ButterKnife;
 public abstract class BaseActivity extends AppCompatActivity {
 
     @Inject Navigator mNavigator;
+    @Inject FoodModelDataMapper mFoodModelDataMapper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

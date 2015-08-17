@@ -98,12 +98,31 @@ public class FoodDataStore {
         });
     }
 
-    public Observable<Void> deleteFood(final long foodId) {
+    public Observable<Void> addFood(final FoodEntity food) {
         return Observable.create(new Observable.OnSubscribe<Void>() {
             @Override
             public void call(Subscriber<? super Void> subscriber) {
                 FoodEntityDao foodEntityDao = initGreenDao();
-                foodEntityDao.deleteByKey(foodId);
+                long result = foodEntityDao.insert(food);
+
+                if (result == -1) {
+                    subscriber.onError(new Throwable());
+                } else {
+                    subscriber.onCompleted();
+                }
+            }
+        });
+    }
+
+    public Observable<Void> deleteFood(final FoodEntity food) {
+        return Observable.create(new Observable.OnSubscribe<Void>() {
+            @Override
+            public void call(Subscriber<? super Void> subscriber) {
+                FoodEntityDao foodEntityDao = initGreenDao();
+                // TODO uncomment:
+                //foodEntityDao.deleteByKey(foodId);
+
+                subscriber.onCompleted();
             }
         });
     }

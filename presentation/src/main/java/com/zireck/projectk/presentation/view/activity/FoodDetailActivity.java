@@ -14,10 +14,11 @@ import com.zireck.projectk.R;
 import com.zireck.projectk.presentation.dagger.HasComponent;
 import com.zireck.projectk.presentation.dagger.component.DaggerFoodComponent;
 import com.zireck.projectk.presentation.dagger.component.FoodComponent;
-import com.zireck.projectk.presentation.model.FoodModel;
-import com.zireck.projectk.presentation.view.fragment.FoodDetailFragment;
+import com.zireck.projectk.presentation.dagger.module.FoodModule;
 import com.zireck.projectk.presentation.listener.FoodDetailCallback;
+import com.zireck.projectk.presentation.model.FoodModel;
 import com.zireck.projectk.presentation.util.PictureUtils;
+import com.zireck.projectk.presentation.view.fragment.FoodDetailFragment;
 
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
 import net.steamcrafted.materialiconlib.MaterialIconView;
@@ -27,7 +28,8 @@ import butterknife.Bind;
 /**
  * Created by Zireck on 29/07/2015.
  */
-public class FoodDetailActivity extends BaseActivity implements FoodDetailCallback, HasComponent<FoodComponent> {
+public class FoodDetailActivity extends BaseActivity implements FoodDetailCallback,
+                                                                HasComponent<FoodComponent> {
 
     private static final String EXTRA_FOOD_OBJECT = "food_object";
 
@@ -57,8 +59,8 @@ public class FoodDetailActivity extends BaseActivity implements FoodDetailCallba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_detail);
 
-        initInjector();
         mapExtras();
+        initInjector();
         initializeFragment();
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
@@ -93,14 +95,10 @@ public class FoodDetailActivity extends BaseActivity implements FoodDetailCallba
             throwIllegalArgumentException();
         }
 
-        //mFoodId = extras.getLong(FoodDetailActivity.EXTRA_FOOD_ID);
         mFood = extras.getParcelable(FoodDetailActivity.EXTRA_FOOD_OBJECT);
         if (mFood == null) {
             throwIllegalArgumentException();
         }
-        /*if (mFoodId < 0) {
-            throwIllegalArgumentException();
-        }*/
     }
 
     private void initializeFragment() {
@@ -126,6 +124,7 @@ public class FoodDetailActivity extends BaseActivity implements FoodDetailCallba
         mFoodComponent = DaggerFoodComponent.builder()
                 .applicationComponent(getApplicationComponent())
                 .activityModule(getActivityModule())
+                .foodModule(new FoodModule(mFoodModelDataMapper.transformInverse(mFood)))
                 .build();
     }
 

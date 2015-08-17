@@ -33,8 +33,13 @@ public interface FoodRepository {
     Observable<List<Food>> drinks();
 
     /**
-     * Get an {@link Observable} which will notify the deletion of a {@link Food} object.
-     * @param foodId
+     * Get an {@link Observable} which will notify the addition of a {@link Food} object.
      */
-    Observable<Void> deleteFood(final long foodId);
+    Observable<Void> addFood(final Food food);
+
+    /**
+     * Get an {@link Observable} which will notify the deletion of a {@link Food} object.
+     * @param food
+     */
+    Observable<Void> deleteFood(final Food food);
 }

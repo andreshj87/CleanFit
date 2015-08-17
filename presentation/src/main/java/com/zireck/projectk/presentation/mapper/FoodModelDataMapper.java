@@ -28,7 +28,7 @@ public class FoodModelDataMapper {
      */
     public FoodModel transform(Food food) {
         if (food == null) {
-            throw new IllegalArgumentException("Cannot transform a null value");
+            argumentException();
         }
 
         FoodModel foodModel = new FoodModel(food.getId());
@@ -63,5 +63,54 @@ public class FoodModelDataMapper {
         }
 
         return foodModelsCollection;
+    }
+
+    /**
+     * Transforms a {@link FoodModel} into a {@link Food}.
+     *
+     * @param foodModel {@link FoodModel} object to be transformed.
+     * @return {@link Food}.
+     */
+    public Food transformInverse(FoodModel foodModel) {
+        if (foodModel == null) {
+            argumentException();
+        }
+
+        Food food = new Food(foodModel.getId());
+        food.setName(foodModel.getName());
+        food.setBrand(foodModel.getBrand());
+        food.setIsDrink(foodModel.isDrink());
+        food.setCalories(foodModel.getCalories());
+        food.setFats(foodModel.getFats());
+        food.setCarbohydrates(foodModel.getCarbohydrates());
+        food.setProteins(foodModel.getProteins());
+        food.setPicture(foodModel.getPicture());
+
+        return food;
+    }
+
+    /**
+     * Transforms a Collection of {@link FoodModel} into a Collection of {@link Food}.
+     *
+     * @param foodModelsCollection {@link FoodModel} objects to be transformed.
+     * @return List of {@link Food}.
+     */
+    public Collection<Food> transformInverse(Collection<FoodModel> foodModelsCollection) {
+        Collection<Food> foodsCollection;
+
+        if (foodModelsCollection != null && !foodModelsCollection.isEmpty()) {
+            foodsCollection = new ArrayList<Food>();
+            for (FoodModel foodModel : foodModelsCollection) {
+                foodsCollection.add(transformInverse(foodModel));
+            }
+        } else {
+            foodsCollection = Collections.emptyList();
+        }
+
+        return foodsCollection;
+    }
+
+    private void argumentException() {
+        throw new IllegalArgumentException("Cannot transform a null value");
     }
 }

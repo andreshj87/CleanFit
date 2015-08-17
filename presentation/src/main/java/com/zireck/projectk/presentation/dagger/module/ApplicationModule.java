@@ -9,6 +9,7 @@ import com.zireck.projectk.domain.executor.ThreadExecutor;
 import com.zireck.projectk.domain.repository.FoodRepository;
 import com.zireck.projectk.presentation.AndroidApplication;
 import com.zireck.projectk.presentation.UIThread;
+import com.zireck.projectk.presentation.mapper.FoodModelDataMapper;
 import com.zireck.projectk.presentation.navigation.Navigator;
 
 import javax.inject.Singleton;
@@ -51,5 +52,10 @@ public class ApplicationModule {
     @Provides @Singleton
     FoodRepository provideFoodRepository(FoodDataRepository foodDataRepository) {
         return foodDataRepository;
+    }
+
+    @Provides @Singleton
+    FoodModelDataMapper provideFoodModelDataMapper() {
+        return new FoodModelDataMapper();
     }
 }

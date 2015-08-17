@@ -68,4 +68,52 @@ public class FoodEntityDataMapper {
 
         return foodsList;
     }
+
+    /**
+     * Transforms a {@link Food} into a {@link FoodEntity}.
+     *
+     * @param food {@link Food} to be transformed.
+     * @return {@link FoodEntity} if valid {@link Food}, otherwise null.
+     */
+    public FoodEntity transformInverse(Food food) {
+        FoodEntity foodEntity = null;
+        if (food != null) {
+            foodEntity = new FoodEntity(food.getId());
+            foodEntity.setName(food.getName());
+            foodEntity.setBrand(food.getBrand());
+            foodEntity.setIsDrink(food.isDrink());
+            foodEntity.setCalories(food.getCalories());
+            foodEntity.setFats(food.getFats());
+            foodEntity.setCarbohydrates(food.getCarbohydrates());
+            foodEntity.setProteins(food.getProteins());
+            foodEntity.setPicture(food.getPicture());
+        }
+
+        return foodEntity;
+    }
+
+    /**
+     * Transforms a Collection of {@link Food} into a List of {@link FoodEntity}.
+     *
+     * @param foodCollection {@link Food} Collection to be transformed.
+     * @return List of {@link FoodEntity}.
+     */
+    public List<FoodEntity> transformInverse(Collection<Food> foodCollection) {
+        List<FoodEntity> foodEntities;
+
+        if (foodCollection != null && !foodCollection.isEmpty()) {
+            foodEntities = new ArrayList<FoodEntity>();
+            FoodEntity foodEntity;
+            for (Food food : foodCollection) {
+                foodEntity = transformInverse(food);
+                if (foodEntity != null) {
+                    foodEntities.add(foodEntity);
+                }
+            }
+        } else {
+            foodEntities = Collections.emptyList();
+        }
+
+        return foodEntities;
+    }
 }

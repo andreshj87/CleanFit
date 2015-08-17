@@ -5,10 +5,10 @@ import android.content.Context;
 import com.zireck.projectk.domain.executor.PostExecutionThread;
 import com.zireck.projectk.domain.executor.ThreadExecutor;
 import com.zireck.projectk.domain.repository.FoodRepository;
-import com.zireck.projectk.presentation.view.activity.BaseActivity;
 import com.zireck.projectk.presentation.dagger.module.ApplicationModule;
+import com.zireck.projectk.presentation.mapper.FoodModelDataMapper;
 import com.zireck.projectk.presentation.navigation.Navigator;
-import com.zireck.projectk.presentation.view.activity.FoodDetailActivity;
+import com.zireck.projectk.presentation.view.activity.BaseActivity;
 
 import javax.inject.Singleton;
 
@@ -21,7 +21,6 @@ import dagger.Component;
 @Component(modules = ApplicationModule.class)
 public interface ApplicationComponent {
     void inject(BaseActivity baseActivity);
-    void inject(FoodDetailActivity foodDetailActivity);
 
     // Exposed to sub-graphs.
     Context context();
@@ -29,4 +28,5 @@ public interface ApplicationComponent {
     ThreadExecutor threadExecutor();
     PostExecutionThread postExecutionThread();
     FoodRepository foodRepository();
+    FoodModelDataMapper foodModelDataMapper();
 }

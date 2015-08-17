@@ -26,6 +26,7 @@ public class FoodDetailPresenter implements Presenter {
 
     private FoodDetailView mView;
     private Interactor mDeleteFoodInteractor;
+
     private FoodModel mFood;
 
     @Inject
@@ -105,6 +106,10 @@ public class FoodDetailPresenter implements Presenter {
         pieChartData.setHasCenterCircle(true);
         pieChartData.setHasLabels(false);
         mView.setPieChartData(pieChartData);
+    }
+
+    public long getFoodId() {
+        return mFood.getId();
     }
 
     public FoodModel getFood() {

@@ -8,7 +8,7 @@ import net.steamcrafted.materialiconlib.MaterialIconView;
 /**
  * Created by Zireck on 24/07/2015.
  */
-public interface AddFoodView {
+public interface AddFoodView extends View {
     public void foodSuccessfullyAdded();
     public void setGr();
     public void setMl();

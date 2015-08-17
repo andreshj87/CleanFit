@@ -1,11 +1,13 @@
 package com.zireck.projectk.presentation.dagger.module;
 
+import com.zireck.projectk.domain.Food;
 import com.zireck.projectk.domain.executor.PostExecutionThread;
 import com.zireck.projectk.domain.executor.ThreadExecutor;
+import com.zireck.projectk.domain.interactor.AddFood;
 import com.zireck.projectk.domain.interactor.DeleteFood;
+import com.zireck.projectk.domain.interactor.GetAllFoodList;
 import com.zireck.projectk.domain.interactor.GetDrinkList;
 import com.zireck.projectk.domain.interactor.GetFoodDetails;
-import com.zireck.projectk.domain.interactor.GetAllFoodList;
 import com.zireck.projectk.domain.interactor.GetFoodList;
 import com.zireck.projectk.domain.interactor.Interactor;
 import com.zireck.projectk.domain.repository.FoodRepository;
@@ -22,6 +24,7 @@ import dagger.Provides;
 @Module
 public class FoodModule {
 
+    private Food mFood;
     private long mFoodId = -1;
 
     public FoodModule() {
@@ -30,6 +33,10 @@ public class FoodModule {
 
     public FoodModule(long foodId) {
         mFoodId = foodId;
+    }
+
+    public FoodModule(final Food food) {
+        mFood = food;
     }
 
     @Provides @PerActivity @Named("allFoodList")
@@ -53,9 +60,16 @@ public class FoodModule {
         return new GetFoodDetails(mFoodId, foodRepository, threadExecutor, postExecutionThread);
     }
 
+    @Provides @PerActivity @Named("addFood")
+    Interactor provideAddFoodInteractor(FoodRepository foodRepository,
+                                        ThreadExecutor threadExecutor,
+                                        PostExecutionThread postExecutionThread) {
+        return new AddFood(mFood, foodRepository, threadExecutor, postExecutionThread);
+    }
+
     @Provides @PerActivity @Named("deleteFood")
     Interactor provideDeleteInteractor(FoodRepository foodRepository, ThreadExecutor threadExecutor,
                                        PostExecutionThread postExecutionThread) {
-        return new DeleteFood(mFoodId, foodRepository, threadExecutor, postExecutionThread);
+        return new DeleteFood(mFood, foodRepository, threadExecutor, postExecutionThread);
     }
 }

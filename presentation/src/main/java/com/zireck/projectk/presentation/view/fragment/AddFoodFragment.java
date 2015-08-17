@@ -19,15 +19,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zireck.projectk.R;
+import com.zireck.projectk.presentation.dagger.component.FoodComponent;
 import com.zireck.projectk.presentation.helper.LimitedDecimalsInputFilter;
 import com.zireck.projectk.presentation.listener.OnAddFoodFinishedListener;
 import com.zireck.projectk.presentation.presenter.AddFoodPresenter;
-import com.zireck.projectk.presentation.presenter.AddFoodPresenterImpl;
 import com.zireck.projectk.presentation.util.PictureUtils;
 import com.zireck.projectk.presentation.util.SnackbarUtils;
 import com.zireck.projectk.presentation.view.AddFoodView;
 
 import net.steamcrafted.materialiconlib.MaterialIconView;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -69,7 +71,8 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
     @Bind(R.id.food_proteins_edit_text) EditText mFoodProteinsEditText;
 
     private OnAddFoodFinishedListener mCallback;
-    private AddFoodPresenter mPresenter;
+    //private OldAddFoodPresenter mPresenter;
+    @Inject AddFoodPresenter mAddFoodPresenter;
 
     @Override
     public void onAttach(Activity activity) {
@@ -92,13 +95,23 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mPresenter = new AddFoodPresenterImpl(getActivity(), this);
-
         hideKeyboard();
         //initEditTextFocusListeners();
         initEditTextFocusListenersWeird();
         applyDecimalFilters();
         initDrinkCheckBox();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        initialize();
+    }
+
+    private void initialize() {
+        getComponent(FoodComponent.class).inject(this);
+        mAddFoodPresenter.setView(this);
     }
 
     @Override
@@ -130,7 +143,7 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
 
         if (requestCode == PictureUtils.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-                mPresenter.receivePicture();
+                mAddFoodPresenter.receivePicture();
             } else {
                 SnackbarUtils.showError(getView(), "Picture wasn't taken.");
             }
@@ -139,17 +152,17 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
 
     @OnClick(R.id.food_picture)
     public void onFoodImageClick() {
-        mPresenter.startCamera(getActivity());
+        mAddFoodPresenter.startCamera(getActivity());
     }
 
     @OnClick(R.id.button_take_picture)
     public void onTakePictureClick() {
-        mPresenter.startCamera(getActivity());
+        mAddFoodPresenter.startCamera(getActivity());
     }
 
     @OnClick(R.id.button_delete_picture)
     public void onDeletePictureClick() {
-        mPresenter.deleteCurrentPicture();
+        mAddFoodPresenter.deleteCurrentPicture();
     }
 
     @Override
@@ -254,9 +267,9 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
                 if (v instanceof EditText) {
                     EditText editText = (EditText) v;
                     if (hasFocus) {
-                        mPresenter.hasFocus(editText);
+                        mAddFoodPresenter.hasFocus(editText);
                     } else {
-                        mPresenter.lostFocus(editText);
+                        mAddFoodPresenter.lostFocus(editText);
                     }
                 }
             }
@@ -282,9 +295,9 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
                 nameExistingOnFocusChangeListener.onFocusChange(v, hasFocus);
 
                 if (hasFocus) {
-                    mPresenter.hasFocus(nameEditText);
+                    mAddFoodPresenter.hasFocus(nameEditText);
                 } else {
-                    mPresenter.lostFocus(nameEditText);
+                    mAddFoodPresenter.lostFocus(nameEditText);
                 }
             }
         });
@@ -297,9 +310,9 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
                 brandExistingOnFocusChangeListener.onFocusChange(v, hasFocus);
 
                 if (hasFocus) {
-                    mPresenter.hasFocus(brandEditText);
+                    mAddFoodPresenter.hasFocus(brandEditText);
                 } else {
-                    mPresenter.lostFocus(brandEditText);
+                    mAddFoodPresenter.lostFocus(brandEditText);
                 }
             }
         });
@@ -312,9 +325,9 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
                 caloriesExistingOnFocusChangeListener.onFocusChange(v, hasFocus);
 
                 if (hasFocus) {
-                    mPresenter.hasFocus(caloriesEditText);
+                    mAddFoodPresenter.hasFocus(caloriesEditText);
                 } else {
-                    mPresenter.lostFocus(caloriesEditText);
+                    mAddFoodPresenter.lostFocus(caloriesEditText);
                 }
             }
         });
@@ -327,9 +340,9 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
                 fatsExistingOnFocusChangeListener.onFocusChange(v, hasFocus);
 
                 if (hasFocus) {
-                    mPresenter.hasFocus(fatsEditText);
+                    mAddFoodPresenter.hasFocus(fatsEditText);
                 } else {
-                    mPresenter.lostFocus(fatsEditText);
+                    mAddFoodPresenter.lostFocus(fatsEditText);
                 }
             }
         });
@@ -342,9 +355,9 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
                 carbohydratesExistingOnFocusChangeListener.onFocusChange(v, hasFocus);
 
                 if (hasFocus) {
-                    mPresenter.hasFocus(carbohydratesEditText);
+                    mAddFoodPresenter.hasFocus(carbohydratesEditText);
                 } else {
-                    mPresenter.lostFocus(carbohydratesEditText);
+                    mAddFoodPresenter.lostFocus(carbohydratesEditText);
                 }
             }
         });
@@ -357,9 +370,9 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
                 proteinsExistingOnFocusChangeListener.onFocusChange(v, hasFocus);
 
                 if (hasFocus) {
-                    mPresenter.hasFocus(proteinsEditText);
+                    mAddFoodPresenter.hasFocus(proteinsEditText);
                 } else {
-                    mPresenter.lostFocus(proteinsEditText);
+                    mAddFoodPresenter.lostFocus(proteinsEditText);
                 }
             }
         });
@@ -387,7 +400,7 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
         String carbohydrates = mFoodCarbohydratesEditText.getText().toString();
         String proteins = mFoodProteinsEditText.getText().toString();
 
-        mPresenter.validateData(name, brand, isDrink, calories, fats, carbohydrates, proteins);
+        mAddFoodPresenter.validateData(name, brand, isDrink, calories, fats, carbohydrates, proteins);
     }
 
     protected void applyDecimalFilters() {
@@ -407,7 +420,7 @@ public class AddFoodFragment extends BaseFragment implements AddFoodView {
         mFoodIsDrinkCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mPresenter.isDrink(isChecked);
+                mAddFoodPresenter.isDrink(isChecked);
             }
         });
     }

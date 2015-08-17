@@ -19,7 +19,7 @@ import com.zireck.projectk.presentation.view.EditFoodView;
 /**
  * Created by Zireck on 31/07/2015.
  */
-public class EditFoodPresenterImpl extends AddFoodPresenterImpl implements EditFoodPresenter, OnEditFoodInteractorFinishedListener {
+public class EditFoodPresenterImpl extends OldAddFoodPresenterImpl implements EditFoodPresenter, OnEditFoodInteractorFinishedListener {
 
     private Context mContext;
     private EditFoodView mView;

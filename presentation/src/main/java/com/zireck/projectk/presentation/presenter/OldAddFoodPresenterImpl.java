@@ -21,17 +21,17 @@ import net.steamcrafted.materialiconlib.MaterialIconView;
 /**
  * Created by Zireck on 24/07/2015.
  */
-public class AddFoodPresenterImpl implements AddFoodPresenter, OnAddFoodInteractorFinishedListener {
+public class OldAddFoodPresenterImpl implements OldAddFoodPresenter, OnAddFoodInteractorFinishedListener {
 
     protected Context mContext;
     private AddFoodView mView;
     private AddFoodInteractor mInteractor;
 
-    public AddFoodPresenterImpl() {
+    public OldAddFoodPresenterImpl() {
 
     }
 
-    public AddFoodPresenterImpl(Context context, AddFoodView view) {
+    public OldAddFoodPresenterImpl(Context context, AddFoodView view) {
         mContext = context;
         mView = view;
         mInteractor = new AddFoodInteractorImpl();
