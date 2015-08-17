@@ -9,8 +9,9 @@ import android.widget.EditText;
 
 import com.squareup.picasso.Picasso;
 import com.zireck.projectk.R;
+import com.zireck.projectk.domain.interactor.AddFood;
 import com.zireck.projectk.domain.interactor.DefaultSubscriber;
-import com.zireck.projectk.domain.interactor.Interactor;
+import com.zireck.projectk.presentation.mapper.FoodModelDataMapper;
 import com.zireck.projectk.presentation.model.FoodModel;
 import com.zireck.projectk.presentation.util.MathUtils;
 import com.zireck.projectk.presentation.util.PictureUtils;
@@ -29,12 +30,15 @@ public class AddFoodPresenter implements Presenter {
 
     private Context mContext;
     private AddFoodView mView;
-    private Interactor mAddFoodInteractor;
+    private AddFood mAddFoodInteractor;
+    private FoodModelDataMapper mFoodModelDataMapper;
 
     @Inject
-    public AddFoodPresenter(Context context, @Named("addFood") Interactor addFoodInteractor) {
+    public AddFoodPresenter(Context context, @Named("addFood") AddFood addFoodInteractor,
+                            FoodModelDataMapper foodModelDataMapper) {
         mContext = context;
         mAddFoodInteractor = addFoodInteractor;
+        mFoodModelDataMapper = foodModelDataMapper;
     }
 
     @Override
@@ -57,13 +61,13 @@ public class AddFoodPresenter implements Presenter {
         mAddFoodInteractor.unsubscribe();
     }
 
-    public void addFood() {
-        // TODO: You need to pass the FoodModel object somehow to FoodModule
-        // See: https://github.com/android10/Android-CleanArchitecture/issues/32
+    public void addFood(final FoodModel foodModel) {
+        mAddFoodInteractor.setFood(mFoodModelDataMapper.transformInverse(foodModel));
         mAddFoodInteractor.execute(new AddFoodSubscriber());
     }
 
-    public void validateData(String name, String brand, boolean isDrink, String calories, String fats, String carboydrates, String proteins) {
+    public void validateData(String name, String brand, boolean isDrink, String calories,
+                             String fats, String carboydrates, String proteins) {
         boolean error = false;
 
         if (TextUtils.isEmpty(name)) {
@@ -97,7 +101,7 @@ public class AddFoodPresenter implements Presenter {
         }
 
         if (!error) {
-            FoodModel food = new FoodModel(88);
+            FoodModel food = new FoodModel();
             food.setName(name);
             food.setBrand(brand);
             food.setIsDrink(isDrink);
@@ -107,8 +111,7 @@ public class AddFoodPresenter implements Presenter {
             food.setProteins(Double.valueOf(proteins));
             food.setPicture(consolidateNewPicture());
 
-            addFood();
-
+            addFood(food);
         }
     }
 

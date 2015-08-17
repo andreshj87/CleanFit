@@ -114,13 +114,25 @@ public class FoodDataStore {
         });
     }
 
-    public Observable<Void> deleteFood(final FoodEntity food) {
+    public Observable<Void> editFood(final FoodEntity food) {
         return Observable.create(new Observable.OnSubscribe<Void>() {
             @Override
             public void call(Subscriber<? super Void> subscriber) {
                 FoodEntityDao foodEntityDao = initGreenDao();
                 // TODO uncomment:
-                //foodEntityDao.deleteByKey(foodId);
+                //foodEntityDao.update(food);
+
+                subscriber.onCompleted();
+            }
+        });
+    }
+
+    public Observable<Void> deleteFood(final FoodEntity food) {
+        return Observable.create(new Observable.OnSubscribe<Void>() {
+            @Override
+            public void call(Subscriber<? super Void> subscriber) {
+                FoodEntityDao foodEntityDao = initGreenDao();
+                foodEntityDao.deleteByKey(food.getId());
 
                 subscriber.onCompleted();
             }

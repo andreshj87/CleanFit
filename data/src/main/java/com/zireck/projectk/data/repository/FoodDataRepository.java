@@ -74,6 +74,11 @@ public class FoodDataRepository implements FoodRepository {
     }
 
     @Override
+    public Observable<Void> editFood(Food food) {
+        return mFoodDataStore.editFood(mFoodEntityDataMapper.transformInverse(food));
+    }
+
+    @Override
     public Observable<Void> deleteFood(final Food food) {
         return mFoodDataStore.deleteFood(mFoodEntityDataMapper.transformInverse(food));
     }

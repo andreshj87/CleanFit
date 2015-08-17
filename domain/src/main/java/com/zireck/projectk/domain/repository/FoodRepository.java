@@ -38,6 +38,11 @@ public interface FoodRepository {
     Observable<Void> addFood(final Food food);
 
     /**
+     * Get an {@link Observable} which will notify the edition of a {@link Food} object.
+     */
+    Observable<Void> editFood(final Food food);
+
+    /**
      * Get an {@link Observable} which will notify the deletion of a {@link Food} object.
      * @param food
      */

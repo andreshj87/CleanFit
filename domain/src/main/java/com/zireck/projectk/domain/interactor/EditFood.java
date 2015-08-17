@@ -5,32 +5,28 @@ import com.zireck.projectk.domain.executor.PostExecutionThread;
 import com.zireck.projectk.domain.executor.ThreadExecutor;
 import com.zireck.projectk.domain.repository.FoodRepository;
 
+import javax.inject.Inject;
+
 import rx.Observable;
 
 /**
  * Created by Zireck on 17/08/2015.
  */
-public class AddFood extends Interactor {
+public class EditFood extends Interactor {
 
-    private Food mFood;
-    private FoodRepository mFoodRepository;
+    private final Food mFood;
+    private final FoodRepository mFoodRepository;
 
-    public AddFood(FoodRepository foodRepository, ThreadExecutor threadExecutor,
+    @Inject
+    public EditFood(final Food food, FoodRepository foodRepository, ThreadExecutor threadExecutor,
                       PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
-        mFoodRepository = foodRepository;
-    }
-
-    public void setFood(Food food) {
-        if (food == null) {
-            throw new IllegalArgumentException("Food object cannot be null.");
-        }
-
         mFood = food;
+        mFoodRepository = foodRepository;
     }
 
     @Override
     protected Observable buildInteractorObservable() {
-        return mFoodRepository.addFood(mFood);
+        return mFoodRepository.editFood(mFood);
     }
 }

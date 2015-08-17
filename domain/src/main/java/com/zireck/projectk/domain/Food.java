@@ -5,7 +5,7 @@ package com.zireck.projectk.domain;
  */
 public class Food {
 
-    private final long id;
+    private long id;
     private String name;
     private String brand;
     private boolean isDrink;
@@ -14,6 +14,10 @@ public class Food {
     private double carbohydrates;
     private double proteins;
     private String picture;
+
+    public Food() {
+
+    }
 
     public Food(long id) {
         this.id = id;

@@ -5,6 +5,7 @@ import com.zireck.projectk.domain.executor.PostExecutionThread;
 import com.zireck.projectk.domain.executor.ThreadExecutor;
 import com.zireck.projectk.domain.interactor.AddFood;
 import com.zireck.projectk.domain.interactor.DeleteFood;
+import com.zireck.projectk.domain.interactor.EditFood;
 import com.zireck.projectk.domain.interactor.GetAllFoodList;
 import com.zireck.projectk.domain.interactor.GetDrinkList;
 import com.zireck.projectk.domain.interactor.GetFoodDetails;
@@ -35,7 +36,7 @@ public class FoodModule {
         mFoodId = foodId;
     }
 
-    public FoodModule(final Food food) {
+    public FoodModule(Food food) {
         mFood = food;
     }
 
@@ -61,10 +62,17 @@ public class FoodModule {
     }
 
     @Provides @PerActivity @Named("addFood")
-    Interactor provideAddFoodInteractor(FoodRepository foodRepository,
+    AddFood provideAddFoodInteractor(FoodRepository foodRepository,
                                         ThreadExecutor threadExecutor,
                                         PostExecutionThread postExecutionThread) {
-        return new AddFood(mFood, foodRepository, threadExecutor, postExecutionThread);
+        return new AddFood(foodRepository, threadExecutor, postExecutionThread);
+    }
+
+    @Provides @PerActivity @Named("editFood")
+    Interactor provideEditFoodInteractor(FoodRepository foodRepository,
+                                         ThreadExecutor threadExecutor,
+                                         PostExecutionThread postExecutionThread) {
+        return new EditFood(mFood, foodRepository, threadExecutor, postExecutionThread);
     }
 
     @Provides @PerActivity @Named("deleteFood")

@@ -8,7 +8,7 @@ import android.os.Parcelable;
  */
 public class FoodModel implements Parcelable {
 
-    private final long id;
+    private long id;
     private String name;
     private String brand;
     private boolean isDrink;
@@ -17,6 +17,10 @@ public class FoodModel implements Parcelable {
     private double carbohydrates;
     private double proteins;
     private String picture;
+
+    public FoodModel() {
+
+    }
 
     public FoodModel(long id) {
         this.id = id;

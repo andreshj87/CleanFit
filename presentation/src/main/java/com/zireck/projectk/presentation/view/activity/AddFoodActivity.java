@@ -12,6 +12,7 @@ import com.zireck.projectk.R;
 import com.zireck.projectk.presentation.dagger.HasComponent;
 import com.zireck.projectk.presentation.dagger.component.DaggerFoodComponent;
 import com.zireck.projectk.presentation.dagger.component.FoodComponent;
+import com.zireck.projectk.presentation.dagger.module.FoodModule;
 import com.zireck.projectk.presentation.listener.OnAddFoodFinishedListener;
 
 import butterknife.Bind;
@@ -19,10 +20,10 @@ import butterknife.Bind;
 /**
  * Created by Zireck on 24/07/2015.
  */
-public class AddFoodActivity extends BaseActivity implements OnAddFoodFinishedListener, HasComponent<FoodComponent> {
+public class AddFoodActivity extends BaseActivity implements OnAddFoodFinishedListener,
+                                                                HasComponent<FoodComponent> {
 
     private FoodComponent mFoodComponent;
-
     @Bind(R.id.toolbar) Toolbar mToolbar;
 
     /**
@@ -85,6 +86,7 @@ public class AddFoodActivity extends BaseActivity implements OnAddFoodFinishedLi
         mFoodComponent = DaggerFoodComponent.builder()
                 .applicationComponent(getApplicationComponent())
                 .activityModule(getActivityModule())
+                .foodModule(new FoodModule())
                 .build();
     }
 
