@@ -59,7 +59,7 @@ public class FoodModule {
     @Provides @PerActivity @Named("foodDetails")
     Interactor provideGetFoodDetailsInteractor(FoodRepository foodRepository,
                         ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
-        return new GetFoodDetails(mFoodId, foodRepository, threadExecutor, postExecutionThread);
+        return new GetFoodDetails(mFood, foodRepository, threadExecutor, postExecutionThread);
     }
 
     @Provides @PerActivity @Named("addFood")

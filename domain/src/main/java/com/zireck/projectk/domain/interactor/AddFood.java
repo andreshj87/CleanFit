@@ -5,6 +5,8 @@ import com.zireck.projectk.domain.executor.PostExecutionThread;
 import com.zireck.projectk.domain.executor.ThreadExecutor;
 import com.zireck.projectk.domain.repository.FoodRepository;
 
+import javax.inject.Inject;
+
 import rx.Observable;
 
 /**
@@ -15,6 +17,7 @@ public class AddFood extends Interactor {
     private Food mFood;
     private FoodRepository mFoodRepository;
 
+    @Inject
     public AddFood(FoodRepository foodRepository, ThreadExecutor threadExecutor,
                       PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);

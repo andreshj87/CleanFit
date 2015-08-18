@@ -3,6 +3,7 @@ package com.zireck.projectk.presentation.dagger.component;
 import com.zireck.projectk.presentation.dagger.PerActivity;
 import com.zireck.projectk.presentation.dagger.module.ActivityModule;
 import com.zireck.projectk.presentation.dagger.module.FoodModule;
+import com.zireck.projectk.presentation.view.fragment.AddEditFoodFragment;
 import com.zireck.projectk.presentation.view.fragment.AddFoodFragment;
 import com.zireck.projectk.presentation.view.fragment.DrinkListFragment;
 import com.zireck.projectk.presentation.view.fragment.EditFoodFragment;
@@ -28,4 +29,5 @@ public interface FoodComponent extends ActivityComponent {
     void inject(FoodDetailFragment foodDetailFragment);
     void inject(AddFoodFragment addFoodFragment);
     void inject(EditFoodFragment editFoodFragment);
+    void inject(AddEditFoodFragment addEditFoodFragment);
 }

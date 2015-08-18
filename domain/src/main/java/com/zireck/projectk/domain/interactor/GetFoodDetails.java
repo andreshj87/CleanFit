@@ -19,10 +19,10 @@ public class GetFoodDetails extends Interactor {
     private final FoodRepository mFoodRepository;
 
     @Inject
-    public GetFoodDetails(long foodId, FoodRepository foodRepository, ThreadExecutor threadExecutor,
+    public GetFoodDetails(Food food, FoodRepository foodRepository, ThreadExecutor threadExecutor,
                           PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
-        mFoodId = foodId;
+        mFoodId = food.getId();
         mFoodRepository = foodRepository;
     }
 

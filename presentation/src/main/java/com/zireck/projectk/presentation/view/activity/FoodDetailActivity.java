@@ -107,7 +107,7 @@ public class FoodDetailActivity extends BaseActivity implements FoodDetailCallba
         mFoodComponent = DaggerFoodComponent.builder()
                 .applicationComponent(getApplicationComponent())
                 .activityModule(getActivityModule())
-                .foodModule(new FoodModule(mFood.getId()))
+                .foodModule(new FoodModule(mFoodModelDataMapper.transformInverse(mFood)))
                 .build();
     }
 

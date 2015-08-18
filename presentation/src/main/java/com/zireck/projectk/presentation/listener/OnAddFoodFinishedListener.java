@@ -5,5 +5,4 @@ package com.zireck.projectk.presentation.listener;
  */
 public interface OnAddFoodFinishedListener {
     void foodAdded();
-    void foodNotAdded();
 }

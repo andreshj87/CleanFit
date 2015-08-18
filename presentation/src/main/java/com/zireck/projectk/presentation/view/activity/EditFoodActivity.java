@@ -4,34 +4,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 
 import com.zireck.projectk.R;
-import com.zireck.projectk.presentation.dagger.HasComponent;
 import com.zireck.projectk.presentation.dagger.component.DaggerFoodComponent;
-import com.zireck.projectk.presentation.dagger.component.FoodComponent;
 import com.zireck.projectk.presentation.dagger.module.FoodModule;
 import com.zireck.projectk.presentation.listener.OnEditFoodFinishedListener;
 import com.zireck.projectk.presentation.model.FoodModel;
 import com.zireck.projectk.presentation.view.fragment.EditFoodFragment;
 
-import butterknife.Bind;
-
 /**
  * Created by Zireck on 31/07/2015.
  */
-public class EditFoodActivity extends BaseActivity implements OnEditFoodFinishedListener,
-                                                                HasComponent<FoodComponent> {
+public class EditFoodActivity extends AddEditFoodActivity implements OnEditFoodFinishedListener {
 
     private static final String EXTRA_FOOD_OBJECT = "food_object";
 
-    private FoodComponent mFoodComponent;
-
     private FoodModel mFood;
-
-    @Bind(R.id.toolbar) Toolbar mToolbar;
 
     /**
      * Generates the intent needed to launch this activity.
@@ -49,29 +37,8 @@ public class EditFoodActivity extends BaseActivity implements OnEditFoodFinished
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_food);
-
         mapExtras();
-        initInjector();
-        initActionBar();
-        initializeFragment();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                foodNotEdited();
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public FoodComponent getComponent() {
-        return mFoodComponent;
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -80,8 +47,24 @@ public class EditFoodActivity extends BaseActivity implements OnEditFoodFinished
     }
 
     @Override
-    public void foodNotEdited() {
-        navigateBack(RESULT_CANCELED);
+    public void initInjector() {
+        mFoodComponent = DaggerFoodComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .activityModule(getActivityModule())
+                .foodModule(new FoodModule(mFoodModelDataMapper.transformInverse(mFood)))
+                .build();
+    }
+
+    @Override
+    public void initializeFragment() {
+        if (mFood == null) {
+            throw new IllegalArgumentException("Cannot initialize fragment using a null object.");
+        }
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction
+                .replace(R.id.fragment_container, EditFoodFragment.newInstance(mFood))
+                .commit();
     }
 
     /**
@@ -98,41 +81,6 @@ public class EditFoodActivity extends BaseActivity implements OnEditFoodFinished
         if (mFood == null) {
             throwIllegalArgumentException();
         }
-    }
-
-    private void initInjector() {
-        mFoodComponent = DaggerFoodComponent.builder()
-                .applicationComponent(getApplicationComponent())
-                .activityModule(getActivityModule())
-                .foodModule(new FoodModule(mFoodModelDataMapper.transformInverse(mFood)))
-                .build();
-    }
-
-    private void initActionBar() {
-        mToolbar.setNavigationIcon(R.drawable.ic_close_white_24dp);
-
-        setSupportActionBar(mToolbar);
-        final ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayShowHomeEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-    }
-
-    private void initializeFragment() {
-        if (mFood == null) {
-            throw new IllegalArgumentException("Cannot initialize fragment using a null object.");
-        }
-
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, EditFoodFragment.newInstance(mFood)).commit();
-    }
-
-    private void navigateBack(int result) {
-        Intent intent = new Intent();
-        setResult(result, intent);
-        finish();
     }
 
     private static void throwIllegalArgumentException() {

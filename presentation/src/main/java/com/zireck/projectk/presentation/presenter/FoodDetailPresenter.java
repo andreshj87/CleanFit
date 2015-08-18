@@ -9,6 +9,7 @@ import com.zireck.projectk.domain.interactor.Interactor;
 import com.zireck.projectk.presentation.mapper.FoodModelDataMapper;
 import com.zireck.projectk.presentation.model.FoodModel;
 import com.zireck.projectk.presentation.util.MathUtils;
+import com.zireck.projectk.presentation.util.PictureUtils;
 import com.zireck.projectk.presentation.view.FoodDetailView;
 import com.zireck.projectk.presentation.view.View;
 
@@ -137,6 +138,7 @@ public class FoodDetailPresenter implements Presenter {
     private final class DeleteFoodSubscriber extends DefaultSubscriber {
         @Override
         public void onCompleted() {
+            PictureUtils.deletePicture(mFood.getPicture());
             mView.foodDeleted();
         }
     }

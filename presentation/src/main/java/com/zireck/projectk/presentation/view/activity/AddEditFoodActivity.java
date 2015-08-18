@@ -1,52 +1,40 @@
 package com.zireck.projectk.presentation.view.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import com.zireck.projectk.R;
+import com.zireck.projectk.presentation.dagger.HasComponent;
+import com.zireck.projectk.presentation.dagger.component.FoodComponent;
 
 import butterknife.Bind;
 
 /**
- * Created by Zireck on 06/08/2015.
+ * Created by Zireck on 18/08/2015.
  */
-public class AddMealActivity extends BaseActivity {
+public abstract class AddEditFoodActivity extends BaseActivity
+        implements HasComponent<FoodComponent> {
 
+    protected FoodComponent mFoodComponent;
     @Bind(R.id.toolbar) Toolbar mToolbar;
-
-    /**
-     * Generates the intent needed to launch this activity.
-     */
-    public static Intent getLaunchIntent(final Context context) {
-        return new Intent(context, AddMealActivity.class);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_meal);
+        setContentView(R.layout.activity_add_edit_food);
 
+        initInjector();
         initActionBar();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.menu_add_edit_food, menu);
-
-        return true;
+        initializeFragment();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // TODO goBack
                 navigateBack(RESULT_CANCELED);
                 break;
         }
@@ -55,17 +43,15 @@ public class AddMealActivity extends BaseActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    public FoodComponent getComponent() {
+        return mFoodComponent;
     }
 
-    protected void navigateBack(int result) {
-        Intent intent = new Intent();
-        setResult(result, intent);
-        finish();
-    }
+    public abstract void initInjector();
 
-    protected void initActionBar() {
+    public abstract void initializeFragment();
+
+    private void initActionBar() {
         mToolbar.setNavigationIcon(R.drawable.ic_close_white_24dp);
 
         setSupportActionBar(mToolbar);
@@ -75,5 +61,11 @@ public class AddMealActivity extends BaseActivity {
             actionBar.setDisplayShowHomeEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    protected void navigateBack(int result) {
+        Intent intent = new Intent();
+        setResult(result, intent);
+        finish();
     }
 }

@@ -103,6 +103,7 @@ public class FoodDataStore {
             @Override
             public void call(Subscriber<? super Void> subscriber) {
                 FoodEntityDao foodEntityDao = getFoodEntityDao();
+                food.setId(null);
                 long result = foodEntityDao.insert(food);
 
                 if (result == -1) {
