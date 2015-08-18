@@ -9,26 +9,26 @@ import net.steamcrafted.materialiconlib.MaterialIconView;
  * Created by Zireck on 24/07/2015.
  */
 public interface AddFoodView extends View {
-    public void foodSuccessfullyAdded();
-    public void setGr();
-    public void setMl();
-    public void setNameError();
-    public void setBrandError();
-    public void setCaloriesError();
-    public void setFatsError();
-    public void setCarbohydratesError();
-    public void setProteinsError();
+    void foodSuccessfullyAdded();
+    void setGr();
+    void setMl();
+    void setNameError();
+    void setBrandError();
+    void setCaloriesError();
+    void setFatsError();
+    void setCarbohydratesError();
+    void setProteinsError();
 
-    public MaterialIconView getIconName();
-    public MaterialIconView getIconBrand();
-    public MaterialIconView getIconCalories();
-    public MaterialIconView getIconNutrients();
+    MaterialIconView getIconName();
+    MaterialIconView getIconBrand();
+    MaterialIconView getIconCalories();
+    MaterialIconView getIconNutrients();
 
-    public void startIntentForCameraLaunch(Intent intent, final int requestCode);
+    void startIntentForCameraLaunch(Intent intent, final int requestCode);
 
-    public ImageView getPictureImageView();
+    ImageView getPictureImageView();
 
-    public void deletePicture();
-    public void showDeletePictureLayout();
-    public void hideDeletePictureLayout();
+    void deletePicture();
+    void showDeletePictureLayout();
+    void hideDeletePictureLayout();
 }

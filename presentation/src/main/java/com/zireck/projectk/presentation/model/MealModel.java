@@ -22,7 +22,7 @@ public class MealModel implements Parcelable {
     private double carbohydrates;
     private double proteins;
     private long foodId;
-    private FoodModel food;
+    private FoodModel foodModel;
 
     public MealModel(long id) {
         this.id = id;
@@ -39,7 +39,7 @@ public class MealModel implements Parcelable {
         carbohydrates = in.readDouble();
         proteins = in.readDouble();
         foodId = in.readLong();
-        food = (FoodModel) in.readValue(FoodModel.class.getClassLoader());
+        foodModel = (FoodModel) in.readValue(FoodModel.class.getClassLoader());
     }
 
     public long getId() {
@@ -110,12 +110,12 @@ public class MealModel implements Parcelable {
         this.foodId = foodId;
     }
 
-    public FoodModel getFood() {
-        return food;
+    public FoodModel getFoodModel() {
+        return foodModel;
     }
 
-    public void setFood(FoodModel food) {
-        this.food = food;
+    public void setFoodModel(FoodModel foodModel) {
+        this.foodModel = foodModel;
     }
 
     @Override
@@ -132,7 +132,7 @@ public class MealModel implements Parcelable {
         stringBuilder.append("carbohydrates=" + String.valueOf(this.getCarbohydrates()) + "\n");
         stringBuilder.append("proteins=" + String.valueOf(this.getProteins()) + "\n");
         stringBuilder.append("foodId=" + String.valueOf(this.getFoodId()) + "\n");
-        stringBuilder.append("food=" + this.getFood().getName() + "\n");
+        stringBuilder.append("foodModel=" + this.getFoodModel().getName() + "\n");
         stringBuilder.append("*******************************");
 
         return stringBuilder.toString();
@@ -142,7 +142,7 @@ public class MealModel implements Parcelable {
      * Calculate the amount of calories and nutrients of this meal.
      */
     public void calculateEnergyAndNutrients() {
-        if (this.getFood() == null) {
+        if (this.getFoodModel() == null) {
             throw new NullPointerException("Food not set");
         }
 
@@ -157,19 +157,19 @@ public class MealModel implements Parcelable {
     }
 
     private void calculateCalories() {
-        this.setCalories((this.getGrams() * this.getFood().getCalories()) / 100);
+        this.setCalories((this.getGrams() * this.getFoodModel().getCalories()) / 100);
     }
 
     private void calculateFats() {
-        this.setFats((this.getGrams() * this.getFood().getFats()) / 100);
+        this.setFats((this.getGrams() * this.getFoodModel().getFats()) / 100);
     }
 
     private void calculateCarbohydrates() {
-        this.setCarbohydrates((this.getGrams() * this.getFood().getCarbohydrates()) / 100);
+        this.setCarbohydrates((this.getGrams() * this.getFoodModel().getCarbohydrates()) / 100);
     }
 
     private void calculateProteins() {
-        this.setProteins((this.getGrams() * this.getFood().getProteins()) / 100);
+        this.setProteins((this.getGrams() * this.getFoodModel().getProteins()) / 100);
     }
 
     public String getFormattedDate() {
@@ -196,7 +196,7 @@ public class MealModel implements Parcelable {
         dest.writeDouble(carbohydrates);
         dest.writeDouble(proteins);
         dest.writeLong(foodId);
-        dest.writeValue(food);
+        dest.writeValue(foodModel);
     }
 
     @SuppressWarnings("unused")

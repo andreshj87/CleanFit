@@ -24,7 +24,7 @@ public class Navigator {
 
     public static final int ADD_FOOD_REQUEST = 1;
     public static final int EDIT_FOOD_REQUEST = 2;
-    public static final int DELETE_FOOD_REQUEST = 999;
+    public static final int DELETE_FOOD_REQUEST = 3;
 
     public static final int ADD_MEAL_REQUEST = 4;
 
@@ -40,16 +40,6 @@ public class Navigator {
         Intent intent = AddFoodActivity.getLaunchIntent(activity);
         startActivityForResult(activity, intent, ADD_FOOD_REQUEST);
     }
-
-    /**
-     * Open FoodDetailActivity using a foodId
-     * @param foodId
-     */
-    /*@Deprecated
-    public void openFoodDetailActivity(Activity activity, final long foodId) {
-        Intent intent = FoodDetailActivity.getLaunchIntent(activity, foodId);
-        startActivityForResult(activity, intent, DELETE_FOOD_REQUEST);
-    }*/
 
     /**
      * Open FoodDetailActivity using a FoodModel object.

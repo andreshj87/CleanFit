@@ -29,8 +29,8 @@ import butterknife.Bind;
 public class FoodListFragment extends BaseFragment implements FoodListView {
 
     @Inject Navigator mNavigator;
+    @Inject FoodListPresenter mPresenter;
 
-    @Inject FoodListPresenter mFoodListPresenter;
     @Bind(R.id.food_list) RecyclerView mRecyclerView;
     protected FoodListAdapter mAdapter;
 
@@ -50,25 +50,24 @@ public class FoodListFragment extends BaseFragment implements FoodListView {
         super.onActivityCreated(savedInstanceState);
 
         initialize();
-        loadFoodList();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mFoodListPresenter.resume();
+        mPresenter.resume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mFoodListPresenter.pause();
+        mPresenter.pause();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mFoodListPresenter.destroy();
+        mPresenter.destroy();
     }
 
     @Override
@@ -91,11 +90,7 @@ public class FoodListFragment extends BaseFragment implements FoodListView {
 
     protected void initialize() {
         getComponent(FoodComponent.class).inject(this);
-        mFoodListPresenter.setView(this);
-    }
-
-    protected void loadFoodList() {
-        mFoodListPresenter.initialize();
+        mPresenter.setView(this);
     }
 
     private void initRecyclerView() {
@@ -105,7 +100,7 @@ public class FoodListFragment extends BaseFragment implements FoodListView {
         mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                mFoodListPresenter.onItemClick(position);
+                mPresenter.onItemClick(position);
             }
         }));
 

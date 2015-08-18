@@ -37,6 +37,7 @@ public class FoodDetailActivity extends BaseActivity implements FoodDetailCallba
 
     private FoodModel mFood;
 
+    @Bind(R.id.toolbar) Toolbar mToolbar;
     @Bind(R.id.food_image) ImageView mFoodImage;
     @Bind(R.id.fab) FloatingActionButton mFloatingActionButton;
 
@@ -61,18 +62,9 @@ public class FoodDetailActivity extends BaseActivity implements FoodDetailCallba
 
         mapExtras();
         initInjector();
+        initActionBar();
+        initFloatingActionButton();
         initializeFragment();
-
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        MaterialIconView icon = new MaterialIconView(this);
-        icon.setIcon(MaterialDrawableBuilder.IconValue.FOOD);
-        icon.setColorResource(android.R.color.white);
-        mFloatingActionButton.setImageDrawable(icon.getDrawable());
-
-        //mCollapsingToolbar.setTitle("Food Detail");
-        //mCollapsingToolbar.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
     }
 
     @Override
@@ -83,6 +75,16 @@ public class FoodDetailActivity extends BaseActivity implements FoodDetailCallba
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public FoodComponent getComponent() {
+        return mFoodComponent;
+    }
+
+    @Override
+    public void setFoodPicture(String foodPicture) {
+        Picasso.with(this).load(PictureUtils.getPhotoFileUri(foodPicture)).fit().centerCrop().into(mFoodImage);
     }
 
     /**
@@ -101,6 +103,26 @@ public class FoodDetailActivity extends BaseActivity implements FoodDetailCallba
         }
     }
 
+    private void initInjector() {
+        mFoodComponent = DaggerFoodComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .activityModule(getActivityModule())
+                .foodModule(new FoodModule(mFood.getId()))
+                .build();
+    }
+
+    private void initActionBar() {
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void initFloatingActionButton() {
+        MaterialIconView icon = new MaterialIconView(this);
+        icon.setIcon(MaterialDrawableBuilder.IconValue.FOOD);
+        icon.setColorResource(android.R.color.white);
+        mFloatingActionButton.setImageDrawable(icon.getDrawable());
+    }
+
     private void initializeFragment() {
         if (mFood == null) {
             return;
@@ -113,23 +135,5 @@ public class FoodDetailActivity extends BaseActivity implements FoodDetailCallba
     private static void throwIllegalArgumentException() {
         throw new IllegalArgumentException(
                 "FoodDetailActivity has to be launched using a valid Food object as extra");
-    }
-
-    @Override
-    public void setFoodPicture(String foodPicture) {
-        Picasso.with(this).load(PictureUtils.getPhotoFileUri(foodPicture)).fit().centerCrop().into(mFoodImage);
-    }
-
-    private void initInjector() {
-        mFoodComponent = DaggerFoodComponent.builder()
-                .applicationComponent(getApplicationComponent())
-                .activityModule(getActivityModule())
-                .foodModule(new FoodModule(mFoodModelDataMapper.transformInverse(mFood)))
-                .build();
-    }
-
-    @Override
-    public FoodComponent getComponent() {
-        return mFoodComponent;
     }
 }

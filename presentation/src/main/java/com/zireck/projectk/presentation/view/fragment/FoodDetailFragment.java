@@ -35,13 +35,11 @@ import lecho.lib.hellocharts.view.PieChartView;
  */
 public class FoodDetailFragment extends BaseFragment implements FoodDetailView {
 
-    private static final String EXTRA_FOOD_ID = "food_id";
     private static final String EXTRA_FOOD_OBJECT = "food_object";
 
-    private FoodDetailCallback mCallback;
-    //private OldFoodDetailPresenter mPresenter;
-    @Inject FoodDetailPresenter mFoodDetailPresenter;
     @Inject Navigator mNavigator;
+    @Inject FoodDetailPresenter mPresenter;
+    private FoodDetailCallback mCallback;
 
     @Bind(R.id.food_name) TextView mFoodName;
     @Bind(R.id.food_brand) TextView mFoodBrand;
@@ -102,19 +100,19 @@ public class FoodDetailFragment extends BaseFragment implements FoodDetailView {
     @Override
     public void onResume() {
         super.onResume();
-        mFoodDetailPresenter.resume();
+        mPresenter.resume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mFoodDetailPresenter.pause();
+        mPresenter.pause();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mFoodDetailPresenter.destroy();
+        mPresenter.destroy();
     }
 
     @Override
@@ -133,7 +131,7 @@ public class FoodDetailFragment extends BaseFragment implements FoodDetailView {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_edit:
-                mNavigator.openEditFoodActivity(getActivity(), mFoodDetailPresenter.getFood());
+                mNavigator.openEditFoodActivity(getActivity(), mPresenter.getFood());
                 break;
             case R.id.action_delete:
                 showDeleteDialog();
@@ -143,27 +141,17 @@ public class FoodDetailFragment extends BaseFragment implements FoodDetailView {
     }
 
     @Override
-    public String getFoodIdTag() {
-        return FoodDetailFragment.EXTRA_FOOD_ID;
-    }
-
-    @Override
-    public String getFoodExtraKey() {
-        return FoodDetailFragment.EXTRA_FOOD_OBJECT;
-    }
-
-    @Override
-    public void setFoodName(String foodName) {
+    public void setName(String foodName) {
         mFoodName.setText(foodName);
     }
 
     @Override
-    public void setFoodBrand(String foodBrand) {
+    public void setBrand(String foodBrand) {
         mFoodBrand.setText(foodBrand);
     }
 
     @Override
-    public void setFoodCalories(String foodCalories) {
+    public void setCalories(String foodCalories) {
         mFoodCalories.setText(foodCalories);
     }
 
@@ -198,6 +186,11 @@ public class FoodDetailFragment extends BaseFragment implements FoodDetailView {
     }
 
     @Override
+    public void setNutrientsDescription(String description) {
+        mNutrientsDescription.setText(description);
+    }
+
+    @Override
     public void setFoodPicture(String foodImage) {
         mCallback.setFoodPicture(foodImage);
     }
@@ -229,15 +222,10 @@ public class FoodDetailFragment extends BaseFragment implements FoodDetailView {
         getActivity().finish();
     }
 
-    @Override
-    public void setNutrientsDescription(String description) {
-        mNutrientsDescription.setText(description);
-    }
-
     private void initialize() {
         getComponent(FoodComponent.class).inject(this);
-        mFoodDetailPresenter.setView(this);
-        mFoodDetailPresenter.mapExtras(getArguments());
+        mPresenter.setView(this);
+        mPresenter.mapExtras(getArguments(), FoodDetailFragment.EXTRA_FOOD_OBJECT);
     }
 
     private void setFoodBrandIcon() {
@@ -271,7 +259,7 @@ public class FoodDetailFragment extends BaseFragment implements FoodDetailView {
         alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                mFoodDetailPresenter.deleteFood();
+                mPresenter.deleteFood();
             }
         });
         alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

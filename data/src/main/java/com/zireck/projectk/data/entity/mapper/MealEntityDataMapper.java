@@ -16,9 +16,11 @@ import javax.inject.Inject;
  */
 public class MealEntityDataMapper {
 
-    @Inject
-    public MealEntityDataMapper() {
+    private FoodEntityDataMapper mFoodEntityDataMapper;
 
+    @Inject
+    public MealEntityDataMapper(FoodEntityDataMapper foodEntityDataMapper) {
+        mFoodEntityDataMapper = foodEntityDataMapper;
     }
 
     /**
@@ -39,9 +41,7 @@ public class MealEntityDataMapper {
             meal.setCarbohydrates(mealEntity.getCarbohydrates());
             meal.setProteins(mealEntity.getProteins());
             meal.setFoodId(mealEntity.getFoodId());
-
-            // TODO:
-            //meal.setFood(mealEntity.getFood());
+            meal.setFood(mFoodEntityDataMapper.transform(mealEntity.getFoodEntity()));
         }
 
         return meal;
@@ -70,5 +70,54 @@ public class MealEntityDataMapper {
         }
 
         return mealsList;
+    }
+
+    /**
+     * Transforms a {@link Meal} into a {@link MealEntity}.
+     *
+     * @param meal {@link Meal} to be transformed.
+     * @return {@link MealEntity} if valid {@link Meal}, otherwise null.
+     */
+    public MealEntity transformInverse(Meal meal) {
+        MealEntity mealEntity = null;
+        if (meal != null) {
+            mealEntity = new MealEntity(meal.getId());
+            mealEntity.setDate(meal.getDate());
+            mealEntity.setMealtime(meal.getMealtime());
+            mealEntity.setGrams(meal.getGrams());
+            mealEntity.setCalories(meal.getCalories());
+            mealEntity.setFats(meal.getFats());
+            mealEntity.setCarbohydrates(meal.getCarbohydrates());
+            mealEntity.setProteins(meal.getProteins());
+            mealEntity.setFoodId(meal.getFoodId());
+            mealEntity.setFoodEntity(mFoodEntityDataMapper.transformInverse(meal.getFood()));
+        }
+
+        return mealEntity;
+    }
+
+    /**
+     * Transforms a Collection of {@link Meal} into a List of {@link MealEntity}.
+     *
+     * @param mealCollection {@link Meal} Collection to be transformed.
+     * @return List of {@link MealEntity}.
+     */
+    public List<MealEntity> transformInverse(Collection<Meal> mealCollection) {
+        List<MealEntity> mealEntityList;
+
+        if (mealCollection != null && !mealCollection.isEmpty()) {
+            mealEntityList = new ArrayList<MealEntity>();
+            MealEntity mealEntity;
+            for (Meal meal : mealCollection) {
+                mealEntity = transformInverse(meal);
+                if (mealEntity != null) {
+                    mealEntityList.add(mealEntity);
+                }
+            }
+        } else {
+            mealEntityList = Collections.emptyList();
+        }
+
+        return mealEntityList;
     }
 }

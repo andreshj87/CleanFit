@@ -62,8 +62,8 @@ public class AddFoodActivity extends BaseActivity implements OnAddFoodFinishedLi
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    public FoodComponent getComponent() {
+        return mFoodComponent;
     }
 
     @Override
@@ -74,12 +74,6 @@ public class AddFoodActivity extends BaseActivity implements OnAddFoodFinishedLi
     @Override
     public void foodNotAdded() {
         navigateBack(RESULT_CANCELED);
-    }
-
-    private void navigateBack(int result) {
-        Intent intent = new Intent();
-        setResult(result, intent);
-        finish();
     }
 
     private void initInjector() {
@@ -102,8 +96,9 @@ public class AddFoodActivity extends BaseActivity implements OnAddFoodFinishedLi
         }
     }
 
-    @Override
-    public FoodComponent getComponent() {
-        return mFoodComponent;
+    private void navigateBack(int result) {
+        Intent intent = new Intent();
+        setResult(result, intent);
+        finish();
     }
 }

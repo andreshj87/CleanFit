@@ -33,6 +33,7 @@ public class FoodModule {
     }
 
     public FoodModule(long foodId) {
+        System.out.println("k9d3 FoodModule() with = " + foodId);
         mFoodId = foodId;
     }
 

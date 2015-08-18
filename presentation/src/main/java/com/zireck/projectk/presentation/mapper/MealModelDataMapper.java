@@ -15,9 +15,11 @@ import javax.inject.Inject;
  */
 public class MealModelDataMapper {
 
-    @Inject
-    public MealModelDataMapper() {
+    private FoodModelDataMapper mFoodModelDataMapper;
 
+    @Inject
+    public MealModelDataMapper(FoodModelDataMapper foodModelDataMapper) {
+        mFoodModelDataMapper = foodModelDataMapper;
     }
 
     /**
@@ -28,7 +30,7 @@ public class MealModelDataMapper {
      */
     public MealModel transform(Meal meal) {
         if (meal == null) {
-            throw new IllegalArgumentException("Cannot transform a null value");
+            argumentException();
         }
 
         MealModel mealModel = new MealModel(meal.getId());
@@ -40,9 +42,7 @@ public class MealModelDataMapper {
         mealModel.setCarbohydrates(meal.getCarbohydrates());
         mealModel.setProteins(meal.getProteins());
         mealModel.setFoodId(meal.getFoodId());
-
-        // TODO:
-        //mealModel.setFood(meal.getFood());
+        mealModel.setFoodModel(mFoodModelDataMapper.transform(meal.getFood()));
 
         return mealModel;
     }
@@ -66,5 +66,55 @@ public class MealModelDataMapper {
         }
 
         return mealModelsCollection;
+    }
+
+    /**
+     * Transforms a {@link MealModel} into a {@link Meal}.
+     *
+     * @param mealModel {@link MealModel} object to be transformed.
+     * @return {@link Meal}.
+     */
+    public Meal transformInverse(MealModel mealModel) {
+        if (mealModel == null) {
+            argumentException();
+        }
+
+        Meal meal = new Meal(mealModel.getId());
+        meal.setDate(mealModel.getDate());
+        meal.setMealtime(mealModel.getMealtime());
+        meal.setGrams(mealModel.getGrams());
+        meal.setCalories(mealModel.getCalories());
+        meal.setFats(mealModel.getFats());
+        meal.setCarbohydrates(mealModel.getCarbohydrates());
+        meal.setProteins(mealModel.getProteins());
+        meal.setFoodId(mealModel.getFoodId());
+        meal.setFood(mFoodModelDataMapper.transformInverse(mealModel.getFoodModel()));
+
+        return meal;
+    }
+
+    /**
+     * Transforms a Collection of {@link MealModel} into a Collection of {@link Meal}.
+     *
+     * @param mealModelCollection {@link MealModel} objects to be transformed.
+     * @return List of {@link Meal}.
+     */
+    public Collection<Meal> transformInverse(Collection<MealModel> mealModelCollection) {
+        Collection<Meal> mealCollection;
+
+        if (mealModelCollection != null && !mealModelCollection.isEmpty()) {
+            mealCollection = new ArrayList<Meal>();
+            for (MealModel mealModel : mealModelCollection) {
+                mealCollection.add(transformInverse(mealModel));
+            }
+        } else {
+            mealCollection = Collections.emptyList();
+        }
+
+        return mealCollection;
+    }
+
+    private void argumentException() {
+        throw new IllegalArgumentException("Cannot transform a null value");
     }
 }

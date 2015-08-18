@@ -3,8 +3,10 @@ package com.zireck.projectk.presentation.presenter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import com.zireck.projectk.domain.Food;
 import com.zireck.projectk.domain.interactor.DefaultSubscriber;
 import com.zireck.projectk.domain.interactor.Interactor;
+import com.zireck.projectk.presentation.mapper.FoodModelDataMapper;
 import com.zireck.projectk.presentation.model.FoodModel;
 import com.zireck.projectk.presentation.util.MathUtils;
 import com.zireck.projectk.presentation.view.FoodDetailView;
@@ -25,13 +27,19 @@ import lecho.lib.hellocharts.model.SliceValue;
 public class FoodDetailPresenter implements Presenter {
 
     private FoodDetailView mView;
+    private Interactor mGetFoodDetailsInteractor;
     private Interactor mDeleteFoodInteractor;
+    private FoodModelDataMapper mFoodModelDataMapper;
 
     private FoodModel mFood;
 
     @Inject
-    public FoodDetailPresenter(@Named("deleteFood") Interactor deleteFoodInteractor) {
+    public FoodDetailPresenter(@Named("foodDetails") Interactor getFoodDetailsInteractor,
+                               @Named("deleteFood") Interactor deleteFoodInteractor,
+                               FoodModelDataMapper foodModelDataMapper) {
+        mGetFoodDetailsInteractor = getFoodDetailsInteractor;
         mDeleteFoodInteractor = deleteFoodInteractor;
+        mFoodModelDataMapper = foodModelDataMapper;
     }
 
     @Override
@@ -41,7 +49,7 @@ public class FoodDetailPresenter implements Presenter {
 
     @Override
     public void resume() {
-
+        mGetFoodDetailsInteractor.execute(new GetFoodDetailsSubscriber());
     }
 
     @Override
@@ -51,15 +59,16 @@ public class FoodDetailPresenter implements Presenter {
 
     @Override
     public void destroy() {
+        mGetFoodDetailsInteractor.unsubscribe();
         mDeleteFoodInteractor.unsubscribe();
     }
 
-    public void mapExtras(Bundle bundle) {
+    public void mapExtras(Bundle bundle, String extraFoodObjectKey) {
         if (bundle == null) {
             throwIllegalArgumentException();
         }
 
-        mFood = bundle.getParcelable(mView.getFoodExtraKey());
+        mFood = bundle.getParcelable(extraFoodObjectKey);
         if (mFood == null) {
             throwIllegalArgumentException();
         } else {
@@ -67,18 +76,11 @@ public class FoodDetailPresenter implements Presenter {
         }
     }
 
-
-
-    private void throwIllegalArgumentException() {
-        throw new IllegalArgumentException(
-                "FoodDetailFragment has to be launched using a valid Food object as extra");
-    }
-
     private void showFoodDetailsInView(FoodModel food) {
         mView.setFoodPicture(food.getPicture());
 
-        mView.setFoodName(food.getName());
-        mView.setFoodBrand(food.getBrand());
+        mView.setName(food.getName());
+        mView.setBrand(food.getBrand());
 
         if (!food.isDrink()) {
             mView.setNutrientsDescription("Energy & Nutrients (per 100gr)");
@@ -86,7 +88,7 @@ public class FoodDetailPresenter implements Presenter {
             mView.setNutrientsDescription("Energy & Nutrients (per 100ml)");
         }
 
-        mView.setFoodCalories(MathUtils.formatDouble(food.getCalories()));
+        mView.setCalories(MathUtils.formatDouble(food.getCalories()));
 
         mView.setFatsAmount(MathUtils.formatDouble(food.getFats()) + "g");
         mView.setCarbohydratesAmount(MathUtils.formatDouble(food.getCarbohydrates()) + "g");
@@ -110,16 +112,26 @@ public class FoodDetailPresenter implements Presenter {
         mView.setPieChartData(pieChartData);
     }
 
-    public long getFoodId() {
-        return mFood.getId();
-    }
-
     public FoodModel getFood() {
         return mFood;
     }
 
     public void deleteFood() {
         mDeleteFoodInteractor.execute(new DeleteFoodSubscriber());
+    }
+
+    private void throwIllegalArgumentException() {
+        throw new IllegalArgumentException(
+                "FoodDetailFragment has to be launched using a valid Food object as extra");
+    }
+
+    private final class GetFoodDetailsSubscriber extends DefaultSubscriber<Food> {
+        @Override
+        public void onNext(Food food) {
+            FoodModel foodModel = mFoodModelDataMapper.transform(food);
+            mFood = foodModel;
+            showFoodDetailsInView(foodModel);
+        }
     }
 
     private final class DeleteFoodSubscriber extends DefaultSubscriber {

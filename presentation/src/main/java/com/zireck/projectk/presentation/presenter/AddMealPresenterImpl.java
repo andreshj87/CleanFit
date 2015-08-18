@@ -49,7 +49,7 @@ public class AddMealPresenterImpl implements AddMealPresenter, OnAddMealInteract
 
     @Override
     public void initialize() {
-        //updateEnergyAndNutrients(mView.getFood(), MathUtils.getAmountFromText(mView.getAmount()));
+        //updateEnergyAndNutrients(mView.getFoodModel(), MathUtils.getAmountFromText(mView.getAmount()));
     }
 
     @Override

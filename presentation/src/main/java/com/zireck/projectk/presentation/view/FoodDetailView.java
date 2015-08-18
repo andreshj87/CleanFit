@@ -6,22 +6,20 @@ import lecho.lib.hellocharts.model.PieChartData;
  * Created by Zireck on 29/07/2015.
  */
 public interface FoodDetailView extends View {
-    public String getFoodIdTag();
-    String getFoodExtraKey();
-    public void setFoodName(String foodName);
-    public void setFoodBrand(String foodBrand);
-    public void setFoodCalories(String foodCalories);
-    public void setFatsAmount(String fatsAmount);
-    public void setFatsPercent(String fatsPercent);
-    public void setCarbohydratesAmount(String carbohydratesAmount);
-    public void setCarbohydratesPercent(String carbohydratesPercent);
-    public void setProteinsAmount(String proteinsAmount);
-    public void setProteinsPercent(String proteinsPercent);
-    public void setFoodPicture(String foodImage);
-    public void setPieChartData(PieChartData pieChartData);
-    public int getFatsColor();
-    public int getCarbohydrtesColor();
-    public int getProteinsColor();
-    public void foodDeleted();
-    public void setNutrientsDescription(String description);
+    void setName(String foodName);
+    void setBrand(String foodBrand);
+    void setCalories(String foodCalories);
+    void setFatsAmount(String fatsAmount);
+    void setFatsPercent(String fatsPercent);
+    void setCarbohydratesAmount(String carbohydratesAmount);
+    void setCarbohydratesPercent(String carbohydratesPercent);
+    void setProteinsAmount(String proteinsAmount);
+    void setProteinsPercent(String proteinsPercent);
+    void setNutrientsDescription(String description);
+    void setFoodPicture(String foodImage);
+    void setPieChartData(PieChartData pieChartData);
+    int getFatsColor();
+    int getCarbohydrtesColor();
+    int getProteinsColor();
+    void foodDeleted();
 }

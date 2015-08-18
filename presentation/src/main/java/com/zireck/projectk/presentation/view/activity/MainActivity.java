@@ -36,7 +36,8 @@ import com.zireck.projectk.presentation.view.fragment.HomeFragment;
 import butterknife.Bind;
 import butterknife.OnClick;
 
-public class MainActivity extends BaseActivity implements OnFoodRepositoryTabChangeListener, HasComponent<FoodComponent> {
+public class MainActivity extends BaseActivity implements OnFoodRepositoryTabChangeListener,
+                                                            HasComponent<FoodComponent> {
 
     private static final String NAVIGATION_VIEW_SELECTED_ITEM = "NavigationViewSelectedItem";
 
@@ -51,14 +52,10 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
     @Bind(R.id.fab) FloatingActionButton mFloatingActionButton;
     private ActionBarDrawerToggle mDrawerToggle;
 
-    @Bind(R.id.fab_menu)
-    FloatingActionMenu mFabMenu;
-    @Bind(R.id.fab_food)
-    com.github.clans.fab.FloatingActionButton mFabFood;
-    @Bind(R.id.fab_meal)
-    com.github.clans.fab.FloatingActionButton mFabMeal;
-    @Bind(R.id.fab_barcode)
-    com.github.clans.fab.FloatingActionButton mFabBarcode;
+    @Bind(R.id.fab_menu) FloatingActionMenu mFabMenu;
+    @Bind(R.id.fab_food) com.github.clans.fab.FloatingActionButton mFabFood;
+    @Bind(R.id.fab_meal) com.github.clans.fab.FloatingActionButton mFabMeal;
+    @Bind(R.id.fab_barcode) com.github.clans.fab.FloatingActionButton mFabBarcode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,56 +63,10 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
         setContentView(R.layout.activity_main);
 
         initInjector();
-
         initActionBar();
-
         initNavigationView();
-
         initDrawerToggle();
-
         selectNavigationViewFirstItem();
-
-        /*
-        DaoMaster.DevOpenHelper daoMaster = new DaoMaster.DevOpenHelper(this, "projectk", null);
-        SQLiteDatabase mDatabase = daoMaster.getWritableDatabase();
-        DaoMaster mDaoMaster = new DaoMaster(mDatabase);
-        DaoSession mDaoSession = mDaoMaster.newSession();
-        FoodEntityDao foodEntityDao = mDaoSession.getFoodEntityDao();
-
-        FoodEntity foodEntity = new FoodEntity();
-        foodEntity.setId((long) 5);
-        foodEntity.setName("Cafe");
-        foodEntity.setBrand("Capuchino");
-        foodEntity.setIsDrink(true);
-        foodEntity.setCalories(135);
-        foodEntity.setFats(12);
-        foodEntity.setCarbohydrates(31);
-        foodEntity.setProteins(8);
-
-        foodEntityDao.insert(foodEntity);
-
-        foodEntity.setId((long) 6);
-        foodEntity.setName("Leche");
-        foodEntity.setBrand("Asturiana");
-        foodEntity.setIsDrink(true);
-        foodEntity.setCalories(112);
-        foodEntity.setFats(22);
-        foodEntity.setCarbohydrates(35);
-        foodEntity.setProteins(19);
-
-        foodEntityDao.insert(foodEntity);
-
-        foodEntity.setId((long) 7);
-        foodEntity.setName("Arroz Redondo");
-        foodEntity.setBrand("Gallo");
-        foodEntity.setIsDrink(false);
-        foodEntity.setCalories(245);
-        foodEntity.setFats(15);
-        foodEntity.setCarbohydrates(47);
-        foodEntity.setProteins(27);
-
-        foodEntityDao.insert(foodEntity);*/
-
     }
 
     @Override
@@ -177,7 +128,8 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
         super.onRestoreInstanceState(savedInstanceState);
         Log.d(getClass().getSimpleName(), "restore");
         if (savedInstanceState.containsKey(NAVIGATION_VIEW_SELECTED_ITEM)) {
-            setNavigationViewSelectedItem(savedInstanceState.getInt(NAVIGATION_VIEW_SELECTED_ITEM, 0));
+            setNavigationViewSelectedItem(
+                    savedInstanceState.getInt(NAVIGATION_VIEW_SELECTED_ITEM, 0));
         }
     }
 
@@ -187,11 +139,13 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
 
         if (requestCode == Navigator.ADD_FOOD_REQUEST) {
             if (resultCode == RESULT_OK) {
-                SnackbarUtils.showShortMessageWithElevation(mCoordinatorLayout, "Food successfully added", 8);
+                SnackbarUtils.showShortMessageWithElevation(
+                        mCoordinatorLayout, "Food successfully added", 8);
             }
         } else if (requestCode == Navigator.DELETE_FOOD_REQUEST) {
             if (resultCode == RESULT_OK) {
-                SnackbarUtils.showShortMessageWithElevation(mCoordinatorLayout, "Food successfully deleted", 8);
+                SnackbarUtils.showShortMessageWithElevation(
+                        mCoordinatorLayout, "Food successfully deleted", 8);
             }
         }
     }
@@ -199,6 +153,11 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
     @Override
     public void tabChanged() {
         showFAB();
+    }
+
+    @Override
+    public FoodComponent getComponent() {
+        return mFoodComponent;
     }
 
     @OnClick(R.id.fab)
@@ -326,10 +285,5 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
     private void setNavigationViewSelectedItem(int position) {
         Menu menu = mNavigationView.getMenu();
         menu.getItem(position).setChecked(true);
-    }
-
-    @Override
-    public FoodComponent getComponent() {
-        return mFoodComponent;
     }
 }

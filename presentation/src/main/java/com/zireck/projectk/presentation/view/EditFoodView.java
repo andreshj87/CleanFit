@@ -9,37 +9,37 @@ import net.steamcrafted.materialiconlib.MaterialIconView;
  * Created by Zireck on 31/07/2015.
  */
 public interface EditFoodView extends View {
-    public String getFoodIdTag();
-    public void foodSuccessfullyEdited();
+    String getFoodIdTag();
+    void foodSuccessfullyEdited();
 
-    public void setGr();
-    public void setMl();
-    public void setNameError();
-    public void setBrandError();
-    public void setCaloriesError();
-    public void setFatsError();
-    public void setCarbohydratesError();
-    public void setProteinsError();
+    void setGr();
+    void setMl();
+    void setNameError();
+    void setBrandError();
+    void setCaloriesError();
+    void setFatsError();
+    void setCarbohydratesError();
+    void setProteinsError();
 
-    public MaterialIconView getIconName();
-    public MaterialIconView getIconBrand();
-    public MaterialIconView getIconCalories();
-    public MaterialIconView getIconNutrients();
+    MaterialIconView getIconName();
+    MaterialIconView getIconBrand();
+    MaterialIconView getIconCalories();
+    MaterialIconView getIconNutrients();
 
-    public void startIntentForCameraLaunch(Intent intent, final int requestCode);
+    void startIntentForCameraLaunch(Intent intent, final int requestCode);
 
-    public ImageView getPictureImageView();
+    ImageView getPictureImageView();
 
-    public void deletePicture();
-    public void showDeletePictureLayout();
-    public void hideDeletePictureLayout();
+    void deletePicture();
+    void showDeletePictureLayout();
+    void hideDeletePictureLayout();
 
-    public void setFoodName(String foodName);
-    public void setFoodBrand(String foodBrand);
-    public void setFoodCalories(String foodCalories);
-    public void setFoodFats(String foodFats);
-    public void setFoodCarbohydrates(String foodCarbohydrates);
-    public void setFoodProteins(String foodProteins);
+    void setFoodName(String foodName);
+    void setFoodBrand(String foodBrand);
+    void setFoodCalories(String foodCalories);
+    void setFoodFats(String foodFats);
+    void setFoodCarbohydrates(String foodCarbohydrates);
+    void setFoodProteins(String foodProteins);
 
-    public void setIsDrink(boolean isDrink);
+    void setIsDrink(boolean isDrink);
 }

@@ -25,14 +25,13 @@ import butterknife.Bind;
 public class EditFoodActivity extends BaseActivity implements OnEditFoodFinishedListener,
                                                                 HasComponent<FoodComponent> {
 
-    private static final String EXTRA_FOOD_OBJECT = "food_oject";
+    private static final String EXTRA_FOOD_OBJECT = "food_object";
 
     private FoodComponent mFoodComponent;
 
     private FoodModel mFood;
 
-    @Bind(R.id.toolbar)
-    Toolbar mToolbar;
+    @Bind(R.id.toolbar) Toolbar mToolbar;
 
     /**
      * Generates the intent needed to launch this activity.
@@ -71,8 +70,18 @@ public class EditFoodActivity extends BaseActivity implements OnEditFoodFinished
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    public FoodComponent getComponent() {
+        return mFoodComponent;
+    }
+
+    @Override
+    public void foodEdited() {
+        navigateBack(RESULT_OK);
+    }
+
+    @Override
+    public void foodNotEdited() {
+        navigateBack(RESULT_CANCELED);
     }
 
     /**
@@ -89,41 +98,6 @@ public class EditFoodActivity extends BaseActivity implements OnEditFoodFinished
         if (mFood == null) {
             throwIllegalArgumentException();
         }
-    }
-
-    @Override
-    public void foodEdited() {
-        navigateBack(RESULT_OK);
-    }
-
-    @Override
-    public void foodNotEdited() {
-        navigateBack(RESULT_CANCELED);
-    }
-
-    private void initializeFragment() {
-        if (mFood == null) {
-            throw new IllegalArgumentException("Cannot initialize fragment using a null object.");
-        }
-
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, EditFoodFragment.newInstance(mFood)).commit();
-    }
-
-    private static void throwIllegalArgumentException() {
-        throw new IllegalArgumentException(
-                "EditFoodActivity has to be launched using a valid Food identifier as extra");
-    }
-
-    @Override
-    public FoodComponent getComponent() {
-        return mFoodComponent;
-    }
-
-    private void navigateBack(int result) {
-        Intent intent = new Intent();
-        setResult(result, intent);
-        finish();
     }
 
     private void initInjector() {
@@ -144,5 +118,25 @@ public class EditFoodActivity extends BaseActivity implements OnEditFoodFinished
             actionBar.setDisplayShowHomeEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    private void initializeFragment() {
+        if (mFood == null) {
+            throw new IllegalArgumentException("Cannot initialize fragment using a null object.");
+        }
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, EditFoodFragment.newInstance(mFood)).commit();
+    }
+
+    private void navigateBack(int result) {
+        Intent intent = new Intent();
+        setResult(result, intent);
+        finish();
+    }
+
+    private static void throwIllegalArgumentException() {
+        throw new IllegalArgumentException(
+                "EditFoodActivity has to be launched using a valid Food identifier as extra");
     }
 }

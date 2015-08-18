@@ -29,8 +29,8 @@ import butterknife.Bind;
 public class DrinkListFragment extends BaseFragment implements DrinkListView {
 
     @Inject Navigator mNavigator;
+    @Inject DrinkListPresenter mPresenter;
 
-    @Inject DrinkListPresenter mDrinkListPresenter;
     @Bind(R.id.food_list) RecyclerView mRecyclerView;
     protected FoodListAdapter mAdapter;
 
@@ -50,25 +50,24 @@ public class DrinkListFragment extends BaseFragment implements DrinkListView {
         super.onActivityCreated(savedInstanceState);
 
         initialize();
-        loadDrinkList();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mDrinkListPresenter.resume();
+        mPresenter.resume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mDrinkListPresenter.pause();
+        mPresenter.pause();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mDrinkListPresenter.destroy();
+        mPresenter.destroy();
     }
 
     @Override
@@ -91,11 +90,7 @@ public class DrinkListFragment extends BaseFragment implements DrinkListView {
 
     private void initialize() {
         getComponent(FoodComponent.class).inject(this);
-        mDrinkListPresenter.setView(this);
-    }
-
-    private void loadDrinkList() {
-        mDrinkListPresenter.initialize();
+        mPresenter.setView(this);
     }
 
     private void initRecyclerView() {
@@ -105,7 +100,7 @@ public class DrinkListFragment extends BaseFragment implements DrinkListView {
         mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                mDrinkListPresenter.onItemClick(position);
+                mPresenter.onItemClick(position);
             }
         }));
 

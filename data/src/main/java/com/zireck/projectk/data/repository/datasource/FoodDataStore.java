@@ -31,7 +31,7 @@ public class FoodDataStore {
         return Observable.create(new Observable.OnSubscribe<FoodEntity>() {
             @Override
             public void call(Subscriber<? super FoodEntity> subscriber) {
-                FoodEntityDao foodEntityDao = initGreenDao();
+                FoodEntityDao foodEntityDao = getFoodEntityDao();
                 FoodEntity foodEntity = foodEntityDao.queryBuilder().where(FoodEntityDao.Properties.Id.eq(foodId)).unique();
 
                 if (foodEntity != null) {
@@ -48,7 +48,7 @@ public class FoodDataStore {
         return Observable.create(new Observable.OnSubscribe<List<FoodEntity>>() {
             @Override
             public void call(Subscriber<? super List<FoodEntity>> subscriber) {
-                FoodEntityDao foodEntityDao = initGreenDao();
+                FoodEntityDao foodEntityDao = getFoodEntityDao();
                 List<FoodEntity> foodEntities;
                 foodEntities = foodEntityDao.loadAll();
 
@@ -66,7 +66,7 @@ public class FoodDataStore {
         return Observable.create(new Observable.OnSubscribe<List<FoodEntity>>() {
             @Override
             public void call(Subscriber<? super List<FoodEntity>> subscriber) {
-                FoodEntityDao foodEntityDao = initGreenDao();
+                FoodEntityDao foodEntityDao = getFoodEntityDao();
                 List<FoodEntity> foodEntities;
                 foodEntities = foodEntityDao.queryBuilder().where(FoodEntityDao.Properties.IsDrink.eq(false)).list();
 
@@ -84,7 +84,7 @@ public class FoodDataStore {
         return Observable.create(new Observable.OnSubscribe<List<FoodEntity>>() {
             @Override
             public void call(Subscriber<? super List<FoodEntity>> subscriber) {
-                FoodEntityDao foodEntityDao = initGreenDao();
+                FoodEntityDao foodEntityDao = getFoodEntityDao();
                 List<FoodEntity> foodEntities;
                 foodEntities = foodEntityDao.queryBuilder().where(FoodEntityDao.Properties.IsDrink.eq(true)).list();
 
@@ -102,7 +102,7 @@ public class FoodDataStore {
         return Observable.create(new Observable.OnSubscribe<Void>() {
             @Override
             public void call(Subscriber<? super Void> subscriber) {
-                FoodEntityDao foodEntityDao = initGreenDao();
+                FoodEntityDao foodEntityDao = getFoodEntityDao();
                 long result = foodEntityDao.insert(food);
 
                 if (result == -1) {
@@ -118,7 +118,7 @@ public class FoodDataStore {
         return Observable.create(new Observable.OnSubscribe<Void>() {
             @Override
             public void call(Subscriber<? super Void> subscriber) {
-                FoodEntityDao foodEntityDao = initGreenDao();
+                FoodEntityDao foodEntityDao = getFoodEntityDao();
                 foodEntityDao.update(food);
 
                 subscriber.onCompleted();
@@ -130,7 +130,7 @@ public class FoodDataStore {
         return Observable.create(new Observable.OnSubscribe<Void>() {
             @Override
             public void call(Subscriber<? super Void> subscriber) {
-                FoodEntityDao foodEntityDao = initGreenDao();
+                FoodEntityDao foodEntityDao = getFoodEntityDao();
                 foodEntityDao.deleteByKey(food.getId());
 
                 subscriber.onCompleted();
@@ -138,11 +138,15 @@ public class FoodDataStore {
         });
     }
 
-    private FoodEntityDao initGreenDao() {
-        DaoMaster.DevOpenHelper daoMaster = new DaoMaster.DevOpenHelper(mContext, "projectk", null);
-        SQLiteDatabase mDatabase = daoMaster.getWritableDatabase();
-        DaoMaster mDaoMaster = new DaoMaster(mDatabase);
-        DaoSession mDaoSession = mDaoMaster.newSession();
-        return mDaoSession.getFoodEntityDao();
+    private FoodEntityDao getFoodEntityDao() {
+        return initGreenDao().getFoodEntityDao();
+    }
+
+    private DaoSession initGreenDao() {
+        DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(mContext, "projectk", null);
+        SQLiteDatabase database = devOpenHelper.getWritableDatabase();
+        DaoMaster daoMaster = new DaoMaster(database);
+        DaoSession daoSession = daoMaster.newSession();
+        return daoSession;
     }
 }

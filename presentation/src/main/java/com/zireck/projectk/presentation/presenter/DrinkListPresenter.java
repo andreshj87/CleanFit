@@ -42,7 +42,7 @@ public class DrinkListPresenter implements Presenter {
 
     @Override
     public void resume() {
-
+        getDrinkList();
     }
 
     @Override
@@ -53,10 +53,6 @@ public class DrinkListPresenter implements Presenter {
     @Override
     public void destroy() {
         mGetDrinkListInteractor.unsubscribe();
-    }
-
-    public void initialize() {
-        getDrinkList();
     }
 
     private void getDrinkList() {

@@ -332,16 +332,16 @@ public class AddMealFragment extends BaseFragment implements AddMealView,
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position < 0) {
-                    //mPresenter.setFood(null);
+                    //mPresenter.setFoodModel(null);
                     return;
                 }
 
-                //mPresenter.setFood((FoodModel) mSpinnerFood.getItemAtPosition(position + 1));
+                //mPresenter.setFoodModel((FoodModel) mSpinnerFood.getItemAtPosition(position + 1));
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                //mPresenter.setFood(null);
+                //mPresenter.setFoodModel(null);
             }
         });
     }

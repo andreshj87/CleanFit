@@ -24,7 +24,6 @@ import javax.inject.Named;
 public class FoodListPresenter implements Presenter {
 
     private FoodListView mView;
-
     private final Interactor mGetFoodListInteractor;
     private final FoodModelDataMapper mFoodModelDataMapper;
 
@@ -42,7 +41,7 @@ public class FoodListPresenter implements Presenter {
 
     @Override
     public void resume() {
-
+        getFoodList();
     }
 
     @Override
@@ -53,10 +52,6 @@ public class FoodListPresenter implements Presenter {
     @Override
     public void destroy() {
         mGetFoodListInteractor.unsubscribe();
-    }
-
-    public void initialize() {
-        getFoodList();
     }
 
     private void getFoodList() {
