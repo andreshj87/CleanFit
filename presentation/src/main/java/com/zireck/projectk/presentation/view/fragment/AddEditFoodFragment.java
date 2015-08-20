@@ -10,11 +10,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zireck.projectk.R;
@@ -24,6 +24,7 @@ import com.zireck.projectk.presentation.util.PictureUtils;
 import com.zireck.projectk.presentation.util.SnackbarUtils;
 import com.zireck.projectk.presentation.view.AddEditFoodView;
 
+import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
 import net.steamcrafted.materialiconlib.MaterialIconView;
 
 import butterknife.Bind;
@@ -36,7 +37,9 @@ public abstract class AddEditFoodFragment extends BaseFragment implements AddEdi
 
     @Bind(R.id.food_picture) ImageView mFoodPicture;
 
-    @Bind(R.id.layout_delete_picture) LinearLayout mLayoutDeletePicture;
+    @Bind(R.id.button_picture_take) Button mButtonPictureTake;
+    @Bind(R.id.button_picture_delete) Button mButtonPictureDelete;
+    @Bind(R.id.icon_camera) MaterialIconView mIconCamera;
 
     @Bind(R.id.food_name_icon) MaterialIconView mFoodNameIcon;
     @Bind(R.id.food_name_text_input_layout) TextInputLayout mFoodNameTextInputLayout;
@@ -75,6 +78,7 @@ public abstract class AddEditFoodFragment extends BaseFragment implements AddEdi
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        initButtonIcons();
         hideKeyboard();
         applyDecimalFilters();
         initDrinkCheckBox();
@@ -138,12 +142,12 @@ public abstract class AddEditFoodFragment extends BaseFragment implements AddEdi
         getPresenter().startCamera(getActivity());
     }
 
-    @OnClick(R.id.button_take_picture)
+    @OnClick(R.id.button_picture_take)
     public void onTakePictureClick() {
         getPresenter().startCamera(getActivity());
     }
 
-    @OnClick(R.id.button_delete_picture)
+    @OnClick(R.id.button_picture_delete)
     public void onDeletePictureClick() {
         getPresenter().deleteCurrentPicture();
     }
@@ -227,12 +231,14 @@ public abstract class AddEditFoodFragment extends BaseFragment implements AddEdi
 
     @Override
     public void showDeletePictureLayout() {
-        mLayoutDeletePicture.setVisibility(View.VISIBLE);
+        mButtonPictureDelete.setVisibility(View.VISIBLE);
+        mIconCamera.setVisibility(View.GONE);
     }
 
     @Override
     public void hideDeletePictureLayout() {
-        mLayoutDeletePicture.setVisibility(View.GONE);
+        mButtonPictureDelete.setVisibility(View.INVISIBLE);
+        mIconCamera.setVisibility(View.VISIBLE);
     }
 
     public abstract void initialize();
@@ -247,6 +253,18 @@ public abstract class AddEditFoodFragment extends BaseFragment implements AddEdi
 
     protected void setError(EditText editText, String type) {
         editText.setError("Invalid " + type);
+    }
+
+    private void initButtonIcons() {
+        MaterialIconView icon = new MaterialIconView(getActivity());
+        icon.setColorResource(R.color.primary);
+        icon.setIcon(MaterialDrawableBuilder.IconValue.CAMERA);
+        mButtonPictureTake.setCompoundDrawables(icon.getDrawable(), null, null, null);
+        mButtonPictureTake.setCompoundDrawablePadding(4);
+
+        icon.setIcon(MaterialDrawableBuilder.IconValue.CLOSE);
+        mButtonPictureDelete.setCompoundDrawables(icon.getDrawable(), null, null, null);
+        mButtonPictureDelete.setCompoundDrawablePadding(4);
     }
 
     protected void hideKeyboard() {
