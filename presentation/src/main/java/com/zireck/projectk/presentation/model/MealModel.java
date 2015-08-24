@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class MealModel implements Parcelable {
 
-    private final long id;
+    private long id;
     private Date date;
     private int mealtime;
     private int grams;
@@ -23,6 +23,10 @@ public class MealModel implements Parcelable {
     private double proteins;
     private long foodId;
     private FoodModel foodModel;
+
+    public MealModel() {
+
+    }
 
     public MealModel(long id) {
         this.id = id;

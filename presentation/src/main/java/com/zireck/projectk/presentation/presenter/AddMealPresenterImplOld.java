@@ -19,7 +19,7 @@ import java.util.Locale;
 /**
  * Created by Zireck on 06/08/2015.
  */
-public class AddMealPresenterImpl implements AddMealPresenter, OnAddMealInteractorFinishedListener {
+public class AddMealPresenterImplOld implements AddMealPresenterOld, OnAddMealInteractorFinishedListener {
 
     private AddMealView mView;
     private AddMealInteractor mInteractor;
@@ -29,7 +29,7 @@ public class AddMealPresenterImpl implements AddMealPresenter, OnAddMealInteract
 
     private String mCurrentMeasure = "GR";
 
-    public AddMealPresenterImpl(AddMealView view) {
+    public AddMealPresenterImplOld(AddMealView view) {
         mView = view;
         mInteractor = new AddMealInteractorImpl();
 
@@ -43,7 +43,7 @@ public class AddMealPresenterImpl implements AddMealPresenter, OnAddMealInteract
         }*/
 
         if (foods != null) {
-            mView.setSpinnerFoodItems(foods);
+            //mView.setSpinnerFoodItems(foods);
         }
     }
 
@@ -122,7 +122,7 @@ public class AddMealPresenterImpl implements AddMealPresenter, OnAddMealInteract
     public void setAmount(int amount) {
         mView.setAmountText(amount + mCurrentMeasure.toLowerCase());
 
-        updateEnergyAndNutrients(mView.getFood(), amount);
+        //updateEnergyAndNutrients(mView.getFood(), amount);
     }
 
     @Override

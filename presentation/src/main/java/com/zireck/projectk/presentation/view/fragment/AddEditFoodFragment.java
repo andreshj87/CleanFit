@@ -126,7 +126,7 @@ public abstract class AddEditFoodFragment extends BaseFragment implements AddEdi
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_add_edit_food, menu);
+        inflater.inflate(R.menu.menu_add_edit, menu);
     }
 
     @Override

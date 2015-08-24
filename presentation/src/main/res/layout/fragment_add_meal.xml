@@ -11,23 +11,50 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <fr.ganfra.materialspinner.MaterialSpinner
-            android:id="@+id/spinner_food"
+        <FrameLayout
+            android:id="@+id/layout_food_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            app:ms_multiline="false"
-            app:ms_hint="Food"
-            app:ms_baseColor="@color/primary"
-            app:ms_highlightColor="@color/primary_dark"
-            app:ms_errorColor="@color/red"
-            app:ms_arrowColor="@color/primary"
-            app:ms_alignLabels="false" />
+            android:layout_marginBottom="16dp"
+            android:padding="8dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:background="@color/white"
+            android:elevation="2dp" >
+
+            <RelativeLayout
+                android:id="@+id/layout_pick_food"
+                android:layout_width="match_parent"
+                android:layout_height="64dp">
+
+                <net.steamcrafted.materialiconlib.MaterialIconView
+                    android:id="@+id/icon_pick_food"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:scaleType="center"
+                    app:materialIcon="plus_box"
+                    app:materialIconColor="@color/icon_activated"
+                    app:materialIconSize="36dp"/>
+
+                <TextView
+                    android:id="@+id/text_pick_your_food"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Pick your food"
+                    android:textSize="18sp"/>
+
+            </RelativeLayout>
+
+            <include
+                layout="@layout/food_item" />
+
+        </FrameLayout>
 
         <LinearLayout
             android:id="@+id/layout_date"
@@ -180,8 +207,7 @@
                 android:padding="4dp"
                 android:gravity="center"
                 android:text="250 kcal"
-                android:textColor="@color/white"
-                android:background="@color/calories"/>
+                android:textColor="@color/calories" />
 
         </LinearLayout>
 
@@ -215,8 +241,7 @@
                 android:padding="4dp"
                 android:gravity="center"
                 android:text="12 fats"
-                android:textColor="@color/white"
-                android:background="@color/fats"/>
+                android:textColor="@color/fats" />
 
             <TextView
                 android:id="@+id/meal_carbohydrates"
@@ -226,8 +251,7 @@
                 android:padding="4dp"
                 android:gravity="center"
                 android:text="34 carbs"
-                android:textColor="@color/white"
-                android:background="@color/carbohydrates"/>
+                android:textColor="@color/carbohydrates" />
 
             <TextView
                 android:id="@+id/meal_proteins"
@@ -237,8 +261,7 @@
                 android:padding="4dp"
                 android:gravity="center"
                 android:text="18 proteins"
-                android:textColor="@color/white"
-                android:background="@color/proteins"/>
+                android:textColor="@color/proteins" />
 
         </LinearLayout>
 

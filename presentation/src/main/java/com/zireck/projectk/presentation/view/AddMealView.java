@@ -2,14 +2,12 @@ package com.zireck.projectk.presentation.view;
 
 import com.zireck.projectk.presentation.model.FoodModel;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Created by Zireck on 06/08/2015.
  */
-public interface AddMealView {
-    public void setSpinnerFoodItems(List<FoodModel> foodItems);
-
+public interface AddMealView extends View {
     public void setDateText(String date);
     public void setTimeText(String time);
     public void setAmountText(String amount);
@@ -18,7 +16,6 @@ public interface AddMealView {
     public void setCarbohydratesText(String carbohydrates);
     public void setProteinsText(String proteins);
 
-    public FoodModel getFood();
     public String getAmount();
 
     public void setFoodError();
@@ -30,4 +27,6 @@ public interface AddMealView {
     public void setGr();
     public void setMl();
 
+    void setFoodItems(Collection<FoodModel> foodItems);
+    void renderFoodInView(FoodModel food);
 }

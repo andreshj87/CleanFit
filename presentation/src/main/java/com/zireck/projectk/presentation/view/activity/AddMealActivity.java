@@ -9,13 +9,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.zireck.projectk.R;
+import com.zireck.projectk.presentation.dagger.HasComponent;
+import com.zireck.projectk.presentation.dagger.component.DaggerFoodComponent;
+import com.zireck.projectk.presentation.dagger.component.FoodComponent;
+import com.zireck.projectk.presentation.dagger.module.FoodModule;
 
 import butterknife.Bind;
 
 /**
  * Created by Zireck on 06/08/2015.
  */
-public class AddMealActivity extends BaseActivity {
+public class AddMealActivity extends BaseActivity implements HasComponent<FoodComponent> {
+
+    private FoodComponent mFoodComponent;
 
     @Bind(R.id.toolbar) Toolbar mToolbar;
 
@@ -31,13 +37,14 @@ public class AddMealActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_meal);
 
+        initInjector();
         initActionBar();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.menu_add_edit_food, menu);
+        //getMenuInflater().inflate(R.menu.menu_add_edit, menu);
 
         return true;
     }
@@ -59,13 +66,20 @@ public class AddMealActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    protected void navigateBack(int result) {
-        Intent intent = new Intent();
-        setResult(result, intent);
-        finish();
+    @Override
+    public FoodComponent getComponent() {
+        return mFoodComponent;
     }
 
-    protected void initActionBar() {
+    private void initInjector() {
+        mFoodComponent = DaggerFoodComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .activityModule(getActivityModule())
+                .foodModule(new FoodModule())
+                .build();
+    }
+
+    private void initActionBar() {
         mToolbar.setNavigationIcon(R.drawable.ic_close_white_24dp);
 
         setSupportActionBar(mToolbar);
@@ -75,5 +89,11 @@ public class AddMealActivity extends BaseActivity {
             actionBar.setDisplayShowHomeEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    private void navigateBack(int result) {
+        Intent intent = new Intent();
+        setResult(result, intent);
+        finish();
     }
 }

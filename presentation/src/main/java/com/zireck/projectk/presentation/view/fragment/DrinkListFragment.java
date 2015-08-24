@@ -14,7 +14,7 @@ import com.zireck.projectk.presentation.model.FoodModel;
 import com.zireck.projectk.presentation.navigation.Navigator;
 import com.zireck.projectk.presentation.presenter.DrinkListPresenter;
 import com.zireck.projectk.presentation.view.DrinkListView;
-import com.zireck.projectk.presentation.view.adapter.FoodListAdapter;
+import com.zireck.projectk.presentation.view.adapter.FoodRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,7 +32,7 @@ public class DrinkListFragment extends BaseFragment implements DrinkListView {
     @Inject DrinkListPresenter mPresenter;
 
     @Bind(R.id.food_list) RecyclerView mRecyclerView;
-    protected FoodListAdapter mAdapter;
+    protected FoodRecyclerAdapter mAdapter;
 
     public static DrinkListFragment newInstance() {
         return new DrinkListFragment();
@@ -104,7 +104,7 @@ public class DrinkListFragment extends BaseFragment implements DrinkListView {
             }
         }));
 
-        mAdapter = new FoodListAdapter(getActivity(), new ArrayList<FoodModel>(), FoodListAdapter.ITEM_LAYOUT);
+        mAdapter = new FoodRecyclerAdapter(getActivity(), new ArrayList<FoodModel>(), FoodRecyclerAdapter.ITEM_LAYOUT);
         mRecyclerView.setAdapter(mAdapter);
     }
 }
