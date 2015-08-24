@@ -16,10 +16,26 @@ public interface MealRepository {
      *
      * @param mealId The meal id used to retrieve meal data.
      */
-    Observable<Meal> meal(final int mealId);
+    Observable<Meal> meal(final long mealId);
 
     /**
      * Get an {@link Observable} which will emit a List of {@link Meal}.
      */
     Observable<List<Meal>> meals();
+
+    /**
+     * Get an {@link Observable} which will notify the addition of a {@link Meal} object.
+     */
+    Observable<Void> addMeal(final Meal meal);
+
+    /**
+     * Get an {@link Observable} which will notify the edition of a {@link Meal} object.
+     */
+    Observable<Void> editMeal(final Meal meal);
+
+    /**
+     * Get an {@link Observable} which will notify the deletion of a {@link Meal} object.
+     * @param meal
+     */
+    Observable<Void> deleteMeal(final Meal meal);
 }
