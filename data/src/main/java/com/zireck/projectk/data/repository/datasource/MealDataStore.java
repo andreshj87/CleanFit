@@ -3,6 +3,7 @@ package com.zireck.projectk.data.repository.datasource;
 import com.zireck.projectk.data.entity.MealEntity;
 import com.zireck.projectk.data.entity.MealEntityDao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -44,6 +45,24 @@ public class MealDataStore extends DataStore {
                 MealEntityDao mealEntityDao = getMealEntityDao();
                 List<MealEntity> mealEntities;
                 mealEntities = mealEntityDao.loadAll();
+
+                if (mealEntities != null) {
+                    subscriber.onNext(mealEntities);
+                    subscriber.onCompleted();
+                } else {
+                    subscriber.onError(new Throwable());
+                }
+            }
+        });
+    }
+
+    public Observable<List<MealEntity>> mealEntityList(final Date date) {
+        return Observable.create(new Observable.OnSubscribe<List<MealEntity>>() {
+            @Override
+            public void call(Subscriber<? super List<MealEntity>> subscriber) {
+                MealEntityDao mealEntityDao = getMealEntityDao();
+                List<MealEntity> mealEntities;
+                mealEntities = mealEntityDao.queryBuilder().where(MealEntityDao.Properties.Date.eq(date)).list();
 
                 if (mealEntities != null) {
                     subscriber.onNext(mealEntities);

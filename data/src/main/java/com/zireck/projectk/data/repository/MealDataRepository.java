@@ -6,6 +6,7 @@ import com.zireck.projectk.data.repository.datasource.MealDataStore;
 import com.zireck.projectk.domain.Meal;
 import com.zireck.projectk.domain.repository.MealRepository;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -29,7 +30,7 @@ public class MealDataRepository implements MealRepository {
     }
 
     @Override
-    public Observable<Meal> meal(int mealId) {
+    public Observable<Meal> meal(long mealId) {
         return mMealDataStore.mealEntityDetails(mealId).map(new Func1<MealEntity, Meal>() {
             @Override
             public Meal call(MealEntity mealEntity) {
@@ -41,6 +42,16 @@ public class MealDataRepository implements MealRepository {
     @Override
     public Observable<List<Meal>> meals() {
         return mMealDataStore.mealEntityList().map(new Func1<List<MealEntity>, List<Meal>>() {
+            @Override
+            public List<Meal> call(List<MealEntity> mealEntities) {
+                return mMealEntityDataMapper.transform(mealEntities);
+            }
+        });
+    }
+
+    @Override
+    public Observable<List<Meal>> meals(Date date) {
+        return mMealDataStore.mealEntityList(date).map(new Func1<List<MealEntity>, List<Meal>>() {
             @Override
             public List<Meal> call(List<MealEntity> mealEntities) {
                 return mMealEntityDataMapper.transform(mealEntities);

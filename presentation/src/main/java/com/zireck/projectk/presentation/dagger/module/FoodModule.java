@@ -76,7 +76,7 @@ public class FoodModule {
     }
 
     @Provides @PerActivity @Named("deleteFood")
-    Interactor provideDeleteInteractor(FoodRepository foodRepository, ThreadExecutor threadExecutor,
+    Interactor provideDeleteFoodInteractor(FoodRepository foodRepository, ThreadExecutor threadExecutor,
                                        PostExecutionThread postExecutionThread) {
         return new DeleteFood(mFood, foodRepository, threadExecutor, postExecutionThread);
     }

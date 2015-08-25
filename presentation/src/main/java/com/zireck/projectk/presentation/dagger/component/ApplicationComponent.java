@@ -5,8 +5,10 @@ import android.content.Context;
 import com.zireck.projectk.domain.executor.PostExecutionThread;
 import com.zireck.projectk.domain.executor.ThreadExecutor;
 import com.zireck.projectk.domain.repository.FoodRepository;
+import com.zireck.projectk.domain.repository.MealRepository;
 import com.zireck.projectk.presentation.dagger.module.ApplicationModule;
 import com.zireck.projectk.presentation.mapper.FoodModelDataMapper;
+import com.zireck.projectk.presentation.mapper.MealModelDataMapper;
 import com.zireck.projectk.presentation.navigation.Navigator;
 import com.zireck.projectk.presentation.view.activity.BaseActivity;
 
@@ -28,5 +30,7 @@ public interface ApplicationComponent {
     ThreadExecutor threadExecutor();
     PostExecutionThread postExecutionThread();
     FoodRepository foodRepository();
+    MealRepository mealRepository();
     FoodModelDataMapper foodModelDataMapper();
+    MealModelDataMapper mealModelDataMapper();
 }
