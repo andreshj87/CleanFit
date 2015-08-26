@@ -3,10 +3,12 @@ package com.zireck.projectk.presentation.presenter;
 import android.support.annotation.NonNull;
 
 import com.zireck.projectk.domain.Food;
+import com.zireck.projectk.domain.interactor.AddMeal;
 import com.zireck.projectk.domain.interactor.DefaultSubscriber;
 import com.zireck.projectk.domain.interactor.Interactor;
 import com.zireck.projectk.presentation.enumeration.Mealtime;
 import com.zireck.projectk.presentation.mapper.FoodModelDataMapper;
+import com.zireck.projectk.presentation.mapper.MealModelDataMapper;
 import com.zireck.projectk.presentation.model.FoodModel;
 import com.zireck.projectk.presentation.model.MealModel;
 import com.zireck.projectk.presentation.util.DateUtils;
@@ -31,7 +33,9 @@ public class AddMealPresenter implements Presenter {
 
     private AddMealView mView;
     private Interactor mGetAllFoodListInteractor;
+    private AddMeal mAddMealInteractor;
     private FoodModelDataMapper mFoodModelDataMapper;
+    private MealModelDataMapper mMealModelDataMapper;
 
     private FoodModel mFood;
 
@@ -45,9 +49,13 @@ public class AddMealPresenter implements Presenter {
 
     @Inject
     public AddMealPresenter(@Named("allFoodList") Interactor getAllFoodListInteractor,
-                            FoodModelDataMapper foodModelDataMapper) {
+                            @Named("addMeal") AddMeal addMealInteractor,
+                            FoodModelDataMapper foodModelDataMapper,
+                            MealModelDataMapper mealModelDataMapper) {
         mGetAllFoodListInteractor = getAllFoodListInteractor;
+        mAddMealInteractor = addMealInteractor;
         mFoodModelDataMapper = foodModelDataMapper;
+        mMealModelDataMapper = mealModelDataMapper;
     }
 
     @Override
@@ -68,6 +76,7 @@ public class AddMealPresenter implements Presenter {
     @Override
     public void destroy() {
         mGetAllFoodListInteractor.unsubscribe();
+        mAddMealInteractor.unsubscribe();
     }
 
     public void initialize() {
@@ -133,7 +142,7 @@ public class AddMealPresenter implements Presenter {
             e.printStackTrace();
         }
 
-        mCurrentDateReadable = year + "/" + monthOfYear + "/" + dayOfMonth;
+        mCurrentDateReadable = year + "/" + (monthOfYear+1) + "/" + dayOfMonth;
 
         mView.setDateText(date);
     }
@@ -232,7 +241,6 @@ public class AddMealPresenter implements Presenter {
                 return;
             }
 
-            // TODO Add Meal
             MealModel meal = new MealModel();
             meal.setDate(actualDate);
             meal.setMealtime(actualDaily);
@@ -242,7 +250,14 @@ public class AddMealPresenter implements Presenter {
             meal.setFoodModel(food);
 
             meal.calculateEnergyAndNutrients();
+
+            addMeal(meal);
         }
+    }
+
+    private void addMeal(MealModel meal) {
+        mAddMealInteractor.setMeal(mMealModelDataMapper.transformInverse(meal));
+        mAddMealInteractor.execute(new AddMealSubscriber());
     }
 
     private void updateEnergyAndNutrients(FoodModel food, int amount) {
@@ -285,6 +300,13 @@ public class AddMealPresenter implements Presenter {
         @Override
         public void onNext(List<Food> foods) {
             mView.setFoodItems(mFoodModelDataMapper.transform(foods));
+        }
+    }
+
+    private final class AddMealSubscriber extends DefaultSubscriber {
+        @Override
+        public void onCompleted() {
+            System.out.println("k9d3 Added meal!");
         }
     }
 }

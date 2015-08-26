@@ -73,4 +73,10 @@ public class MealDataRepository implements MealRepository {
     public Observable<Void> deleteMeal(Meal meal) {
         return mMealDataStore.deleteMeal(mMealEntityDataMapper.transformInverse(meal));
     }
+
+    @Deprecated
+    @Override
+    public Observable<Void> deleteAllMeals() {
+        return mMealDataStore.deleteAllMeals();
+    }
 }

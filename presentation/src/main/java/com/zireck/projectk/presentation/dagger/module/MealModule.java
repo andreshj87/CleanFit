@@ -4,6 +4,7 @@ import com.zireck.projectk.domain.Meal;
 import com.zireck.projectk.domain.executor.PostExecutionThread;
 import com.zireck.projectk.domain.executor.ThreadExecutor;
 import com.zireck.projectk.domain.interactor.AddMeal;
+import com.zireck.projectk.domain.interactor.DeleteAllMeals;
 import com.zireck.projectk.domain.interactor.DeleteMeal;
 import com.zireck.projectk.domain.interactor.EditMeal;
 import com.zireck.projectk.domain.interactor.GetMealDetails;
@@ -45,10 +46,10 @@ public class MealModule {
     }
 
     @Provides @PerActivity @Named("mealListForDate")
-    //Interactor provideGetMealListForDateInteractor(MealRepository mealRepository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
-    Interactor provideGetMealListForDateInteractor(GetMealListForDate getMealListForDate) {
-        //return new GetMealListForDate(mealRepository, threadExecutor, postExecutionThread);
-        return getMealListForDate;
+    GetMealListForDate provideGetMealListForDateInteractor(MealRepository mealRepository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+    //Interactor provideGetMealListForDateInteractor(GetMealListForDate getMealListForDate) {
+        return new GetMealListForDate(mealRepository, threadExecutor, postExecutionThread);
+        //return getMealListForDate;
     }
 
     @Provides @PerActivity @Named("mealDetails")
@@ -58,7 +59,7 @@ public class MealModule {
     }
 
     @Provides @PerActivity @Named("addMeal")
-    Interactor provideAddMealInteractor(MealRepository mealRepository,
+    AddMeal provideAddMealInteractor(MealRepository mealRepository,
                         ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         return new AddMeal(mealRepository, threadExecutor, postExecutionThread);
     }
@@ -75,4 +76,8 @@ public class MealModule {
         return new DeleteMeal(mMeal, mealRepository, threadExecutor, postExecutionThread);
     }
 
+    @Provides @PerActivity @Named("deleteAllMeals")
+    Interactor provideDeleteAllMealsInteractor(MealRepository mealRepository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+        return new DeleteAllMeals(mealRepository, threadExecutor, postExecutionThread);
+    }
 }

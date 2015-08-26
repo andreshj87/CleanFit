@@ -94,7 +94,7 @@ public class Day {
     public String toString() {
         System.out.println("For day " + DateUtils.getFormattedDayDate(mDate) + " we have the following meals: ");
         for (MealModel meal : mMeals) {
-            System.out.println(meal.getFoodModel().getName() + " -> " + meal.getGrams());
+            System.out.println(meal.getFoodModel().getName() + " -> " + meal.getGrams() + " in date: " + meal.getDate().toString());
         }
 
         return super.toString();

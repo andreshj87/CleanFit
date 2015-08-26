@@ -1,8 +1,14 @@
 package com.zireck.projectk.data.repository.datasource;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+
+import com.zireck.projectk.data.entity.DaoMaster;
+import com.zireck.projectk.data.entity.DaoSession;
 import com.zireck.projectk.data.entity.MealEntity;
 import com.zireck.projectk.data.entity.MealEntityDao;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -14,11 +20,13 @@ import rx.Subscriber;
 /**
  * Created by Zireck on 24/08/2015.
  */
-public class MealDataStore extends DataStore {
+public class MealDataStore {
+
+    @Inject Context mContext;
 
     @Inject
     public MealDataStore() {
-        super();
+
     }
 
     public Observable<MealEntity> mealEntityDetails(final long mealId) {
@@ -60,11 +68,30 @@ public class MealDataStore extends DataStore {
         return Observable.create(new Observable.OnSubscribe<List<MealEntity>>() {
             @Override
             public void call(Subscriber<? super List<MealEntity>> subscriber) {
+                System.out.println("k9d3 date received to compare: " + date.toString());
+
+                Calendar now = Calendar.getInstance();
+                now.setTimeInMillis(System.currentTimeMillis());
+                now.add(Calendar.MONTH, -1);
+                now.add(Calendar.DAY_OF_MONTH, -1);
+
+                Calendar first = Calendar.getInstance();
+                first.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+
+                Calendar last = Calendar.getInstance();
+                last.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH), 23, 59, 59);
+
+                Date firstDate = first.getTime();
+                Date lastDate = last.getTime();
+
+                System.out.println("k9d3 searching meals between dates: " + firstDate.toString() + " ___ AND ___ " + lastDate.toString());
+
                 MealEntityDao mealEntityDao = getMealEntityDao();
                 List<MealEntity> mealEntities;
-                mealEntities = mealEntityDao.queryBuilder().where(MealEntityDao.Properties.Date.eq(date)).list();
+                mealEntities = mealEntityDao.queryBuilder().where(MealEntityDao.Properties.Date.between(firstDate, lastDate)).list();
 
                 if (mealEntities != null) {
+                    System.out.println("k9d3 amount of meals found: " + mealEntities.size());
                     subscriber.onNext(mealEntities);
                     subscriber.onCompleted();
                 } else {
@@ -115,7 +142,28 @@ public class MealDataStore extends DataStore {
         });
     }
 
+    @Deprecated
+    public Observable<Void> deleteAllMeals() {
+        return Observable.create(new Observable.OnSubscribe<Void>() {
+            @Override
+            public void call(Subscriber<? super Void> subscriber) {
+                MealEntityDao mealEntityDao = getMealEntityDao();
+                mealEntityDao.deleteAll();
+
+                subscriber.onCompleted();
+            }
+        });
+    }
+
     private MealEntityDao getMealEntityDao() {
-        return mDaoSession.getMealEntityDao();
+        return initGreenDao().getMealEntityDao();
+    }
+
+    private DaoSession initGreenDao() {
+        DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(mContext, "projectk", null);
+        SQLiteDatabase database = devOpenHelper.getWritableDatabase();
+        DaoMaster daoMaster = new DaoMaster(database);
+        DaoSession daoSession = daoMaster.newSession();
+        return daoSession;
     }
 }

@@ -46,4 +46,7 @@ public interface MealRepository {
      * @param meal
      */
     Observable<Void> deleteMeal(final Meal meal);
+
+    @Deprecated
+    Observable<Void> deleteAllMeals();
 }

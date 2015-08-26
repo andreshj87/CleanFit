@@ -1,5 +1,10 @@
 package com.zireck.projectk.data.repository.datasource;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+
+import com.zireck.projectk.data.entity.DaoMaster;
+import com.zireck.projectk.data.entity.DaoSession;
 import com.zireck.projectk.data.entity.FoodEntity;
 import com.zireck.projectk.data.entity.FoodEntityDao;
 
@@ -13,11 +18,13 @@ import rx.Subscriber;
 /**
  * Created by Zireck on 11/08/2015.
  */
-public class FoodDataStore extends DataStore {
+public class FoodDataStore {
+
+    @Inject Context mContext;
 
     @Inject
     public FoodDataStore() {
-        super();
+
     }
 
     public Observable<FoodEntity> foodEntityDetails(final long foodId) {
@@ -133,16 +140,14 @@ public class FoodDataStore extends DataStore {
     }
 
     private FoodEntityDao getFoodEntityDao() {
-        //return initGreenDao().getFoodEntityDao();
-        return mDaoSession.getFoodEntityDao();
+        return initGreenDao().getFoodEntityDao();
     }
 
-    /*
     private DaoSession initGreenDao() {
         DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(mContext, "projectk", null);
         SQLiteDatabase database = devOpenHelper.getWritableDatabase();
         DaoMaster daoMaster = new DaoMaster(database);
         DaoSession daoSession = daoMaster.newSession();
         return daoSession;
-    }*/
+    }
 }
