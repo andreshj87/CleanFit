@@ -6,16 +6,16 @@ allprojects {
 
 ext {
     // Android
-    androidBuildToolsVersion = "23.0.0 rc3"
-    androidMinSdkVersion = 14
-    androidTargetSdkVersion = 21
-    androidCompileSdkVersion = 21
+    androidBuildToolsVersion = "23.0.0"
+    androidMinSdkVersion = 15
+    androidTargetSdkVersion = 23
+    androidCompileSdkVersion = 23
 
     // Libraries
-    designVersion = '22.2.1'
-    appCompatVersion = '22.2.1'
-    recyclerViewVersion = '22.2.1'
-    cardViewVersion = '22.2.1'
+    designVersion = '23.0.1'
+    appCompatVersion = '23.0.1'
+    recyclerViewVersion = '23.0.1'
+    cardViewVersion = '23.0.1'
 
     daggerVersion = '2.0'
 
@@ -39,6 +39,9 @@ ext {
     materialIconLibVersion = '1.0.3'
     materialDateTimePickerVersion = '1.4.2'
     materialDialogsVersion = '0.7.8.1'
+
+    fitChartVersion = '1.0'
+    wheelIndicatorViewVersion = '1.0.0'
 
     // Testing
 
@@ -66,6 +69,8 @@ ext {
             materialIconLib:        "net.steamcrafted:materialiconlib:${materialIconLibVersion}",
             materialDateTimePicker: "com.wdullaer:materialdatetimepicker:${materialDateTimePickerVersion}",
             materialDialogs:        "com.afollestad:material-dialogs:${materialDialogsVersion}",
+            fitChart:               "com.txusballesteros:FitChart:${fitChartVersion}",
+            wheelIndicatorView:     "com.dlazaro66.wheelindicatorview:WheelIndicatorView:${wheelIndicatorViewVersion}",
     ]
 
     presentationTestDependencies = [

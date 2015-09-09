@@ -1,24 +1,13 @@
 package com.zireck.projectk.presentation.helper;
 
-import android.content.Context;
-import android.os.Build;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewPropertyAnimatorListener;
-import android.support.v4.view.animation.FastOutSlowInInterpolator;
-import android.util.AttributeSet;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.Interpolator;
-
-import com.zireck.projectk.R;
 
 /**
  * Created by Zireck on 23/07/2015.
  */
+@Deprecated
 public class ScrollAwareFABBehavior extends FloatingActionButton.Behavior {
+    /*
     private static final Interpolator INTERPOLATOR = new FastOutSlowInInterpolator();
     private boolean mIsAnimatingOut = false;
 
@@ -100,5 +89,5 @@ public class ScrollAwareFABBehavior extends FloatingActionButton.Behavior {
             anim.setInterpolator(INTERPOLATOR);
             button.startAnimation(anim);
         }
-    }
+    }*/
 }

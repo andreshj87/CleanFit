@@ -73,4 +73,7 @@ dependencies {
     compile presentationDependencies.materialIconLib
     compile presentationDependencies.materialDateTimePicker
     compile presentationDependencies.materialDialogs
+
+    compile presentationDependencies.fitChart
+    compile presentationDependencies.wheelIndicatorView
 }

@@ -82,7 +82,8 @@ public abstract class AddEditFoodFragment extends BaseFragment implements AddEdi
         hideKeyboard();
         applyDecimalFilters();
         initDrinkCheckBox();
-        initEditTextFocusListenersWeird();
+        //initEditTextFocusListenersWeird();
+        initEditTextFocusListeners();
     }
 
     @Override
