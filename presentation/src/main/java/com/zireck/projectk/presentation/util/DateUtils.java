@@ -38,7 +38,7 @@ public class DateUtils {
     }
 
     public static String getFormattedDayDate(Date date) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM d", Locale.getDefault());
         return dateFormat.format(date);
     }
 

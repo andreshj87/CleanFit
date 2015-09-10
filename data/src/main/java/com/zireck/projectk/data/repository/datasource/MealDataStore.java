@@ -68,8 +68,18 @@ public class MealDataStore {
         return Observable.create(new Observable.OnSubscribe<List<MealEntity>>() {
             @Override
             public void call(Subscriber<? super List<MealEntity>> subscriber) {
-                System.out.println("k9d3 date received to compare: " + date.toString());
+                //System.out.println("k9d3 date received to compare: " + date.toString());
 
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(date);
+
+                Calendar first = Calendar.getInstance();
+                first.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+
+                Calendar last = Calendar.getInstance();
+                last.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), 23, 59, 59);
+
+                /*
                 Calendar now = Calendar.getInstance();
                 now.setTimeInMillis(System.currentTimeMillis());
                 now.add(Calendar.MONTH, -1);
@@ -79,7 +89,7 @@ public class MealDataStore {
                 first.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
 
                 Calendar last = Calendar.getInstance();
-                last.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH), 23, 59, 59);
+                last.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH), 23, 59, 59);*/
 
                 Date firstDate = first.getTime();
                 Date lastDate = last.getTime();
@@ -91,7 +101,7 @@ public class MealDataStore {
                 mealEntities = mealEntityDao.queryBuilder().where(MealEntityDao.Properties.Date.between(firstDate, lastDate)).list();
 
                 if (mealEntities != null) {
-                    System.out.println("k9d3 amount of meals found: " + mealEntities.size());
+                    //System.out.println("k9d3 amount of meals found: " + mealEntities.size());
                     subscriber.onNext(mealEntities);
                     subscriber.onCompleted();
                 } else {
