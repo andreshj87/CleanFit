@@ -5,14 +5,17 @@ import android.content.Context;
 import com.zireck.projectk.data.executor.JobExecutor;
 import com.zireck.projectk.data.repository.FoodDataRepository;
 import com.zireck.projectk.data.repository.MealDataRepository;
+import com.zireck.projectk.data.repository.UserDataRepository;
 import com.zireck.projectk.domain.executor.PostExecutionThread;
 import com.zireck.projectk.domain.executor.ThreadExecutor;
 import com.zireck.projectk.domain.repository.FoodRepository;
 import com.zireck.projectk.domain.repository.MealRepository;
+import com.zireck.projectk.domain.repository.UserRepository;
 import com.zireck.projectk.presentation.AndroidApplication;
 import com.zireck.projectk.presentation.UIThread;
 import com.zireck.projectk.presentation.mapper.FoodModelDataMapper;
 import com.zireck.projectk.presentation.mapper.MealModelDataMapper;
+import com.zireck.projectk.presentation.mapper.UserModelDataMapper;
 import com.zireck.projectk.presentation.navigation.Navigator;
 
 import javax.inject.Singleton;
@@ -63,6 +66,11 @@ public class ApplicationModule {
     }
 
     @Provides @Singleton
+    UserRepository provideUserRepository(UserDataRepository userDataRepository) {
+        return userDataRepository;
+    }
+
+    @Provides @Singleton
     FoodModelDataMapper provideFoodModelDataMapper() {
         return new FoodModelDataMapper();
     }
@@ -70,5 +78,10 @@ public class ApplicationModule {
     @Provides @Singleton
     MealModelDataMapper provideMealModelDataMapper(FoodModelDataMapper foodModelDataMapper) {
         return new MealModelDataMapper(foodModelDataMapper);
+    }
+
+    @Provides @Singleton
+    UserModelDataMapper provideUserModelDataMapper() {
+        return new UserModelDataMapper();
     }
 }

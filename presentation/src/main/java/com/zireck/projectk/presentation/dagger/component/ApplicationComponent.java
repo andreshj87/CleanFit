@@ -6,9 +6,11 @@ import com.zireck.projectk.domain.executor.PostExecutionThread;
 import com.zireck.projectk.domain.executor.ThreadExecutor;
 import com.zireck.projectk.domain.repository.FoodRepository;
 import com.zireck.projectk.domain.repository.MealRepository;
+import com.zireck.projectk.domain.repository.UserRepository;
 import com.zireck.projectk.presentation.dagger.module.ApplicationModule;
 import com.zireck.projectk.presentation.mapper.FoodModelDataMapper;
 import com.zireck.projectk.presentation.mapper.MealModelDataMapper;
+import com.zireck.projectk.presentation.mapper.UserModelDataMapper;
 import com.zireck.projectk.presentation.navigation.Navigator;
 import com.zireck.projectk.presentation.view.activity.BaseActivity;
 
@@ -31,6 +33,8 @@ public interface ApplicationComponent {
     PostExecutionThread postExecutionThread();
     FoodRepository foodRepository();
     MealRepository mealRepository();
+    UserRepository userRepository();
     FoodModelDataMapper foodModelDataMapper();
     MealModelDataMapper mealModelDataMapper();
+    UserModelDataMapper userModelDataMapper();
 }
