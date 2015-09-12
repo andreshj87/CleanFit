@@ -30,7 +30,7 @@ public class UserEntityDataMapper {
             user.setGender(userEntity.getGender());
             user.setBirthday(userEntity.getBirthday());
             user.setAge(userEntity.getAge());
-            user.setMeasurementSystem(userEntity.getMeasurementSystem());
+            //user.setMeasurementSystem(userEntity.getMeasurementSystem());
             user.setWeight(userEntity.getWeight());
             user.setHeight(userEntity.getHeight());
             user.setActivityFactor(userEntity.getActivityFactor());
@@ -58,7 +58,7 @@ public class UserEntityDataMapper {
             userEntity.setGender(user.getGender());
             userEntity.setBirthday(user.getBirthday());
             userEntity.setAge(user.getAge());
-            userEntity.setMeasurementSystem(user.getMeasurementSystem());
+            //userEntity.setMeasurementSystem(user.getMeasurementSystem());
             userEntity.setWeight(user.getWeight());
             userEntity.setHeight(user.getHeight());
             userEntity.setActivityFactor(user.getActivityFactor());

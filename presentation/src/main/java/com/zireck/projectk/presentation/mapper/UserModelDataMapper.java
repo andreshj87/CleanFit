@@ -32,7 +32,7 @@ public class UserModelDataMapper {
         userModel.setGender(user.getGender());
         userModel.setBirthday(user.getBirthday());
         userModel.setAge(user.getAge());
-        userModel.setMeasurementSystem(user.getMeasurementSystem());
+        //userModel.setMeasurementSystem(user.getMeasurementSystem());
         userModel.setWeight(user.getWeight());
         userModel.setHeight(user.getHeight());
         userModel.setActivityFactor(user.getActivityFactor());
@@ -61,7 +61,7 @@ public class UserModelDataMapper {
         user.setGender(userModel.getGender());
         user.setBirthday(userModel.getBirthday());
         user.setAge(userModel.getAge());
-        user.setMeasurementSystem(userModel.getMeasurementSystem());
+        //user.setMeasurementSystem(userModel.getMeasurementSystem());
         user.setWeight(userModel.getWeight());
         user.setHeight(userModel.getHeight());
         user.setActivityFactor(userModel.getActivityFactor());

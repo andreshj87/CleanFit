@@ -6,12 +6,12 @@ package com.zireck.projectk.data.entity;
  */
 public class UserEntity extends UserEntityBase  {
 
+    private Long id;
     private String name;
     private int gender;
     /** Not-null value. */
     private java.util.Date birthday;
     private Integer age;
-    private int measurementSystem;
     private double weight;
     private int height;
     private int activityFactor;
@@ -24,12 +24,16 @@ public class UserEntity extends UserEntityBase  {
     public UserEntity() {
     }
 
-    public UserEntity(String name, int gender, java.util.Date birthday, Integer age, int measurementSystem, double weight, int height, int activityFactor, Double bmr, int goal, Double maintain, Double burn, Double gain) {
+    public UserEntity(Long id) {
+        this.id = id;
+    }
+
+    public UserEntity(Long id, String name, int gender, java.util.Date birthday, Integer age, double weight, int height, int activityFactor, Double bmr, int goal, Double maintain, Double burn, Double gain) {
+        this.id = id;
         this.name = name;
         this.gender = gender;
         this.birthday = birthday;
         this.age = age;
-        this.measurementSystem = measurementSystem;
         this.weight = weight;
         this.height = height;
         this.activityFactor = activityFactor;
@@ -38,6 +42,14 @@ public class UserEntity extends UserEntityBase  {
         this.maintain = maintain;
         this.burn = burn;
         this.gain = gain;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -72,14 +84,6 @@ public class UserEntity extends UserEntityBase  {
 
     public void setAge(Integer age) {
         this.age = age;
-    }
-
-    public int getMeasurementSystem() {
-        return measurementSystem;
-    }
-
-    public void setMeasurementSystem(int measurementSystem) {
-        this.measurementSystem = measurementSystem;
     }
 
     public double getWeight() {

@@ -14,7 +14,7 @@ import com.zireck.projectk.data.entity.UserEntity;
 /** 
  * DAO for table USER_ENTITY.
 */
-public class UserEntityDao extends AbstractDao<UserEntity, Void> {
+public class UserEntityDao extends AbstractDao<UserEntity, Long> {
 
     public static final String TABLENAME = "USER_ENTITY";
 
@@ -23,11 +23,11 @@ public class UserEntityDao extends AbstractDao<UserEntity, Void> {
      * Can be used for QueryBuilder and for referencing column names.
     */
     public static class Properties {
-        public final static Property Name = new Property(0, String.class, "name", false, "NAME");
-        public final static Property Gender = new Property(1, int.class, "gender", false, "GENDER");
-        public final static Property Birthday = new Property(2, java.util.Date.class, "birthday", false, "BIRTHDAY");
-        public final static Property Age = new Property(3, Integer.class, "age", false, "AGE");
-        public final static Property MeasurementSystem = new Property(4, int.class, "measurementSystem", false, "MEASUREMENT_SYSTEM");
+        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
+        public final static Property Name = new Property(1, String.class, "name", false, "NAME");
+        public final static Property Gender = new Property(2, int.class, "gender", false, "GENDER");
+        public final static Property Birthday = new Property(3, java.util.Date.class, "birthday", false, "BIRTHDAY");
+        public final static Property Age = new Property(4, Integer.class, "age", false, "AGE");
         public final static Property Weight = new Property(5, double.class, "weight", false, "WEIGHT");
         public final static Property Height = new Property(6, int.class, "height", false, "HEIGHT");
         public final static Property ActivityFactor = new Property(7, int.class, "activityFactor", false, "ACTIVITY_FACTOR");
@@ -51,11 +51,11 @@ public class UserEntityDao extends AbstractDao<UserEntity, Void> {
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "'USER_ENTITY' (" + //
-                "'NAME' TEXT," + // 0: name
-                "'GENDER' INTEGER NOT NULL ," + // 1: gender
-                "'BIRTHDAY' INTEGER NOT NULL ," + // 2: birthday
-                "'AGE' INTEGER," + // 3: age
-                "'MEASUREMENT_SYSTEM' INTEGER NOT NULL ," + // 4: measurementSystem
+                "'_id' INTEGER PRIMARY KEY ," + // 0: id
+                "'NAME' TEXT," + // 1: name
+                "'GENDER' INTEGER NOT NULL ," + // 2: gender
+                "'BIRTHDAY' INTEGER NOT NULL ," + // 3: birthday
+                "'AGE' INTEGER," + // 4: age
                 "'WEIGHT' REAL NOT NULL ," + // 5: weight
                 "'HEIGHT' INTEGER NOT NULL ," + // 6: height
                 "'ACTIVITY_FACTOR' INTEGER NOT NULL ," + // 7: activityFactor
@@ -77,18 +77,22 @@ public class UserEntityDao extends AbstractDao<UserEntity, Void> {
     protected void bindValues(SQLiteStatement stmt, UserEntity entity) {
         stmt.clearBindings();
  
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
+ 
         String name = entity.getName();
         if (name != null) {
-            stmt.bindString(1, name);
+            stmt.bindString(2, name);
         }
-        stmt.bindLong(2, entity.getGender());
-        stmt.bindLong(3, entity.getBirthday().getTime());
+        stmt.bindLong(3, entity.getGender());
+        stmt.bindLong(4, entity.getBirthday().getTime());
  
         Integer age = entity.getAge();
         if (age != null) {
-            stmt.bindLong(4, age);
+            stmt.bindLong(5, age);
         }
-        stmt.bindLong(5, entity.getMeasurementSystem());
         stmt.bindDouble(6, entity.getWeight());
         stmt.bindLong(7, entity.getHeight());
         stmt.bindLong(8, entity.getActivityFactor());
@@ -117,19 +121,19 @@ public class UserEntityDao extends AbstractDao<UserEntity, Void> {
 
     /** @inheritdoc */
     @Override
-    public Void readKey(Cursor cursor, int offset) {
-        return null;
+    public Long readKey(Cursor cursor, int offset) {
+        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
     }    
 
     /** @inheritdoc */
     @Override
     public UserEntity readEntity(Cursor cursor, int offset) {
         UserEntity entity = new UserEntity( //
-            cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // name
-            cursor.getInt(offset + 1), // gender
-            new java.util.Date(cursor.getLong(offset + 2)), // birthday
-            cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3), // age
-            cursor.getInt(offset + 4), // measurementSystem
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // name
+            cursor.getInt(offset + 2), // gender
+            new java.util.Date(cursor.getLong(offset + 3)), // birthday
+            cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4), // age
             cursor.getDouble(offset + 5), // weight
             cursor.getInt(offset + 6), // height
             cursor.getInt(offset + 7), // activityFactor
@@ -145,11 +149,11 @@ public class UserEntityDao extends AbstractDao<UserEntity, Void> {
     /** @inheritdoc */
     @Override
     public void readEntity(Cursor cursor, UserEntity entity, int offset) {
-        entity.setName(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
-        entity.setGender(cursor.getInt(offset + 1));
-        entity.setBirthday(new java.util.Date(cursor.getLong(offset + 2)));
-        entity.setAge(cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3));
-        entity.setMeasurementSystem(cursor.getInt(offset + 4));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
+        entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setGender(cursor.getInt(offset + 2));
+        entity.setBirthday(new java.util.Date(cursor.getLong(offset + 3)));
+        entity.setAge(cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4));
         entity.setWeight(cursor.getDouble(offset + 5));
         entity.setHeight(cursor.getInt(offset + 6));
         entity.setActivityFactor(cursor.getInt(offset + 7));
@@ -162,15 +166,19 @@ public class UserEntityDao extends AbstractDao<UserEntity, Void> {
     
     /** @inheritdoc */
     @Override
-    protected Void updateKeyAfterInsert(UserEntity entity, long rowId) {
-        // Unsupported or missing PK type
-        return null;
+    protected Long updateKeyAfterInsert(UserEntity entity, long rowId) {
+        entity.setId(rowId);
+        return rowId;
     }
     
     /** @inheritdoc */
     @Override
-    public Void getKey(UserEntity entity) {
-        return null;
+    public Long getKey(UserEntity entity) {
+        if(entity != null) {
+            return entity.getId();
+        } else {
+            return null;
+        }
     }
 
     /** @inheritdoc */

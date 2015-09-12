@@ -248,6 +248,9 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
                 fragment = FoodCatalogFragment.newInstance();
                 showFAB();
                 break;
+            case R.id.drawer_settings:
+                startActivity(SettingsActivity.getLaunchIntent(this));
+                return;
         }
 
         // Insert the fragment by replacing any existing fragment

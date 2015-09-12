@@ -2,12 +2,14 @@ package com.zireck.projectk.presentation.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import com.zireck.projectk.presentation.enumeration.ActivityFactor;
 import com.zireck.projectk.presentation.enumeration.Gender;
-import com.zireck.projectk.presentation.enumeration.MeasurementSystem;
+import com.zireck.projectk.presentation.enumeration.Goal;
 import com.zireck.projectk.presentation.util.DateUtils;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -19,7 +21,7 @@ public class UserModel implements Parcelable {
     private int gender;
     private Date birthday;
     private int age;
-    private int measurementSystem;
+    //private int measurementSystem;
     private double weight;
     private int height;
     private int activityFactor;
@@ -38,7 +40,7 @@ public class UserModel implements Parcelable {
         gender = in.readInt();
         birthday = new Date(in.readLong());
         age = in.readInt();
-        measurementSystem = in.readInt();
+        //measurementSystem = in.readInt();
         weight = in.readDouble();
         height = in.readInt();
         activityFactor = in.readInt();
@@ -81,13 +83,14 @@ public class UserModel implements Parcelable {
         this.age = age;
     }
 
+    /*
     public int getMeasurementSystem() {
         return measurementSystem;
     }
 
     public void setMeasurementSystem(int measurementSystem) {
         this.measurementSystem = measurementSystem;
-    }
+    }*/
 
     public double getWeight() {
         return weight;
@@ -169,6 +172,7 @@ public class UserModel implements Parcelable {
      * Calculate the Basal Metabolic Rate using the appropriate formula per each measurement system.
      */
     public void calculateBmr() {
+        /*
         if (getMeasurementSystem() == MeasurementSystem.METRIC.getIntValue()) {
             if (getGender() == Gender.MALE.getIntValue()) {
                 setBmr(66.5 + ( 13.75 * getWeight() ) + ( 5.003 * getHeight() ) - ( 6.755 * getAge() ));
@@ -181,6 +185,12 @@ public class UserModel implements Parcelable {
             } else if (getGender() == Gender.FEMALE.getIntValue()) {
                 setBmr(65.5 + ( 4.35 * getWeight() ) + ( 4.7 * getHeight() ) - ( 4.7 * getAge() ));
             }
+        }*/
+
+        if (getGender() == Gender.MALE.getIntValue()) {
+            setBmr(66.5 + ( 13.75 * getWeight() ) + ( 5.003 * getHeight() ) - ( 6.755 * getAge() ));
+        } else if (getGender() == Gender.FEMALE.getIntValue()) {
+            setBmr(655 + ( 9.563 * getWeight() ) + ( 1.850 * getHeight() ) - ( 4.676 * getAge() ));
         }
 
         if (getBmr() <= 0) {
@@ -225,6 +235,134 @@ public class UserModel implements Parcelable {
         }
     }
 
+    /**
+     * Check the validity of the current object
+     * @return
+     */
+    public boolean isValid() {
+        return isValidGender() && isValidBirthday() && isValidWeight()
+                && isValidHeight() && isValidActivityFactor() && isValidGoal();
+    }
+
+    public boolean isValidName() {
+        return isValidName(getName());
+    }
+
+    public boolean isValidName(String name) {
+        return !TextUtils.isEmpty(name);
+    }
+
+    public boolean isValidGender() {
+        return isValidGender(getGender());
+    }
+
+    public boolean isValidGender(int gender) {
+        return gender == Gender.MALE.getIntValue() || gender == Gender.FEMALE.getIntValue();
+    }
+
+    public boolean isValidBirthday() {
+        return isValidBirthday(getBirthday());
+    }
+
+    public boolean isValidBirthday(Date birthday) {
+        if (birthday == null) {
+            return false;
+        } else {
+            Calendar c = Calendar.getInstance();
+
+            // set the calendar to start of today
+            c.set(Calendar.HOUR_OF_DAY, 0);
+            c.set(Calendar.MINUTE, 0);
+            c.set(Calendar.SECOND, 0);
+            c.set(Calendar.MILLISECOND, 0);
+
+            // and get that as a Date
+            Date today = c.getTime();
+
+            return birthday.before(today);
+        }
+    }
+
+    public boolean isValidActivityFactor() {
+        return isValidActivityFactor(getActivityFactor());
+    }
+
+    public boolean isValidActivityFactor(int activityFactor) {
+        return activityFactor == ActivityFactor.SEDENTARY.getIntValue() ||
+                activityFactor == ActivityFactor.LIGHT.getIntValue() ||
+                activityFactor == ActivityFactor.MODERATE.getIntValue() ||
+                activityFactor == ActivityFactor.HEAVY.getIntValue() ||
+                activityFactor == ActivityFactor.VERY_HEAVY.getIntValue();
+    }
+
+    public boolean isValidGoal() {
+        return isValidGoal(getGoal());
+    }
+
+    public boolean isValidGoal(int goal) {
+        return goal == Goal.MAINTAIN.getIntValue() ||
+                goal == Goal.BURN.getIntValue() ||
+                goal == Goal.GAIN.getIntValue();
+    }
+
+    public boolean isValidWeight() {
+        return isValidWeight(getWeight());
+    }
+
+    public boolean isValidWeight(double weight) {
+        return weight > 0;
+    }
+
+    public boolean isValidHeight() {
+        return isValidHeight(getHeight());
+    }
+
+    public boolean isValidHeight(int height) {
+        return height > 0;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder("***** USER DATA *****");
+        stringBuilder.append("Name: " + getName());
+        stringBuilder.append("Weight: " + getWeight() + " kg");
+        stringBuilder.append("Height: " + getHeight() + " cm");
+
+        if (getGender() == Gender.MALE.getIntValue()) {
+            stringBuilder.append("Gender: " + Gender.MALE.getStringValue());
+        } else if (getGender() == Gender.FEMALE.getIntValue()) {
+            stringBuilder.append("Gender: " + Gender.FEMALE.getStringValue());
+        }
+
+        stringBuilder.append("Birthday: " + DateUtils.getFormattedBirthdayDate(getBirthday()));
+
+        String activityLevel = "";
+        if (getActivityFactor() == ActivityFactor.SEDENTARY.getIntValue()) {
+            activityLevel = ActivityFactor.SEDENTARY.getStringValue();
+        } else if (getActivityFactor() == ActivityFactor.LIGHT.getIntValue()) {
+            activityLevel = ActivityFactor.LIGHT.getStringValue();
+        } else if (getActivityFactor() == ActivityFactor.MODERATE.getIntValue()) {
+            activityLevel = ActivityFactor.MODERATE.getStringValue();
+        } else if (getActivityFactor() == ActivityFactor.HEAVY.getIntValue()) {
+            activityLevel = ActivityFactor.HEAVY.getStringValue();
+        } else if (getActivityFactor() == ActivityFactor.VERY_HEAVY.getIntValue()) {
+            activityLevel = ActivityFactor.VERY_HEAVY.getStringValue();
+        }
+        stringBuilder.append("Activity Level: " + activityLevel);
+
+        String goal = "";
+        if (getGoal() == Goal.MAINTAIN.getIntValue()) {
+            goal = Goal.MAINTAIN.getStringValue();
+        } else if (getGoal() == Goal.BURN.getIntValue()) {
+            goal = Goal.BURN.getStringValue();
+        } else if (getGoal() == Goal.GAIN.getIntValue()) {
+            goal = Goal.GAIN.getStringValue();
+        }
+        stringBuilder.append("Goal: " + goal);
+
+        return stringBuilder.toString();
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -236,7 +374,7 @@ public class UserModel implements Parcelable {
         dest.writeInt(gender);
         dest.writeLong(birthday.getTime());
         dest.writeInt(age);
-        dest.writeInt(measurementSystem);
+        //dest.writeInt(measurementSystem);
         dest.writeDouble(weight);
         dest.writeInt(height);
         dest.writeInt(activityFactor);

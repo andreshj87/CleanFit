@@ -28,6 +28,8 @@
         <activity android:name=".presentation.view.activity.EditFoodActivity" android:label="Edit Food" android:theme="@style/AppTheme.ActionBar" android:configChanges="keyboardHidden|orientation|screenSize" />
 
         <activity android:name=".presentation.view.activity.AddMealActivity" android:label="Add Meal" android:theme="@style/AppTheme.ActionBar" android:configChanges="keyboardHidden|orientation|screenSize" />
+
+        <activity android:name=".presentation.view.activity.SettingsActivity" android:label="Settings" android:theme="@style/AppTheme.ActionBar" android:configChanges="keyboardHidden|orientation|screenSize" />
     </application>
 
 </manifest>

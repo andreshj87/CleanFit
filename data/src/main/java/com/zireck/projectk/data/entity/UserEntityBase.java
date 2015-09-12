@@ -11,7 +11,7 @@ public abstract class UserEntityBase {
     public abstract Date getBirthday();
     public abstract Integer getAge();
     public abstract void setAge(Integer age);
-    public abstract int getMeasurementSystem();
+    //public abstract int getMeasurementSystem();
     public abstract double getWeight();
     public abstract int getHeight();
     public abstract int getActivityFactor();
@@ -23,6 +23,7 @@ public abstract class UserEntityBase {
     public abstract void setBurn(Double burn);
     public abstract Double getGain();
     public abstract void setGain(Double gain);
+
 /*
     public void calculateAll() {
         calculateAge();

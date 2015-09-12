@@ -19,7 +19,11 @@
 
         <item
             android:id="@+id/drawer_repository"
-            android:title="Food Repository" />
+            android:title="Food Catalog" />
+
+        <item
+            android:id="@+id/drawer_settings"
+            android:title="Settings" />
 
     </group>
 </menu>

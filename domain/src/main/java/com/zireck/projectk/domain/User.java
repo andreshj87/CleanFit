@@ -11,7 +11,7 @@ public class User {
     private int gender;
     private Date birthday;
     private int age;
-    private int measurementSystem;
+    //private int measurementSystem;
     private double weight;
     private int height;
     private int activityFactor;
@@ -57,13 +57,14 @@ public class User {
         this.age = age;
     }
 
+    /*
     public int getMeasurementSystem() {
         return measurementSystem;
     }
 
     public void setMeasurementSystem(int measurementSystem) {
         this.measurementSystem = measurementSystem;
-    }
+    }*/
 
     public double getWeight() {
         return weight;

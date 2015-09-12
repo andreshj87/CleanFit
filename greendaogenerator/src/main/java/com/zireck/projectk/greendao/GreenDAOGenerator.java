@@ -52,11 +52,12 @@ public class GreenDAOGenerator {
     private static void addUser(Schema schema) {
         Entity user = schema.addEntity("UserEntity");
         user.setSuperclass("UserEntityBase");
+        user.addIdProperty().primaryKey();
         user.addStringProperty("name");
         user.addIntProperty("gender").notNull();
         user.addDateProperty("birthday").notNull();
         user.addIntProperty("age");
-        user.addIntProperty("measurementSystem").notNull();
+        //user.addIntProperty("measurementSystem").notNull();
         user.addDoubleProperty("weight").notNull();
         user.addIntProperty("height").notNull();
         user.addIntProperty("activityFactor").notNull();

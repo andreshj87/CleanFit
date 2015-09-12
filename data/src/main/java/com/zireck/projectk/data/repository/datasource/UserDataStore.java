@@ -48,13 +48,12 @@ public class UserDataStore {
             @Override
             public void call(Subscriber<? super Void> subscriber) {
                 UserEntityDao userEntityDao = getUserEntityDao();
-                long result = userEntityDao.insert(userEntity);
 
-                if (result == -1) {
-                    subscriber.onError(new Throwable());
-                } else {
-                    subscriber.onCompleted();
-                }
+                userEntity.setId(0L);
+
+                userEntityDao.update(userEntity);
+                userEntityDao.insert(userEntity);
+                subscriber.onCompleted();
             }
         });
     }

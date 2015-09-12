@@ -11,8 +11,8 @@ import java.util.Locale;
  */
 public class DateUtils {
 
-    public static final String DEFAULT_DATETIME_PATTERN = "yyyy/MM/d H:mm";
-    public static final String DEFAULT_DATE_PATTERN = "yyyy/MM/d";
+    public static final String DEFAULT_DATETIME_PATTERN = "yyyy/MM/dd H:mm";
+    public static final String DEFAULT_DATE_PATTERN = "yyyy/MM/dd";
     public static final String DEFAULT_TIME_PATTERN = "H:mm";
 
     public static Date getDateTimeFromText(String text) throws ParseException {
@@ -32,14 +32,20 @@ public class DateUtils {
     }
 
     public static String getFormattedMealDate(Date date) {
-        //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
-        SimpleDateFormat dateFormat = new SimpleDateFormat(DEFAULT_DATETIME_PATTERN, Locale.getDefault());
+        SimpleDateFormat dateFormat =
+                new SimpleDateFormat(DEFAULT_DATETIME_PATTERN, Locale.getDefault());
         return dateFormat.format(date);
     }
 
     public static String getFormattedDayDate(Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM d", Locale.getDefault());
         return dateFormat.format(date);
+    }
+
+    public static String getFormattedBirthdayDate(Date birthday) {
+        SimpleDateFormat birthdayFormat =
+                new SimpleDateFormat(DEFAULT_DATE_PATTERN, Locale.getDefault());
+        return birthdayFormat.format(birthday);
     }
 
     public static int calculateAge(Date birthDate) {
