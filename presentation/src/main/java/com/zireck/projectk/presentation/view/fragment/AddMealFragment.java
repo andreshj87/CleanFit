@@ -365,7 +365,7 @@ public class AddMealFragment extends BaseFragment implements AddMealView,
     public void onDailyClick() {
         mMaterialDialog = new MaterialDialog.Builder(getActivity())
                 .title("Daily Meal")
-                .items(Mealtime.getValues())
+                .items(Mealtime.getStringValues(getActivity()))
                 .itemsCallbackSingleChoice(0, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog materialDialog, View view, int which,
@@ -441,7 +441,8 @@ public class AddMealFragment extends BaseFragment implements AddMealView,
         FoodModel food = mPresenter.getFood();
         String date = mPresenter.getCurrentDateReadable();
         String time = mPresenter.getCurrentTimeReadable();
-        String daily = mTextDaily.getText().toString();
+        //String daily = mTextDaily.getText().toString();
+        Mealtime daily = Mealtime.fromValue(getActivity(), mTextDaily.getText().toString());
         String amount = mTextAmount.getText().toString();
 
         mPresenter.validateData(food, date, time, daily, amount);

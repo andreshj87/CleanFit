@@ -329,13 +329,14 @@ public class UserModel implements Parcelable {
         stringBuilder.append("Height: " + getHeight() + " cm");
 
         if (getGender() == Gender.MALE.getIntValue()) {
-            stringBuilder.append("Gender: " + Gender.MALE.getStringValue());
+            //stringBuilder.append("Gender: " + Gender.MALE.getStringValue());
         } else if (getGender() == Gender.FEMALE.getIntValue()) {
-            stringBuilder.append("Gender: " + Gender.FEMALE.getStringValue());
+            //stringBuilder.append("Gender: " + Gender.FEMALE.getStringValue());
         }
 
         stringBuilder.append("Birthday: " + DateUtils.getFormattedBirthdayDate(getBirthday()));
 
+        /*
         String activityLevel = "";
         if (getActivityFactor() == ActivityFactor.SEDENTARY.getIntValue()) {
             activityLevel = ActivityFactor.SEDENTARY.getStringValue();
@@ -348,8 +349,9 @@ public class UserModel implements Parcelable {
         } else if (getActivityFactor() == ActivityFactor.VERY_HEAVY.getIntValue()) {
             activityLevel = ActivityFactor.VERY_HEAVY.getStringValue();
         }
-        stringBuilder.append("Activity Level: " + activityLevel);
+        stringBuilder.append("Activity Level: " + activityLevel);*/
 
+        /*
         String goal = "";
         if (getGoal() == Goal.MAINTAIN.getIntValue()) {
             goal = Goal.MAINTAIN.getStringValue();
@@ -358,7 +360,7 @@ public class UserModel implements Parcelable {
         } else if (getGoal() == Goal.GAIN.getIntValue()) {
             goal = Goal.GAIN.getStringValue();
         }
-        stringBuilder.append("Goal: " + goal);
+        stringBuilder.append("Goal: " + goal);*/
 
         return stringBuilder.toString();
     }

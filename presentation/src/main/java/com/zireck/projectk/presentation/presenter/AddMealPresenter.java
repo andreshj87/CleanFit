@@ -190,7 +190,7 @@ public class AddMealPresenter implements Presenter {
         return mCurrentMeasure;
     }
 
-    public void validateData(FoodModel food, String date, String time, String daily, String amount) {
+    public void validateData(FoodModel food, String date, String time, Mealtime daily, String amount) {
         boolean error = false;
 
         if (food == null) {
@@ -208,7 +208,7 @@ public class AddMealPresenter implements Presenter {
             error = true;
         }
 
-        if (StringUtils.isNullOrEmpty(daily)) {
+        if (daily == null) {
             mView.setDailyError();
             error = true;
         }
@@ -229,12 +229,6 @@ public class AddMealPresenter implements Presenter {
                 return;
             }
 
-            int actualDaily = Mealtime.getIntValueForString(daily);
-            if (actualDaily < 0 || actualDaily >= Mealtime.getValues().length) {
-                mView.setDailyError();
-                return;
-            }
-
             int actualAmount = MathUtils.getAmountFromText(amount);
             if (actualAmount < 0) {
                 mView.setAmountError();
@@ -243,7 +237,7 @@ public class AddMealPresenter implements Presenter {
 
             MealModel meal = new MealModel();
             meal.setDate(actualDate);
-            meal.setMealtime(actualDaily);
+            meal.setMealtime(daily.getIntValue());
             meal.setGrams(actualAmount);
 
             meal.setFoodId(food.getId());

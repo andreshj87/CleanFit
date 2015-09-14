@@ -3,6 +3,7 @@ package com.zireck.projectk.presentation.enumeration;
 /**
  * Created by Zireck on 13/07/2015.
  */
+@Deprecated
 public enum MeasurementSystem {
     METRIC(1, "Metric"),
     IMPERIAL(2, "Imperial");

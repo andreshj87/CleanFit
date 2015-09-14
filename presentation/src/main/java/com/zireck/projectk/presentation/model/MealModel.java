@@ -3,7 +3,6 @@ package com.zireck.projectk.presentation.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.zireck.projectk.presentation.enumeration.Mealtime;
 import com.zireck.projectk.presentation.util.DateUtils;
 
 import java.util.Date;
@@ -178,10 +177,6 @@ public class MealModel implements Parcelable {
 
     public String getFormattedDate() {
         return DateUtils.getFormattedMealDate(this.getDate());
-    }
-
-    public String getFormattedMealtime() {
-        return Mealtime.values()[this.getMealtime()].getStringValue();
     }
 
     @Override

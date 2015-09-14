@@ -21,7 +21,6 @@ import com.zireck.projectk.presentation.presenter.SettingsPresenter;
 import com.zireck.projectk.presentation.util.DateUtils;
 import com.zireck.projectk.presentation.util.MathUtils;
 import com.zireck.projectk.presentation.util.SnackbarUtils;
-import com.zireck.projectk.presentation.util.ToastUtils;
 import com.zireck.projectk.presentation.view.SettingsView;
 
 import java.util.Calendar;
@@ -111,7 +110,6 @@ public class SettingsFragment extends BaseFragment implements SettingsView,
                 .input("Name", mPresenter.getCurrentName(), new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(MaterialDialog dialog, CharSequence input) {
-                        ToastUtils.showShortMessage(getActivity(), "Nombre: " + input.toString());
                         mPresenter.setCurrentName(input.toString());
                     }
                 }).show();
@@ -127,7 +125,7 @@ public class SettingsFragment extends BaseFragment implements SettingsView,
                 .setPlusMinusVisibility(View.INVISIBLE)
                 .setDecimalVisibility(View.VISIBLE)
                 .setCurrentNumber(mPresenter.getCurrentWeight())
-                .setLabelText("kg");
+                .setLabelText(getActivity().getString(R.string.kilogram_short));
 
         mNumberPickerBuilder.show();
     }
@@ -142,26 +140,25 @@ public class SettingsFragment extends BaseFragment implements SettingsView,
                 .setPlusMinusVisibility(View.INVISIBLE)
                 .setDecimalVisibility(View.INVISIBLE)
                 .setCurrentNumber(mPresenter.getCurrentHeight())
-                .setLabelText("cm");
+                .setLabelText(getActivity().getString(R.string.centimeter_short));
 
         mNumberPickerBuilder.show();
     }
 
     @OnClick(R.id.layout_gender)
     public void onClickGender() {
-        CharSequence[] genders = { Gender.MALE.getStringValue(), Gender.FEMALE.getStringValue() };
         new MaterialDialog.Builder(getActivity())
                 .theme(Theme.LIGHT)
                 .title("Gender")
-                .items(genders)
-                .itemsCallbackSingleChoice(mPresenter.getCurrentGender()-1, new MaterialDialog.ListCallbackSingleChoice() {
+                .items(Gender.getStringValues(getActivity()))
+                .itemsCallbackSingleChoice(mPresenter.getCurrentGender() - 1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                        if (text.toString().equalsIgnoreCase(Gender.MALE.getStringValue())) {
-                            mPresenter.setCurrentGender(Gender.MALE.getIntValue());
-                        } else if (text.toString().equalsIgnoreCase(Gender.FEMALE.getStringValue())) {
-                            mPresenter.setCurrentGender(Gender.FEMALE.getIntValue());
+                        Gender gender = Gender.fromValue(getActivity(), text.toString());
+                        if (gender != null) {
+                            mPresenter.setCurrentGender(gender.getIntValue());
                         }
+
                         return true;
                     }
                 })
@@ -199,30 +196,16 @@ public class SettingsFragment extends BaseFragment implements SettingsView,
 
     @OnClick(R.id.layout_activity_factor)
     public void onClickActivityFactor() {
-        final CharSequence[] activityFactors = {
-                ActivityFactor.SEDENTARY.getStringValue(), ActivityFactor.LIGHT.getStringValue(),
-                ActivityFactor.MODERATE.getStringValue(), ActivityFactor.HEAVY.getStringValue(),
-                ActivityFactor.VERY_HEAVY.getStringValue()
-        };
-
         new MaterialDialog.Builder(getActivity())
                 .theme(Theme.LIGHT)
                 .title("Activity Level")
-                .items(activityFactors)
-                .itemsCallbackSingleChoice(mPresenter.getCurrentActivityFactor()-1, new MaterialDialog.ListCallbackSingleChoice() {
+                .items(ActivityFactor.getStringValues(getActivity()))
+                .itemsCallbackSingleChoice(mPresenter.getCurrentActivityFactor() - 1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                        String selectedFactor = text.toString();
-                        if (selectedFactor.equalsIgnoreCase(ActivityFactor.SEDENTARY.getStringValue())) {
-                            mPresenter.setCurrentActivityFactor(ActivityFactor.SEDENTARY.getIntValue());
-                        } else if (selectedFactor.equalsIgnoreCase(ActivityFactor.LIGHT.getStringValue())) {
-                            mPresenter.setCurrentActivityFactor(ActivityFactor.LIGHT.getIntValue());
-                        } else if (selectedFactor.equalsIgnoreCase(ActivityFactor.MODERATE.getStringValue())) {
-                            mPresenter.setCurrentActivityFactor(ActivityFactor.MODERATE.getIntValue());
-                        } else if (selectedFactor.equalsIgnoreCase(ActivityFactor.HEAVY.getStringValue())) {
-                            mPresenter.setCurrentActivityFactor(ActivityFactor.HEAVY.getIntValue());
-                        } else if (selectedFactor.equalsIgnoreCase(ActivityFactor.VERY_HEAVY.getStringValue())) {
-                            mPresenter.setCurrentActivityFactor(ActivityFactor.VERY_HEAVY.getIntValue());
+                        ActivityFactor activityFactor = ActivityFactor.fromValue(getActivity(), text.toString());
+                        if (activityFactor != null) {
+                            mPresenter.setCurrentActivityFactor(activityFactor.getIntValue());
                         }
 
                         return true;
@@ -234,26 +217,16 @@ public class SettingsFragment extends BaseFragment implements SettingsView,
 
     @OnClick(R.id.layout_goal)
     public void onClickGoal() {
-        final CharSequence[] goals = {
-                Goal.MAINTAIN.getStringValue(),
-                Goal.BURN.getStringValue(),
-                Goal.GAIN.getStringValue()
-        };
-
         new MaterialDialog.Builder(getActivity())
                 .theme(Theme.LIGHT)
                 .title("Goal")
-                .items(goals)
+                .items(Goal.getStringValues(getActivity()))
                 .itemsCallbackSingleChoice(mPresenter.getCurrentGoal() - 1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                        String selectedGoal = text.toString();
-                        if (selectedGoal.equalsIgnoreCase(Goal.MAINTAIN.getStringValue())) {
-                            mPresenter.setCurrentGoal(Goal.MAINTAIN.getIntValue());
-                        } else if (selectedGoal.equalsIgnoreCase(Goal.BURN.getStringValue())) {
-                            mPresenter.setCurrentGoal(Goal.BURN.getIntValue());
-                        } else if (selectedGoal.equalsIgnoreCase(Goal.GAIN.getStringValue())) {
-                            mPresenter.setCurrentGoal(Goal.GAIN.getIntValue());
+                        Goal goal = Goal.fromValue(getActivity(), text.toString());
+                        if (goal != null) {
+                            mPresenter.setCurrentGoal(goal.getIntValue());
                         }
 
                         return true;
@@ -303,21 +276,20 @@ public class SettingsFragment extends BaseFragment implements SettingsView,
         }
 
         if (userModel.isValidWeight()) {
-            mUserWeight.setText(MathUtils.formatDouble(userModel.getWeight()) + " kg");
+            mUserWeight.setText(MathUtils.formatDouble(userModel.getWeight()) + " " + getActivity().getString(R.string.kilogram_short));
         } else {
             mUserWeight.setText(notSet);
         }
 
         if (userModel.isValidHeight()) {
-            mUserHeight.setText(userModel.getHeight() + " cm");
+            mUserHeight.setText(userModel.getHeight() + " " + getActivity().getString(R.string.centimeter_short));
         } else {
             mUserHeight.setText(notSet);
         }
 
-        if (userModel.getGender() == Gender.MALE.getIntValue()) {
-            mUserGender.setText(Gender.MALE.getStringValue());
-        } else if (userModel.getGender() == Gender.FEMALE.getIntValue()) {
-            mUserGender.setText(Gender.FEMALE.getStringValue());
+        Gender gender = Gender.fromValue(userModel.getGender());
+        if (gender != null) {
+            mUserGender.setText(gender.toString(getActivity()));
         } else {
             mUserGender.setText(notSet);
         }
@@ -330,34 +302,24 @@ public class SettingsFragment extends BaseFragment implements SettingsView,
             mUserBirthday.setText(notSet);
         }
 
-        if (userModel.getActivityFactor() == ActivityFactor.SEDENTARY.getIntValue()) {
-            mUserActivityFactor.setText("Sedentary");
-        } else if (userModel.getActivityFactor() == ActivityFactor.LIGHT.getIntValue()) {
-            mUserActivityFactor.setText("Light");
-        } else if (userModel.getActivityFactor() == ActivityFactor.MODERATE.getIntValue()) {
-            mUserActivityFactor.setText("Moderate");
-        } else if (userModel.getActivityFactor() == ActivityFactor.HEAVY.getIntValue()) {
-            mUserActivityFactor.setText("Heavy");
-        } else if (userModel.getActivityFactor() == ActivityFactor.VERY_HEAVY.getIntValue()) {
-            mUserActivityFactor.setText("Very Heavy");
+        ActivityFactor activityFactor = ActivityFactor.fromValue(userModel.getActivityFactor());
+        if (activityFactor != null) {
+            mUserActivityFactor.setText(activityFactor.toString(getActivity()));
         } else {
             mUserActivityFactor.setText(notSet);
         }
 
-        if (userModel.getGoal() == Goal.MAINTAIN.getIntValue()) {
-            mUserGoal.setText("Maintain");
-        } else if (userModel.getGoal() == Goal.BURN.getIntValue()) {
-            mUserGoal.setText("Burn");
-        } else if (userModel.getGoal() == Goal.GAIN.getIntValue()) {
-            mUserGoal.setText("Gain");
+        Goal goal = Goal.fromValue(userModel.getGoal());
+        if (goal != null) {
+            mUserGoal.setText(goal.toString(getActivity()));
         } else {
             mUserGoal.setText(notSet);
         }
+
     }
 
     @Override
     public void showError(String message) {
         SnackbarUtils.showError(getView(), message);
     }
-
 }
