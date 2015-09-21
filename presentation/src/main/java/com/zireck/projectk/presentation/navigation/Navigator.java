@@ -8,6 +8,7 @@ import com.zireck.projectk.presentation.view.activity.AddFoodActivity;
 import com.zireck.projectk.presentation.view.activity.AddMealActivity;
 import com.zireck.projectk.presentation.view.activity.EditFoodActivity;
 import com.zireck.projectk.presentation.view.activity.FoodDetailActivity;
+import com.zireck.projectk.presentation.view.activity.SettingsActivity;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -64,6 +65,14 @@ public class Navigator {
     public void openAddMealActivity(Activity activity) {
         Intent intent = AddMealActivity.getLaunchIntent(activity);
         startActivityForResult(activity, intent, ADD_MEAL_REQUEST);
+    }
+
+    /**
+     * Open SettingsActivity
+     */
+    public void openSettingsActivity(Activity activity) {
+        Intent intent = SettingsActivity.getLaunchIntent(activity);
+        startActivity(activity, intent);
     }
 
     private void startActivity(Activity activity, Intent intent) {

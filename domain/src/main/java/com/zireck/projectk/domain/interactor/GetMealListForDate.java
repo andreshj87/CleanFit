@@ -15,7 +15,8 @@ import rx.Observable;
  */
 public class GetMealListForDate extends Interactor {
 
-    private Date mDate;
+    private Date mFirstDate;
+    private Date mLastDate;
     private MealRepository mMealRepository;
 
     @Inject
@@ -25,16 +26,17 @@ public class GetMealListForDate extends Interactor {
         mMealRepository = mealRepository;
     }
 
-    public void setDate(Date date) {
-        if (date == null) {
+    public void setDate(Date firstDate, Date lastDate) {
+        if (firstDate == null || lastDate == null) {
             throw new IllegalArgumentException("Date cannot be null.");
         }
 
-        mDate = date;
+        mFirstDate = firstDate;
+        mLastDate = lastDate;
     }
 
     @Override
     protected Observable buildInteractorObservable() {
-        return mMealRepository.meals(mDate);
+        return mMealRepository.meals(mFirstDate, mLastDate);
     }
 }

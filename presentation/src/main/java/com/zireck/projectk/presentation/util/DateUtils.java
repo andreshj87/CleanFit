@@ -48,6 +48,26 @@ public class DateUtils {
         return birthdayFormat.format(birthday);
     }
 
+    public static Date getFirstTimeOfDay(Date day) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(day);
+
+        Calendar firstTimeOfDay = Calendar.getInstance();
+        firstTimeOfDay.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+
+        return firstTimeOfDay.getTime();
+    }
+
+    public static Date getLastTimeOfDay(Date day) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(day);
+
+        Calendar lastTimeOfDay = Calendar.getInstance();
+        lastTimeOfDay.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), 23, 59, 59);
+
+        return lastTimeOfDay.getTime();
+    }
+
     public static int calculateAge(Date birthDate) {
         int years = 0;
         int months = 0;

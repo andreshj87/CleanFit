@@ -8,7 +8,6 @@ import com.zireck.projectk.data.entity.DaoSession;
 import com.zireck.projectk.data.entity.MealEntity;
 import com.zireck.projectk.data.entity.MealEntityDao;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -64,12 +63,13 @@ public class MealDataStore {
         });
     }
 
-    public Observable<List<MealEntity>> mealEntityList(final Date date) {
+    public Observable<List<MealEntity>> mealEntityList(final Date firstDate, final Date lastDate) {
         return Observable.create(new Observable.OnSubscribe<List<MealEntity>>() {
             @Override
             public void call(Subscriber<? super List<MealEntity>> subscriber) {
                 //System.out.println("k9d3 date received to compare: " + date.toString());
 
+                /*
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(date);
 
@@ -77,7 +77,7 @@ public class MealDataStore {
                 first.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
 
                 Calendar last = Calendar.getInstance();
-                last.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), 23, 59, 59);
+                last.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), 23, 59, 59);*/
 
                 /*
                 Calendar now = Calendar.getInstance();
@@ -91,8 +91,8 @@ public class MealDataStore {
                 Calendar last = Calendar.getInstance();
                 last.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH), 23, 59, 59);*/
 
-                Date firstDate = first.getTime();
-                Date lastDate = last.getTime();
+                //Date firstDate = first.getTime();
+                //Date lastDate = last.getTime();
 
                 System.out.println("k9d3 searching meals between dates: " + firstDate.toString() + " ___ AND ___ " + lastDate.toString());
 

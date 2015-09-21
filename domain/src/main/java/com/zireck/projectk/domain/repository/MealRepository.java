@@ -27,9 +27,10 @@ public interface MealRepository {
     /**
      * Get an {@link Observable} which will emit a List of {@link Meal}.
      *
-     * @param date The date used to retrieve meal data.
+     * @param firstDate The date used to retrieve meal data.
+     * @param lastDate The date used to retrieve meal data.
      */
-    Observable<List<Meal>> meals(final Date date);
+    Observable<List<Meal>> meals(final Date firstDate, final Date lastDate);
 
     /**
      * Get an {@link Observable} which will notify the addition of a {@link Meal} object.

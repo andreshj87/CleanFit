@@ -50,8 +50,8 @@ public class MealDataRepository implements MealRepository {
     }
 
     @Override
-    public Observable<List<Meal>> meals(Date date) {
-        return mMealDataStore.mealEntityList(date).map(new Func1<List<MealEntity>, List<Meal>>() {
+    public Observable<List<Meal>> meals(Date firstDate, Date lastDate) {
+        return mMealDataStore.mealEntityList(firstDate, lastDate).map(new Func1<List<MealEntity>, List<Meal>>() {
             @Override
             public List<Meal> call(List<MealEntity> mealEntities) {
                 return mMealEntityDataMapper.transform(mealEntities);

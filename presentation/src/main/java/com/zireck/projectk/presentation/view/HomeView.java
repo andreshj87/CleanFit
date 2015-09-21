@@ -9,4 +9,6 @@ import java.util.List;
  */
 public interface HomeView extends View {
     void renderDays(List<Day> days);
+    void navigateToSettings();
+    void setTodayData(double maxCalories, double currentValue);
 }

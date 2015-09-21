@@ -13,6 +13,7 @@ import com.txusballesteros.widgets.FitChart;
 import com.zireck.projectk.R;
 import com.zireck.projectk.presentation.dagger.component.FoodComponent;
 import com.zireck.projectk.presentation.model.Day;
+import com.zireck.projectk.presentation.navigation.Navigator;
 import com.zireck.projectk.presentation.presenter.HomePresenter;
 import com.zireck.projectk.presentation.util.DateUtils;
 import com.zireck.projectk.presentation.util.MathUtils;
@@ -31,11 +32,16 @@ import butterknife.OnClick;
  */
 public class HomeFragment extends BaseFragment implements HomeView {
 
+    @Inject Navigator mNavigator;
+
     @Inject HomePresenter mPresenter;
 
     @Bind(R.id.layout_days) LinearLayout mLayoutDays;
     @Bind(R.id.fit_chart) FitChart mFitChart;
     @Bind(R.id.wheel_indicator_view) WheelIndicatorView mWheelIndicatorView;
+
+    @Bind(R.id.fit_chart_main_text) TextView mFitChartMainText;
+    @Bind(R.id.fit_chart_goal_text) TextView mFitChartGoalText;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -47,7 +53,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
 
         initialize();
 
-        initFitChart();
+        //initFitChart();
         initWheelIndicatorView();
     }
 
@@ -126,6 +132,27 @@ public class HomeFragment extends BaseFragment implements HomeView {
             dayCalories.setText(String.valueOf(MathUtils.betterFormatDouble(day.getCalories())) + " kcal");
 
             mLayoutDays.addView(dayView);
+        }
+    }
+
+    @Override
+    public void navigateToSettings() {
+        mNavigator.openSettingsActivity(getActivity());
+    }
+
+    @Override
+    public void setTodayData(double maxCalories, double currentValue) {
+        System.out.println("k9d3 setting today data max=" + maxCalories + " current:" + currentValue);
+        mFitChart.setMinValue(0f);
+        mFitChart.setMaxValue((float) maxCalories);
+        mFitChart.setValue((float) currentValue);
+
+        mFitChartMainText.setText(currentValue + " kcal");
+
+        if (currentValue >= maxCalories) {
+            mFitChartGoalText.setText("Goal exceeded by " + (currentValue-maxCalories) + " kcal");
+        } else {
+            mFitChartGoalText.setText("Your goal is " + MathUtils.betterFormatDouble(maxCalories) + " kcal");
         }
     }
 }

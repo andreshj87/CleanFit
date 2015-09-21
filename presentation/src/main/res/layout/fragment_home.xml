@@ -10,6 +10,139 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <RelativeLayout
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp" >
+
+            <TextView
+                android:id="@+id/fit_chart_main_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_above="@+id/fit_chart_separator"
+                android:text="13 min"
+                android:textSize="32sp"/>
+
+            <View
+                android:id="@+id/fit_chart_separator"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_centerInParent="true"
+                android:background="@color/black"
+                android:visibility="invisible"/>
+
+            <TextView
+                android:id="@+id/fit_chart_today_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/fit_chart_separator"
+                android:text="today"
+                android:textSize="32sp"/>
+
+            <TextView
+                android:id="@+id/fit_chart_goal_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/fit_chart_today_text"
+                android:layout_marginTop="12dp"
+                android:text="Your goal is 1 hr" />
+
+            <com.txusballesteros.widgets.FitChart
+                android:id="@+id/fit_chart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                app:strokeSize="22dp"
+                app:valueStrokeColor="@color/accent"
+                app:backStrokeColor="#E0E0E0"
+                app:animationMode="overdraw" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <net.steamcrafted.materialiconlib.MaterialIconView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:padding="6dp"
+                android:scaleType="center"
+                android:background="@color/accent"
+                app:materialIcon="fire"
+                app:materialIconColor="@color/white"
+                app:materialIconSize="24dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="500 calories eaten"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <net.steamcrafted.materialiconlib.MaterialIconView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:padding="6dp"
+                android:scaleType="center"
+                app:materialIcon="fire"
+                app:materialIconColor="@color/icon_deactivated"
+                app:materialIconSize="24dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1500 calories left"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+
+        <com.dlazaro66.wheelindicatorview.WheelIndicatorView
+            android:visibility="gone"
+            android:id="@+id/wheel_indicator_view"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center_horizontal"
+            app:itemsLineWidth="8dp"
+            app:backgroundColor="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Days:"/>
+
         <Button
             android:id="@+id/button_meals"
             android:layout_width="match_parent"
@@ -22,41 +155,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="FitChart:"
-            android:layout_margin="24dp"/>
-
-        <com.txusballesteros.widgets.FitChart
-            android:id="@+id/fit_chart"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_gravity="center_horizontal"
-            app:strokeSize="16dp"
-            app:valueStrokeColor="#ff0000"
-            app:backStrokeColor="#00ff00"
-            app:animationMode="overdraw" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="WheelIndicatorView:"
-            android:layout_margin="24dp"/>
-
-        <com.dlazaro66.wheelindicatorview.WheelIndicatorView
-            android:id="@+id/wheel_indicator_view"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_gravity="center_horizontal"
-            app:itemsLineWidth="8dp"
-            app:backgroundColor="@color/white" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Days:"/>
 
     </LinearLayout>
 

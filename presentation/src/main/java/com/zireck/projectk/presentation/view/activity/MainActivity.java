@@ -180,8 +180,9 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
     @OnClick(R.id.fab_meal)
     public void onClickFabMeal() {
         //mNavigator.openAddMealActivity();
-        Intent intent = new Intent(this, AddMealActivity.class);
-        startActivity(intent);
+        mNavigator.openAddMealActivity(this);
+        //Intent intent = new Intent(this, AddMealActivity.class);
+        //startActivity(intent);
     }
 
     private void showFAB() {
