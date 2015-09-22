@@ -28,6 +28,7 @@ import com.zireck.projectk.presentation.dagger.component.FoodComponent;
 import com.zireck.projectk.presentation.listener.OnFoodRepositoryTabChangeListener;
 import com.zireck.projectk.presentation.navigation.Navigator;
 import com.zireck.projectk.presentation.util.SnackbarUtils;
+import com.zireck.projectk.presentation.view.fragment.DiaryFragment;
 import com.zireck.projectk.presentation.view.fragment.DrinkListFragment;
 import com.zireck.projectk.presentation.view.fragment.FoodCatalogFragment;
 import com.zireck.projectk.presentation.view.fragment.FoodListFragment;
@@ -40,6 +41,7 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
                                                             HasComponent<FoodComponent> {
 
     private static final String NAVIGATION_VIEW_SELECTED_ITEM = "NavigationViewSelectedItem";
+    private static final String FRAGMENT_TAG_DATA_PROVIDER = "data provider";
 
     private FoodComponent mFoodComponent;
 
@@ -244,6 +246,10 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
                 break;
             case R.id.drawer_drink:
                 fragment = DrinkListFragment.newInstance();
+                break;
+            case R.id.drawer_diary:
+                fragment = DiaryFragment.newInstance();
+                showFAB();
                 break;
             case R.id.drawer_repository:
                 fragment = FoodCatalogFragment.newInstance();

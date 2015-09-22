@@ -32,6 +32,7 @@ ext {
     circleImageViewVersion = '1.3.0'
     betterPickersVersion = '2.0.0'
     helloChartsVersion = '1.5.5@aar'
+    advancedRecyclerViewVersion = '0.7.4@aar'
 
     materialSpinnerVersion = '1.1.0'
     materialMenuToolBarVersion = '1.5.4'
@@ -63,6 +64,7 @@ ext {
             circleImageView:        "de.hdodenhof:circleimageview:${circleImageViewVersion}",
             betterPickers:          "com.code-troopers.betterpickers:library:${betterPickersVersion}",
             helloCharts:            "com.github.lecho:hellocharts-library:${helloChartsVersion}",
+            advancedRecyclerView:   "com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:${advancedRecyclerViewVersion}",
             materialSpinner:        "com.github.ganfra:material-spinner:${materialSpinnerVersion}",
             materialMenuToolbar:    "com.balysv.materialmenu:material-menu-toolbar:${materialMenuToolBarVersion}",
             materialTabStrip:       "com.jpardogo.materialtabstrip:library:${materialTabStripVersion}",

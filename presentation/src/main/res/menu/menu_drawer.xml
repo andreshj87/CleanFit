@@ -18,12 +18,16 @@
             android:title="Drink"/>
 
         <item
+            android:id="@+id/drawer_diary"
+            android:title="Diary"/>
+
+        <item
             android:id="@+id/drawer_repository"
-            android:title="Food Catalog" />
+            android:title="Food Catalog"/>
 
         <item
             android:id="@+id/drawer_settings"
-            android:title="Settings" />
+            android:title="Settings"/>
 
     </group>
 </menu>

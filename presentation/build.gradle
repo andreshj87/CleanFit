@@ -66,6 +66,7 @@ dependencies {
     compile presentationDependencies.circleImageView
     compile presentationDependencies.betterPickers
     compile presentationDependencies.helloCharts
+    compile presentationDependencies.advancedRecyclerView
 
     compile presentationDependencies.materialSpinner
     compile presentationDependencies.materialMenuToolbar
