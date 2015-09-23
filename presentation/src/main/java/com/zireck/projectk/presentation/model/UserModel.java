@@ -156,6 +156,25 @@ public class UserModel implements Parcelable {
         this.gain = gain;
     }
 
+    public double getGoalCalories() {
+        calculateAll();
+
+        Goal goal = Goal.fromValue(getGoal());
+        if (goal != null) {
+            if (goal.getIntValue() == Goal.MAINTAIN.getIntValue()) {
+                return getMaintain();
+            } else if (goal.getIntValue() == Goal.BURN.getIntValue()) {
+                return getBurn();
+            } else if (goal.getIntValue() == Goal.GAIN.getIntValue()) {
+                return getGain();
+            } else {
+                throw new IllegalStateException("Invalid Goal.");
+            }
+        } else {
+            throw new NullPointerException("Goal cannot be null.");
+        }
+    }
+
     public void calculateAll() {
         calculateAge();
         calculateBmr();

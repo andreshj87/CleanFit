@@ -3,11 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -103,6 +104,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginStart="24dp"
             android:layout_marginLeft="24dp"
             android:layout_marginEnd="24dp"
@@ -129,32 +131,17 @@
 
         </LinearLayout>
 
-        <com.dlazaro66.wheelindicatorview.WheelIndicatorView
-            android:visibility="gone"
-            android:id="@+id/wheel_indicator_view"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_gravity="center_horizontal"
-            app:itemsLineWidth="8dp"
-            app:backgroundColor="@color/white" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Days:"/>
-
-        <Button
-            android:id="@+id/button_meals"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="See Meals"/>
-
         <LinearLayout
             android:id="@+id/layout_days"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"/>
+
+        <View
+            android:id="@+id/filler"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@color/blue"/>
 
     </LinearLayout>
 

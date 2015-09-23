@@ -7,7 +7,6 @@ import com.zireck.projectk.domain.User;
 import com.zireck.projectk.domain.interactor.DefaultSubscriber;
 import com.zireck.projectk.domain.interactor.GetMealListForDate;
 import com.zireck.projectk.domain.interactor.Interactor;
-import com.zireck.projectk.presentation.enumeration.Goal;
 import com.zireck.projectk.presentation.mapper.MealModelDataMapper;
 import com.zireck.projectk.presentation.mapper.UserModelDataMapper;
 import com.zireck.projectk.presentation.model.Day;
@@ -45,6 +44,8 @@ public class HomePresenter implements Presenter {
     private Date mDate;
     private Day mToday;
     private List<Day> mWeek;
+
+    private int mDaysReceived = 0;
 
     @Inject
     public HomePresenter(@Named("userDetails") Interactor getUserDetails,
@@ -145,6 +146,18 @@ public class HomePresenter implements Presenter {
         }
     }
 
+    private void renderWeekWhenPossible() {
+        mDaysReceived++;
+        if (mDaysReceived >= 7) {
+            mDaysReceived = 0;
+            mView.renderDays(mWeek);
+        }
+    }
+
+    public double getUserGoalCalories() {
+        return (mUserModel != null && mUserModel.isValid()) ? mUserModel.getGoalCalories() : 0;
+    }
+
     private final class GetUserDetailsSubscriber extends DefaultSubscriber<User> {
 
         @Override
@@ -187,7 +200,7 @@ public class HomePresenter implements Presenter {
             mToday.setMeals(mMealModelDataMapper.transform(meals));
 
             if (mUserModel != null && mUserModel.isValid()) {
-                mUserModel.calculateAll();
+                mUserModel.calculateAll();/*
                 Goal goal = Goal.fromValue(mUserModel.getGoal());
                 double maxCalories = 0;
                 if (goal != null) {
@@ -198,12 +211,12 @@ public class HomePresenter implements Presenter {
                     } else if (goal.getIntValue() == Goal.GAIN.getIntValue()) {
                         maxCalories = mUserModel.getGain();
                     }
-                }
+                }*/
 
                 mToday.calculateEnergyAndNutrients();
-                mView.setTodayData(maxCalories, mToday.getCalories());
+                mView.setTodayData(mUserModel.getGoalCalories(), mToday.getCalories());
             } else {
-                System.out.println("k9d3 UserModel null or invalid");
+                throw new IllegalStateException("Invalid UserModel");
             }
         }
     }
@@ -211,7 +224,7 @@ public class HomePresenter implements Presenter {
     private final class GetMealListForWeekSubscriber extends DefaultSubscriber<List<Meal>> {
         @Override
         public void onCompleted() {
-
+            renderWeekWhenPossible();
         }
 
         @Override
@@ -234,35 +247,8 @@ public class HomePresenter implements Presenter {
             day.setMeals(mealModels);
             mWeek.add(day);
 
-            System.out.println("k9d3 dia añadido a semana: " + day.getDate().toString());
+            System.out.println("k9d3 dia aï¿½adido a semana: " + day.getDate().toString());
         }
-    }
-
-    @Deprecated
-    public void showMeals() {
-        mView.renderDays(mWeek);
-
-        System.out.println("k9d3 ----- START -----");
-
-        if (mToday != null) {
-            System.out.println("k9d3 Meals for today (" + mToday.getDate().toString() + "): ");
-            mToday.toString();
-        } else {
-            System.out.println("k9d3 today=null");
-        }
-
-        System.out.println("k9d3 -----");
-        System.out.println("k9d3 Weekly meals");
-        if (mWeek == null || mWeek.size() <= 0) {
-            System.out.println("k9d3 Weekly meals=null or zero");
-        } else {
-            for (int i=0; i<mWeek.size(); i++) {
-                System.out.println("k9d3 Meals for day (" + mWeek.get(i).getDate().toString() + "): ");
-                mWeek.get(i).toString();
-            }
-        }
-
-        System.out.println("k9d3 ----- /THE END -----");
     }
 
     /*

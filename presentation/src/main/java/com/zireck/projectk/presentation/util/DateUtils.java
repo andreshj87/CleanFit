@@ -13,7 +13,7 @@ public class DateUtils {
 
     public static final String DEFAULT_DATETIME_PATTERN = "yyyy/MM/dd H:mm";
     public static final String DEFAULT_DATE_PATTERN = "yyyy/MM/dd";
-    public static final String DEFAULT_TIME_PATTERN = "H:mm";
+    public static final String DEFAULT_TIME_PATTERN = "HH:mm";
 
     public static Date getDateTimeFromText(String text) throws ParseException {
         return getItFromText(DEFAULT_DATETIME_PATTERN, text);
@@ -66,6 +66,11 @@ public class DateUtils {
         lastTimeOfDay.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), 23, 59, 59);
 
         return lastTimeOfDay.getTime();
+    }
+
+    public static String getTimeFromMealDate(Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DEFAULT_TIME_PATTERN);
+        return simpleDateFormat.format(date);
     }
 
     public static int calculateAge(Date birthDate) {

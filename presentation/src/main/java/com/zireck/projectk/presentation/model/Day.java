@@ -60,6 +60,12 @@ public class Day {
         return mProteins;
     }
 
+    public int getProgressForGoal(double goal) {
+        calculateEnergy();
+
+        return (int) ((getCalories() * 100) / goal);
+    }
+
     public void calculateEnergyAndNutrients() {
         if (mMeals == null) {
             throw new NullPointerException("Meal list cannot be null.");

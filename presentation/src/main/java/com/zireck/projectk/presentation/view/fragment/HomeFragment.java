@@ -1,14 +1,12 @@
 package com.zireck.projectk.presentation.view.fragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.dlazaro66.wheelindicatorview.WheelIndicatorItem;
-import com.dlazaro66.wheelindicatorview.WheelIndicatorView;
 import com.txusballesteros.widgets.FitChart;
 import com.zireck.projectk.R;
 import com.zireck.projectk.presentation.dagger.component.FoodComponent;
@@ -19,13 +17,11 @@ import com.zireck.projectk.presentation.util.DateUtils;
 import com.zireck.projectk.presentation.util.MathUtils;
 import com.zireck.projectk.presentation.view.HomeView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
-import butterknife.OnClick;
 
 /**
  * Created by Zireck on 06/08/2015.
@@ -36,9 +32,9 @@ public class HomeFragment extends BaseFragment implements HomeView {
 
     @Inject HomePresenter mPresenter;
 
-    @Bind(R.id.layout_days) LinearLayout mLayoutDays;
+    @Bind(R.id.layout_days) ViewGroup mLayoutDays;
     @Bind(R.id.fit_chart) FitChart mFitChart;
-    @Bind(R.id.wheel_indicator_view) WheelIndicatorView mWheelIndicatorView;
+    //@Bind(R.id.wheel_indicator_view) WheelIndicatorView mWheelIndicatorView;
 
     @Bind(R.id.fit_chart_main_text) TextView mFitChartMainText;
     @Bind(R.id.fit_chart_goal_text) TextView mFitChartGoalText;
@@ -54,7 +50,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
         initialize();
 
         //initFitChart();
-        initWheelIndicatorView();
+        //initWheelIndicatorView();
     }
 
     @Override
@@ -80,11 +76,6 @@ public class HomeFragment extends BaseFragment implements HomeView {
         return R.layout.fragment_home;
     }
 
-    @OnClick(R.id.button_meals)
-    public void onClickMeals() {
-        mPresenter.showMeals();
-    }
-
     private void initialize() {
         getComponent(FoodComponent.class).inject(this);
         mPresenter.setView(this);
@@ -97,6 +88,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
         mFitChart.setValue(80f);
     }
 
+    /*
     private void initWheelIndicatorView() {
 
         List<WheelIndicatorItem> items = new ArrayList<>();
@@ -107,14 +99,15 @@ public class HomeFragment extends BaseFragment implements HomeView {
 
         mWheelIndicatorView.setWheelIndicatorItems(items);
         mWheelIndicatorView.startItemsAnimation();
-    }
+    }*/
 
     @Override
     public void renderDays(List<Day> days) {
-        // TODO: when should this be called?
         if (days == null || days.size() <= 0) {
-            throw new IllegalArgumentException("Day List cannot be null.");
+            throw new IllegalArgumentException("Day List cannot be null or empty.");
         }
+
+        mLayoutDays.removeAllViews();
 
         LayoutInflater inflater = LayoutInflater.from(getActivity());
 
@@ -131,7 +124,17 @@ public class HomeFragment extends BaseFragment implements HomeView {
             dayDate.setText(DateUtils.getFormattedDayDate(day.getDate()));
             dayCalories.setText(String.valueOf(MathUtils.betterFormatDouble(day.getCalories())) + " kcal");
 
-            mLayoutDays.addView(dayView);
+            int realProgress = day.getProgressForGoal(mPresenter.getUserGoalCalories());
+            int barProgress = realProgress > 100 ? 100 : realProgress;
+
+            dayCaloriesProgress.setLayoutParams(
+                    new LinearLayout.LayoutParams(0, 24, barProgress)
+            );
+            dayCaloriesPercent.setText(realProgress + "%");
+
+            // TODO: fix height of the last item
+            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            mLayoutDays.addView(dayView, layoutParams);
         }
     }
 

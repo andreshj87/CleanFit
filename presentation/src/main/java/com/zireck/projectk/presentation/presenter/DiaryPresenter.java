@@ -17,6 +17,7 @@ import com.zireck.projectk.presentation.view.View;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -75,6 +76,7 @@ public class DiaryPresenter implements Presenter {
             mView.navigateToSettings();
         } else {
             if (userModel.isValid()) {
+                mView.setDailyCaloriesGoal(userModel.getGoalCalories());
                 retrieveMeals();
             } else {
                 mView.navigateToSettings();
@@ -94,6 +96,7 @@ public class DiaryPresenter implements Presenter {
 
     private List<Day> groupMealsInDays(Collection<MealModel> meals) {
         List<MealModel> mealModels = ((List<MealModel>) meals);
+        Collections.reverse(mealModels);
         List<Day> days = new ArrayList<Day>();
 
         for (MealModel mealModel : mealModels) {

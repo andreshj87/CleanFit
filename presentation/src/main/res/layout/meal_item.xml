@@ -13,21 +13,37 @@
     android:orientation="horizontal">
 
     <net.steamcrafted.materialiconlib.MaterialIconView
-        android:id="@+id/food_isdrink_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         android:scaleType="center"
         app:materialIcon="apple"
-        app:materialIconColor="@color/icon_activated"
+        app:materialIconColor="@color/icon_deactivated"
         app:materialIconSize="24dp"/>
 
-    <TextView
-        android:id="@+id/meal_item"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:textSize="18sp"/>
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/meal_calories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/meal_food"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/meal_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
 </LinearLayout>

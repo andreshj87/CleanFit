@@ -4,11 +4,14 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
 
 import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.animator.RefactoredDefaultItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
+import com.vstechlab.easyfonts.EasyFonts;
 import com.zireck.projectk.R;
 import com.zireck.projectk.presentation.dagger.component.FoodComponent;
 import com.zireck.projectk.presentation.model.Day;
@@ -36,7 +39,8 @@ public class DiaryFragment extends BaseFragment implements DiaryView {
 
     @Inject DiaryPresenter mPresenter;
 
-    @Bind(R.id.recycler_view) RecyclerView mRecyclerView;
+    @Bind(R.id.diary_empty) TextView mDiaryEmpty;
+    @Bind(R.id.diary_recycler_view) RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
     private ExpandableItemAdapter mExpandableItemAdapter;
@@ -100,12 +104,28 @@ public class DiaryFragment extends BaseFragment implements DiaryView {
 
     @Override
     public void renderDaysInView(Collection<Day> days) {
+        if (days != null && days.size() > 0) {
+            mDiaryEmpty.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.VISIBLE);
+        } else {
+            mDiaryEmpty.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.GONE);
+        }
+
         mExpandableItemAdapter.setDays((List<Day>) days);
+    }
+
+    @Override
+    public void setDailyCaloriesGoal(double goal) {
+        mExpandableItemAdapter.setGoal(goal);
     }
 
     private void initialize() {
         getComponent(FoodComponent.class).inject(this);
         mPresenter.setView(this);
+
+        mDiaryEmpty.setTypeface(EasyFonts.robotoLight(getActivity()));
+        mDiaryEmpty.setVisibility(View.VISIBLE);
     }
 
     private void initRecyclerView(Bundle savedInstanceState) {
@@ -115,7 +135,7 @@ public class DiaryFragment extends BaseFragment implements DiaryView {
                 savedInstanceState.getParcelable(SAVED_STATE_EXPANDABLE_ITEM_MANAGER) : null;
         mRecyclerViewExpandableItemManager = new RecyclerViewExpandableItemManager(eimSavedState);
 
-        mExpandableItemAdapter = new ExpandableItemAdapter(new ArrayList<Day>());
+        mExpandableItemAdapter = new ExpandableItemAdapter(getActivity(), new ArrayList<Day>());
         mAdapter = mExpandableItemAdapter;
         mWrappedAdapter = mRecyclerViewExpandableItemManager.createWrappedAdapter(mExpandableItemAdapter);
 
