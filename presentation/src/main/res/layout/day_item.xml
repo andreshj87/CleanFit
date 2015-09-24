@@ -5,7 +5,9 @@
     android:id="@+id/day_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:clickable="true"
+    style="?borderlessButtonStyle">
 
     <TextView
         android:id="@+id/day_date"

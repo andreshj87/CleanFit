@@ -28,7 +28,7 @@ public class FoodModelDataMapper {
      */
     public FoodModel transform(Food food) {
         if (food == null) {
-            argumentException();
+            return null;
         }
 
         FoodModel foodModel = new FoodModel(food.getId());

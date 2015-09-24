@@ -1,6 +1,7 @@
 package com.zireck.projectk.presentation.presenter;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.zireck.projectk.domain.Meal;
 import com.zireck.projectk.domain.User;
@@ -91,6 +92,8 @@ public class DiaryPresenter implements Presenter {
     private void showMealsInView(Collection<MealModel> meals) {
         if (meals != null && !meals.isEmpty()) {
             mView.renderDaysInView(groupMealsInDays(meals));
+        } else {
+            Log.e(getClass().getSimpleName(), "Meal List cannot be null.");
         }
     }
 
@@ -150,6 +153,18 @@ public class DiaryPresenter implements Presenter {
     }
 
     private final class GetMealsSubscriber extends DefaultSubscriber<List<Meal>> {
+
+        @Override
+        public void onCompleted() {
+            super.onCompleted();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            super.onError(e);
+            e.printStackTrace();
+        }
+
         @Override
         public void onNext(List<Meal> meals) {
             mMeals = mMealModelDataMapper.transform(meals);

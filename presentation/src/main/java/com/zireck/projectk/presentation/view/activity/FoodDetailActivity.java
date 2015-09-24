@@ -118,7 +118,7 @@ public class FoodDetailActivity extends BaseActivity implements FoodDetailCallba
 
     private void initFloatingActionButton() {
         MaterialIconView icon = new MaterialIconView(this);
-        icon.setIcon(MaterialDrawableBuilder.IconValue.FOOD);
+        icon.setIcon(MaterialDrawableBuilder.IconValue.SILVERWARE_FORK);
         icon.setColorResource(android.R.color.white);
         mFloatingActionButton.setImageDrawable(icon.getDrawable());
     }

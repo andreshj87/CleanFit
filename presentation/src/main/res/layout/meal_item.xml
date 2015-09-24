@@ -18,7 +18,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         android:scaleType="center"
-        app:materialIcon="apple"
+        app:materialIcon="fire"
         app:materialIconColor="@color/icon_deactivated"
         app:materialIconSize="24dp"/>
 

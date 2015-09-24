@@ -48,4 +48,13 @@
 
     <color name="mdtp_accent_color">@color/primary</color>
     <color name="mdtp_accent_color_dark">@color/primary_dark</color>
+
+    <color name="drawer_item_icon_default">#757575</color>
+    <color name="drawer_item_icon_checked">@color/primary</color>
+
+    <color name="drawer_item_text_default">@color/black</color>
+    <color name="drawer_item_text_checked">@color/primary</color>
+
+    <color name="drawer_item_background_default">#FFFFFF</color>
+    <color name="drawer_item_background_checked">#EEEEEE</color>
 </resources>

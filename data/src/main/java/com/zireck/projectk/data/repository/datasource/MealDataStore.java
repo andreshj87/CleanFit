@@ -101,12 +101,12 @@ public class MealDataStore {
                 mealEntities = mealEntityDao.queryBuilder().where(MealEntityDao.Properties.Date.between(firstDate, lastDate)).list();
 
                 if (mealEntities != null) {
-                    //System.out.println("k9d3 amount of meals found: " + mealEntities.size());
                     subscriber.onNext(mealEntities);
-                    subscriber.onCompleted();
                 } else {
                     subscriber.onError(new Throwable());
                 }
+
+                subscriber.onCompleted();
             }
         });
     }

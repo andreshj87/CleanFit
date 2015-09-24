@@ -128,6 +128,7 @@ public class HomePresenter implements Presenter {
         mGetMealListForDate.execute(new GetMealListForTodaySubscriber());
     }
 
+    // TODO: Retrieve days in order, possibly using some RxJava merging system magic
     private void getMealsForWeek() {
         Calendar now = Calendar.getInstance();
         now.setTimeInMillis(System.currentTimeMillis());
@@ -166,7 +167,7 @@ public class HomePresenter implements Presenter {
 
         @Override
         public void onError(Throwable e) {
-
+            e.printStackTrace();
         }
 
         @Override
@@ -224,13 +225,15 @@ public class HomePresenter implements Presenter {
     private final class GetMealListForWeekSubscriber extends DefaultSubscriber<List<Meal>> {
         @Override
         public void onCompleted() {
+            System.out.println("k9d3 Subscriber For Week completed");
             renderWeekWhenPossible();
         }
 
         @Override
         public void onError(Throwable e) {
             e.printStackTrace();
-
+            System.out.println("k9d3 Subscriber For Week error");
+            renderWeekWhenPossible();
         }
 
         @Override
@@ -247,7 +250,7 @@ public class HomePresenter implements Presenter {
             day.setMeals(mealModels);
             mWeek.add(day);
 
-            System.out.println("k9d3 dia a�adido a semana: " + day.getDate().toString());
+            System.out.println("k9d3 dia anadido a semana: " + day.getDate().toString());
         }
     }
 

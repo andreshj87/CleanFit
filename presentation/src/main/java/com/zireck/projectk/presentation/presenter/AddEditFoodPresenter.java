@@ -29,6 +29,8 @@ public abstract class AddEditFoodPresenter implements Presenter {
     public AddEditFoodPresenter(Context context, FoodModelDataMapper foodModelDataMapper) {
         mContext = context;
         mFoodModelDataMapper = foodModelDataMapper;
+
+        PictureUtils.deletePicture(PictureUtils.TEMP_PICTURE_NAME);
     }
 
     @Override

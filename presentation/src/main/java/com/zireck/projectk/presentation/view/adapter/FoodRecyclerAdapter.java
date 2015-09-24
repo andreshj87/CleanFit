@@ -3,11 +3,16 @@ package com.zireck.projectk.presentation.view.adapter;
 import android.content.Context;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.zireck.projectk.R;
 import com.zireck.projectk.presentation.model.FoodModel;
@@ -45,19 +50,49 @@ public class FoodRecyclerAdapter extends RecyclerView.Adapter<FoodRecyclerAdapte
     }
 
     @Override
-    public void onBindViewHolder(FoodViewHolder holder, int position) {
+    public void onBindViewHolder(final FoodViewHolder holder, int position) {
         final FoodModel food = mFoodsCollection.get(position);
 
         holder.foodId.setText(String.valueOf(food.getId()));
 
-        Uri pictureUri = PictureUtils.getPhotoFileUri(food.getPicture());
-        Picasso.with(mContext).load(pictureUri).fit().centerCrop().into(holder.foodPicture);
+        System.out.println("k9d3 food " + food.getName() + " pic = " + food.getPicture());
+
+        if (food.getPicture() != null && !TextUtils.isEmpty(food.getPicture())) {
+            Uri pictureUri = PictureUtils.getPhotoFileUri(food.getPicture());
+            Picasso.with(mContext).load(pictureUri).fit().centerCrop().into(holder.foodPicture, new Callback() {
+                @Override
+                public void onSuccess() {
+
+                }
+
+                @Override
+                public void onError() {
+                    setFoodTextDrawable(food, holder);
+                }
+            });
+
+            holder.foodTextDrawable.setVisibility(View.INVISIBLE);
+            holder.foodPicture.setVisibility(View.VISIBLE);
+        } else {
+            setFoodTextDrawable(food, holder);
+        }
 
         holder.foodName.setText(food.getName());
         holder.foodBrand.setText(food.getBrand());
         holder.foodCalories.setText(MathUtils.formatDouble(food.getCalories()));
 
         holder.itemView.setTag(food);
+    }
+
+    private void setFoodTextDrawable(FoodModel foodModel, FoodViewHolder foodViewHolder) {
+        ColorGenerator colorGenerator = ColorGenerator.MATERIAL;
+        int color = colorGenerator.getColor(foodModel.getName());
+        TextDrawable textDrawable = TextDrawable.builder()
+                .buildRound(String.valueOf(foodModel.getName().charAt(0)).toUpperCase(), color);
+        foodViewHolder.foodTextDrawable.setImageDrawable(textDrawable);
+
+        foodViewHolder.foodPicture.setVisibility(View.INVISIBLE);
+        foodViewHolder.foodTextDrawable.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -73,6 +108,7 @@ public class FoodRecyclerAdapter extends RecyclerView.Adapter<FoodRecyclerAdapte
     public static class FoodViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.food_id) TextView foodId;
         @Bind(R.id.food_picture) CircleImageView foodPicture;
+        @Bind(R.id.food_textdrawable) ImageView foodTextDrawable;
         @Bind(R.id.food_name) TextView foodName;
         @Bind(R.id.food_brand) TextView foodBrand;
         @Bind(R.id.food_calories) TextView foodCalories;

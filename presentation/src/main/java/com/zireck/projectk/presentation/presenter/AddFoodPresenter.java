@@ -23,6 +23,8 @@ public class AddFoodPresenter extends AddEditFoodPresenter {
     private AddFoodView mView;
     private AddFood mAddFoodInteractor;
 
+    private boolean mGetPicture = false;
+
     @Inject
     public AddFoodPresenter(Context context, @Named("addFood") AddFood addFoodInteractor,
                             FoodModelDataMapper foodModelDataMapper) {
@@ -57,8 +59,15 @@ public class AddFoodPresenter extends AddEditFoodPresenter {
     }
 
     @Override
+    public void receivePicture() {
+        super.receivePicture();
+        mGetPicture = true;
+    }
+
+    @Override
     public void deleteCurrentPicture() {
         super.deleteCurrentPicture();
+        mGetPicture = false;
         PictureUtils.deletePicture(PictureUtils.TEMP_PICTURE_NAME);
     }
 
@@ -68,7 +77,9 @@ public class AddFoodPresenter extends AddEditFoodPresenter {
     }
 
     public void addFood(FoodModel foodModel) {
-        foodModel.setPicture(consolidateNewPicture());
+        if (mGetPicture) {
+            foodModel.setPicture(consolidateNewPicture());
+        }
 
         mAddFoodInteractor.setFood(mFoodModelDataMapper.transformInverse(foodModel));
         mAddFoodInteractor.execute(new AddFoodSubscriber());

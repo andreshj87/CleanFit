@@ -67,6 +67,7 @@ dependencies {
     compile presentationDependencies.betterPickers
     compile presentationDependencies.helloCharts
     compile presentationDependencies.advancedRecyclerView
+    compile presentationDependencies.textDrawable
 
     compile presentationDependencies.materialSpinner
     compile presentationDependencies.materialMenuToolbar

@@ -130,8 +130,10 @@ public class EditFoodPresenter extends AddEditFoodPresenter {
             PictureUtils.deletePicture(mFood.getPicture());
 
             if (mView.getPictureImageView().getDrawable() == null) {
+                System.out.println("k9d3 getPictureImageView().getDrawable == NULL");
                 foodModel.setPicture("");
             } else {
+                System.out.println("k9d3 getPictureImageView().getDrawable != NULL -> " + mView.getPictureImageView().toString());
                 foodModel.setPicture(consolidateNewPicture());
             }
         }

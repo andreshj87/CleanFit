@@ -33,6 +33,7 @@ ext {
     betterPickersVersion = '2.0.0'
     helloChartsVersion = '1.5.5@aar'
     advancedRecyclerViewVersion = '0.7.4@aar'
+    textDrawableVersion = '1.0.1'
 
     materialSpinnerVersion = '1.1.0'
     materialMenuToolBarVersion = '1.5.4'
@@ -65,6 +66,7 @@ ext {
             betterPickers:          "com.code-troopers.betterpickers:library:${betterPickersVersion}",
             helloCharts:            "com.github.lecho:hellocharts-library:${helloChartsVersion}",
             advancedRecyclerView:   "com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:${advancedRecyclerViewVersion}",
+            textDrawable:           "com.amulyakhare:com.amulyakhare.textdrawable:${textDrawableVersion}",
             materialSpinner:        "com.github.ganfra:material-spinner:${materialSpinnerVersion}",
             materialMenuToolbar:    "com.balysv.materialmenu:material-menu-toolbar:${materialMenuToolBarVersion}",
             materialTabStrip:       "com.jpardogo.materialtabstrip:library:${materialTabStripVersion}",

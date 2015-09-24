@@ -29,9 +29,7 @@ import com.zireck.projectk.presentation.listener.OnFoodRepositoryTabChangeListen
 import com.zireck.projectk.presentation.navigation.Navigator;
 import com.zireck.projectk.presentation.util.SnackbarUtils;
 import com.zireck.projectk.presentation.view.fragment.DiaryFragment;
-import com.zireck.projectk.presentation.view.fragment.DrinkListFragment;
 import com.zireck.projectk.presentation.view.fragment.FoodCatalogFragment;
-import com.zireck.projectk.presentation.view.fragment.FoodListFragment;
 import com.zireck.projectk.presentation.view.fragment.HomeFragment;
 
 import butterknife.Bind;
@@ -241,17 +239,11 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
                 fragment = HomeFragment.newInstance();
                 //showFAB();
                 break;
-            case R.id.drawer_food:
-                fragment = FoodListFragment.newInstance();
-                break;
-            case R.id.drawer_drink:
-                fragment = DrinkListFragment.newInstance();
-                break;
             case R.id.drawer_diary:
                 fragment = DiaryFragment.newInstance();
                 showFAB();
                 break;
-            case R.id.drawer_repository:
+            case R.id.drawer_food_catalog:
                 fragment = FoodCatalogFragment.newInstance();
                 showFAB();
                 break;

@@ -1,33 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group
+        android:id="@+id/group_main"
         android:checkableBehavior="single">
 
         <item
             android:id="@+id/drawer_home"
             android:checked="true"
-            android:title="Home"/>
-
-        <item
-            android:id="@+id/drawer_food"
-            android:title="Food"/>
-        ...
-
-        <item
-            android:id="@+id/drawer_drink"
-            android:title="Drink"/>
+            android:title="Home"
+            android:icon="@drawable/ic_home_grey600_24dp"/>
 
         <item
             android:id="@+id/drawer_diary"
-            android:title="Diary"/>
+            android:title="Diary"
+            android:icon="@drawable/ic_calendar_multiple_check_grey600_24dp"/>
 
         <item
-            android:id="@+id/drawer_repository"
-            android:title="Food Catalog"/>
+            android:id="@+id/drawer_food_catalog"
+            android:title="Food Catalog"
+            android:icon="@drawable/ic_food_grey600_24dp"/>
+
+    </group>
+
+    <group
+        android:id="@+id/group_extra"
+        android:checkableBehavior="none">
 
         <item
             android:id="@+id/drawer_settings"
-            android:title="Settings"/>
+            android:title="Settings"
+            android:icon="@drawable/ic_settings_grey600_24dp"/>
 
     </group>
 </menu>

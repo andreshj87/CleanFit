@@ -2,6 +2,7 @@ package com.zireck.projectk.presentation.view.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -163,7 +164,13 @@ public class ExpandableItemAdapter extends AbstractExpandableItemAdapter<
         MealModel meal = meals.get(childPosition);
 
         mealsViewHolder.mMealCalories.setText(MathUtils.betterFormatDouble(meal.getCalories()) + "kcal");
-        mealsViewHolder.mMealFood.setText(meal.getFoodModel().getName() + ", " + meal.getGrams() + "gr");
+
+        String foodName = "(Deleted Food)";
+        if (meal.getFoodModel() != null && !TextUtils.isEmpty(meal.getFoodModel().getName())) {
+            foodName = meal.getFoodModel().getName();
+        }
+        mealsViewHolder.mMealFood.setText(foodName + ", " + meal.getGrams() + "gr");
+
         Mealtime mealtime = Mealtime.fromValue(meal.getMealtime());
         mealsViewHolder.mMealTime.setText(mContext.getResources().getString(mealtime.getResourceValue()) + " @ " + DateUtils.getTimeFromMealDate(meal.getDate()));
     }
