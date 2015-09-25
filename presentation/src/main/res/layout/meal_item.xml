@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -13,8 +13,12 @@
     android:orientation="horizontal">
 
     <net.steamcrafted.materialiconlib.MaterialIconView
+        android:id="@+id/meal_calories_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         android:scaleType="center"
@@ -25,6 +29,8 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/meal_calories_icon"
+        android:layout_toRightOf="@+id/meal_calories_icon"
         android:orientation="vertical">
 
         <TextView
@@ -46,4 +52,17 @@
 
     </LinearLayout>
 
-</LinearLayout>
+    <net.steamcrafted.materialiconlib.MaterialIconView
+        android:id="@+id/meal_delete_button"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:scaleType="centerInside"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        style="?borderlessButtonStyle"
+        app:materialIcon="delete"
+        app:materialIconColor="@color/icon_deactivated"
+        app:materialIconSize="32dp"/>
+
+</RelativeLayout>

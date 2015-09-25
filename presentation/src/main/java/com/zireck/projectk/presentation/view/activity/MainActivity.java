@@ -57,6 +57,8 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
     @Bind(R.id.fab_meal) com.github.clans.fab.FloatingActionButton mFabMeal;
     @Bind(R.id.fab_barcode) com.github.clans.fab.FloatingActionButton mFabBarcode;
 
+    @Bind(R.id.drawer_header_layout) RelativeLayout mDrawerHeaderLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +74,7 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        //getMenuInflater().inflate(R.menu.menu_main, menu);
 
         return true;
     }
@@ -147,6 +149,11 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
                 SnackbarUtils.showShortMessageWithElevation(
                         mCoordinatorLayout, "Food successfully deleted", 8);
             }
+        } else if (requestCode == Navigator.ADD_MEAL_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                SnackbarUtils.showShortMessageWithElevation(
+                        mCoordinatorLayout, "Meal successfully added", 8);
+            }
         }
     }
 
@@ -166,6 +173,8 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
         if (fragment != null) {
             if (fragment instanceof FoodCatalogFragment) {
                 mNavigator.openAddFoodActivity(this);
+            } else if (fragment instanceof DiaryFragment) {
+                mNavigator.openAddMealActivity(this);
             } else {
                 SnackbarUtils.showShortMessage(mCoordinatorLayout, "Nothing!");
             }
@@ -183,6 +192,18 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
         mNavigator.openAddMealActivity(this);
         //Intent intent = new Intent(this, AddMealActivity.class);
         //startActivity(intent);
+    }
+
+    private void showFABMenu() {
+        if (mFabMenu.isMenuButtonHidden()) {
+            mFabMenu.showMenuButton(true);
+        }
+    }
+
+    private void hideFABMenu() {
+        if (!mFabMenu.isMenuButtonHidden()) {
+            mFabMenu.hideMenuButton(true);
+        }
     }
 
     private void showFAB() {
@@ -232,23 +253,31 @@ public class MainActivity extends BaseActivity implements OnFoodRepositoryTabCha
         Fragment fragment = null;
 
         showAppBarLayout();
-        hideFAB();
 
         switch (menuItem.getItemId()) {
             case R.id.drawer_home:
                 fragment = HomeFragment.newInstance();
-                //showFAB();
+
+                hideFAB();
+                showFABMenu();
                 break;
             case R.id.drawer_diary:
                 fragment = DiaryFragment.newInstance();
+
+                hideFABMenu();
                 showFAB();
                 break;
             case R.id.drawer_food_catalog:
                 fragment = FoodCatalogFragment.newInstance();
+
+                hideFABMenu();
                 showFAB();
                 break;
             case R.id.drawer_settings:
                 startActivity(SettingsActivity.getLaunchIntent(this));
+                return;
+            default:
+                hideFAB();
                 return;
         }
 

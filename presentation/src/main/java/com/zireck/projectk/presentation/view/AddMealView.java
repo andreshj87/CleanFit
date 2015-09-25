@@ -29,4 +29,6 @@ public interface AddMealView extends View {
 
     void setFoodItems(Collection<FoodModel> foodItems);
     void renderFoodInView(FoodModel food);
+
+    void mealSuccessfullyAdded();
 }

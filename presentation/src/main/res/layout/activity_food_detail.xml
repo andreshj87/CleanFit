@@ -25,6 +25,7 @@
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginStart="48dp"
             app:expandedTitleMarginEnd="64dp"
+            app:expandedTitleTextAppearance="@android:color/transparent"
             android:fitsSystemWindows="true">
 
             <ImageView
@@ -70,7 +71,9 @@
         app:borderWidth="0dp"
         app:elevation="6dp"
         app:pressedTranslationZ="12dp"
-        app:rippleColor="@android:color/white"
+        app:fab_colorNormal="@color/fab_normal"
+        app:fab_colorPressed="@color/fab_pressed"
+        app:rippleColor="@color/fab_ripple"
         app:layout_anchor="@id/app_bar_layout"
         app:layout_anchorGravity="bottom|right|end" />
 

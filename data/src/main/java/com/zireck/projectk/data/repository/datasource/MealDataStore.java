@@ -51,7 +51,8 @@ public class MealDataStore {
             public void call(Subscriber<? super List<MealEntity>> subscriber) {
                 MealEntityDao mealEntityDao = getMealEntityDao();
                 List<MealEntity> mealEntities;
-                mealEntities = mealEntityDao.loadAll();
+                //mealEntities = mealEntityDao.loadAll();
+                mealEntities = mealEntityDao.queryBuilder().orderAsc(MealEntityDao.Properties.Date).list();
 
                 if (mealEntities != null) {
                     subscriber.onNext(mealEntities);

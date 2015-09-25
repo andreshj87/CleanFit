@@ -3,7 +3,7 @@
 
     <style name="AppTheme" parent="BaseTheme">
         <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:colorControlHighlight">@color/accent_translucent</item> 
+        <item name="android:colorControlHighlight">@color/primary_translucient</item> 
         <item name="android:windowSharedElementsUseOverlay">false</item>
 
         <item name="android:windowContentTransitions">true</item>

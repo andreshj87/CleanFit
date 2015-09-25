@@ -71,9 +71,9 @@ public class MealModule {
     }
 
     @Provides @PerActivity @Named("deleteMeal")
-    Interactor provideDeleteMealInteractor(MealRepository mealRepository,
+    DeleteMeal provideDeleteMealInteractor(MealRepository mealRepository,
                         ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
-        return new DeleteMeal(mMeal, mealRepository, threadExecutor, postExecutionThread);
+        return new DeleteMeal(mealRepository, threadExecutor, postExecutionThread);
     }
 
     @Provides @PerActivity @Named("deleteAllMeals")

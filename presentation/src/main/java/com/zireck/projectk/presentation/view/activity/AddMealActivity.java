@@ -13,13 +13,14 @@ import com.zireck.projectk.presentation.dagger.HasComponent;
 import com.zireck.projectk.presentation.dagger.component.DaggerFoodComponent;
 import com.zireck.projectk.presentation.dagger.component.FoodComponent;
 import com.zireck.projectk.presentation.dagger.module.FoodModule;
+import com.zireck.projectk.presentation.listener.OnAddMealFinishedListener;
 
 import butterknife.Bind;
 
 /**
  * Created by Zireck on 06/08/2015.
  */
-public class AddMealActivity extends BaseActivity implements HasComponent<FoodComponent> {
+public class AddMealActivity extends BaseActivity implements HasComponent<FoodComponent>, OnAddMealFinishedListener {
 
     private FoodComponent mFoodComponent;
 
@@ -95,5 +96,10 @@ public class AddMealActivity extends BaseActivity implements HasComponent<FoodCo
         Intent intent = new Intent();
         setResult(result, intent);
         finish();
+    }
+
+    @Override
+    public void mealAdded() {
+        navigateBack(RESULT_OK);
     }
 }

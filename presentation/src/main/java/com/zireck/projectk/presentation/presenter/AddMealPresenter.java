@@ -298,9 +298,15 @@ public class AddMealPresenter implements Presenter {
     }
 
     private final class AddMealSubscriber extends DefaultSubscriber {
+
+        @Override
+        public void onError(Throwable e) {
+            e.printStackTrace();
+        }
+
         @Override
         public void onCompleted() {
-            System.out.println("k9d3 Added meal!");
+            mView.mealSuccessfullyAdded();
         }
     }
 }

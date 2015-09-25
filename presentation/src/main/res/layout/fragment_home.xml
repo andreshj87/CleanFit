@@ -63,42 +63,28 @@
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 app:strokeSize="22dp"
-                app:valueStrokeColor="@color/accent"
+                app:valueStrokeColor="@color/calories"
                 app:backStrokeColor="#E0E0E0"
                 app:animationMode="overdraw" />
 
         </RelativeLayout>
 
-        <LinearLayout
+        <View
+            android:layout_width="56dp"
+            android:layout_height="2dp"
+            android:layout_marginTop="24dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/primary"/>
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginRight="24dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <net.steamcrafted.materialiconlib.MaterialIconView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:padding="6dp"
-                android:scaleType="center"
-                android:background="@color/accent"
-                app:materialIcon="fire"
-                app:materialIconColor="@color/white"
-                app:materialIconSize="24dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="500 calories eaten"
-                android:textSize="16sp"/>
-
-        </LinearLayout>
-
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center_horizontal"
+            android:text="Today"
+            android:textSize="15sp"
+            android:textColor="@color/icon_deactivated"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -119,17 +105,65 @@
                 android:layout_marginRight="16dp"
                 android:padding="6dp"
                 android:scaleType="center"
-                app:materialIcon="fire"
-                app:materialIconColor="@color/icon_deactivated"
+                android:background="@color/primary"
+                app:materialIcon="flag"
+                app:materialIconColor="@color/white"
                 app:materialIconSize="24dp"/>
 
             <TextView
+                android:id="@+id/calories_to_go"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1500 calories left"
                 android:textSize="16sp"/>
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <net.steamcrafted.materialiconlib.MaterialIconView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:padding="6dp"
+                android:scaleType="center"
+                android:background="@color/calories"
+                app:materialIcon="fire"
+                app:materialIconColor="@color/white"
+                app:materialIconSize="24dp"/>
+
+            <TextView
+                android:id="@+id/calories_eaten"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="56dp"
+            android:layout_height="2dp"
+            android:layout_marginTop="64dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/primary"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center_horizontal"
+            android:text="Last Week"
+            android:textSize="15sp"
+            android:textColor="@color/icon_deactivated"/>
 
         <LinearLayout
             android:id="@+id/layout_days"

@@ -26,6 +26,7 @@
             android:layout_height="200dp"
             android:layout_alignParentTop="true"
             android:scaleType="center"
+            style="?borderlessButtonStyle"
             app:materialIcon="camera"
             app:materialIconColor="@color/white"
             app:materialIconSize="24dp"/>

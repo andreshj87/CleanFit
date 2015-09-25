@@ -6,6 +6,7 @@ import android.util.Log;
 import com.zireck.projectk.domain.Meal;
 import com.zireck.projectk.domain.User;
 import com.zireck.projectk.domain.interactor.DefaultSubscriber;
+import com.zireck.projectk.domain.interactor.DeleteMeal;
 import com.zireck.projectk.domain.interactor.Interactor;
 import com.zireck.projectk.presentation.mapper.MealModelDataMapper;
 import com.zireck.projectk.presentation.mapper.UserModelDataMapper;
@@ -33,6 +34,7 @@ public class DiaryPresenter implements Presenter {
 
     private Interactor mGetUserDetails;
     private Interactor mGetMealList;
+    private DeleteMeal mDeleteMeal;
 
     private UserModelDataMapper mUserModelDataMapper;
     private MealModelDataMapper mMealModelDataMapper;
@@ -42,11 +44,13 @@ public class DiaryPresenter implements Presenter {
 
     @Inject
     public DiaryPresenter(@Named("userDetails") Interactor getUserDetails,
-                         @Named("mealList") Interactor getMealList,
+                          @Named("mealList") Interactor getMealList,
+                          @Named("deleteMeal") DeleteMeal deleteMeal,
                          UserModelDataMapper userModelDataMapper,
                          MealModelDataMapper mealModelDataMapper) {
         mGetUserDetails = getUserDetails;
         mGetMealList = getMealList;
+        mDeleteMeal = deleteMeal;
         mUserModelDataMapper = userModelDataMapper;
         mMealModelDataMapper = mealModelDataMapper;
     }
@@ -134,6 +138,11 @@ public class DiaryPresenter implements Presenter {
         return days;
     }
 
+    public void deleteMeal(MealModel mealModel) {
+        mDeleteMeal.setMeal(mMealModelDataMapper.transformInverse(mealModel));
+        mDeleteMeal.execute(new DeleteMealSubscriber());
+    }
+
     private final class GetUserDetailsSubscriber extends DefaultSubscriber<User> {
 
         @Override
@@ -156,12 +165,11 @@ public class DiaryPresenter implements Presenter {
 
         @Override
         public void onCompleted() {
-            super.onCompleted();
+
         }
 
         @Override
         public void onError(Throwable e) {
-            super.onError(e);
             e.printStackTrace();
         }
 
@@ -169,6 +177,19 @@ public class DiaryPresenter implements Presenter {
         public void onNext(List<Meal> meals) {
             mMeals = mMealModelDataMapper.transform(meals);
             showMealsInView(mMeals);
+        }
+    }
+
+    private final class DeleteMealSubscriber extends DefaultSubscriber {
+
+        @Override
+        public void onError(Throwable e) {
+            e.printStackTrace();
+        }
+
+        @Override
+        public void onCompleted() {
+            retrieveMeals();
         }
     }
 }

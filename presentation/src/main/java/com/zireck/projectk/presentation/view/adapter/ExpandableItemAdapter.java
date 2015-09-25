@@ -10,15 +10,20 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.Theme;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemViewHolder;
 import com.zireck.projectk.R;
 import com.zireck.projectk.presentation.enumeration.Mealtime;
+import com.zireck.projectk.presentation.listener.OnDeleteMealClick;
 import com.zireck.projectk.presentation.model.Day;
 import com.zireck.projectk.presentation.model.MealModel;
 import com.zireck.projectk.presentation.util.DateUtils;
 import com.zireck.projectk.presentation.util.MathUtils;
+
+import net.steamcrafted.materialiconlib.MaterialIconView;
 
 import java.util.List;
 
@@ -34,6 +39,7 @@ public class ExpandableItemAdapter extends AbstractExpandableItemAdapter<
     private Context mContext;
     private List<Day> mDays;
     private double mGoal;
+    private OnDeleteMealClick mCallback;
 
     public static class DaysViewHolder extends AbstractExpandableItemViewHolder {
 
@@ -54,6 +60,7 @@ public class ExpandableItemAdapter extends AbstractExpandableItemAdapter<
         @Bind(R.id.meal_calories) TextView mMealCalories;
         @Bind(R.id.meal_food) TextView mMealFood;
         @Bind(R.id.meal_time) TextView mMealTime;
+        @Bind(R.id.meal_delete_button) MaterialIconView mMealDeleteButton;
 
         public MealsViewHolder(View v) {
             super(v);
@@ -61,8 +68,9 @@ public class ExpandableItemAdapter extends AbstractExpandableItemAdapter<
         }
     }
 
-    public ExpandableItemAdapter(Context context, List<Day> days) {
+    public ExpandableItemAdapter(Context context, OnDeleteMealClick callback, List<Day> days) {
         mContext = context;
+        mCallback = callback;
         mDays = days;
 
         setHasStableIds(true);
@@ -161,7 +169,7 @@ public class ExpandableItemAdapter extends AbstractExpandableItemAdapter<
     public void onBindChildViewHolder(MealsViewHolder mealsViewHolder, int groupPosition, int childPosition, int viewType) {
         final Day day = mDays.get(groupPosition);
         final List<MealModel> meals = (List<MealModel>) day.getMeals();
-        MealModel meal = meals.get(childPosition);
+        final MealModel meal = meals.get(childPosition);
 
         mealsViewHolder.mMealCalories.setText(MathUtils.betterFormatDouble(meal.getCalories()) + "kcal");
 
@@ -173,6 +181,26 @@ public class ExpandableItemAdapter extends AbstractExpandableItemAdapter<
 
         Mealtime mealtime = Mealtime.fromValue(meal.getMealtime());
         mealsViewHolder.mMealTime.setText(mContext.getResources().getString(mealtime.getResourceValue()) + " @ " + DateUtils.getTimeFromMealDate(meal.getDate()));
+
+        mealsViewHolder.mMealDeleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new MaterialDialog.Builder(mContext)
+                        .theme(Theme.LIGHT)
+                        .title("Delete")
+                        .content("Delete meal?")
+                        .positiveText("Ok")
+                        .negativeText("Cancel")
+                        .callback(new MaterialDialog.ButtonCallback() {
+                            @Override
+                            public void onPositive(MaterialDialog dialog) {
+                                super.onPositive(dialog);
+                                mCallback.deleteMeal(meal);
+                            }
+                        })
+                        .show();
+            }
+        });
     }
 
     @Override

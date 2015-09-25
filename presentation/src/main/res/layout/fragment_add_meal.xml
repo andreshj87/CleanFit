@@ -206,8 +206,7 @@
                 android:layout_weight="1"
                 android:padding="4dp"
                 android:gravity="center"
-                android:text="250 kcal"
-                android:textColor="@color/calories" />
+                android:text="250 kcal"/>
 
         </LinearLayout>
 
@@ -240,8 +239,7 @@
                 android:layout_weight="1"
                 android:padding="4dp"
                 android:gravity="center"
-                android:text="12 fats"
-                android:textColor="@color/fats" />
+                android:text="12 fats"/>
 
             <TextView
                 android:id="@+id/meal_carbohydrates"
@@ -250,8 +248,7 @@
                 android:layout_weight="1"
                 android:padding="4dp"
                 android:gravity="center"
-                android:text="34 carbs"
-                android:textColor="@color/carbohydrates" />
+                android:text="34 carbs"/>
 
             <TextView
                 android:id="@+id/meal_proteins"
@@ -260,8 +257,7 @@
                 android:layout_weight="1"
                 android:padding="4dp"
                 android:gravity="center"
-                android:text="18 proteins"
-                android:textColor="@color/proteins" />
+                android:text="18 proteins"/>
 
         </LinearLayout>
 

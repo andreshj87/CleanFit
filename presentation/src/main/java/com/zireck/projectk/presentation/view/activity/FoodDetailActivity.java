@@ -3,6 +3,7 @@ package com.zireck.projectk.presentation.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
@@ -24,6 +25,7 @@ import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
 import net.steamcrafted.materialiconlib.MaterialIconView;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * Created by Zireck on 29/07/2015.
@@ -37,6 +39,7 @@ public class FoodDetailActivity extends BaseActivity implements FoodDetailCallba
 
     private FoodModel mFood;
 
+    @Bind(R.id.collapsing_toolbar) CollapsingToolbarLayout mCollapsingToolbarLayout;
     @Bind(R.id.toolbar) Toolbar mToolbar;
     @Bind(R.id.food_image) ImageView mFoodImage;
     @Bind(R.id.fab) FloatingActionButton mFloatingActionButton;
@@ -114,6 +117,8 @@ public class FoodDetailActivity extends BaseActivity implements FoodDetailCallba
     private void initActionBar() {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mCollapsingToolbarLayout.setTitle(" ");
     }
 
     private void initFloatingActionButton() {
@@ -121,6 +126,11 @@ public class FoodDetailActivity extends BaseActivity implements FoodDetailCallba
         icon.setIcon(MaterialDrawableBuilder.IconValue.SILVERWARE_FORK);
         icon.setColorResource(android.R.color.white);
         mFloatingActionButton.setImageDrawable(icon.getDrawable());
+    }
+
+    @OnClick(R.id.fab)
+    public void onClickFAB() {
+        mNavigator.openAddMealActivity(this);
     }
 
     private void initializeFragment() {

@@ -19,6 +19,7 @@
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_behavior="com.zireck.projectk.presentation.helper.AppBarLayoutSnapBehavior"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <android.support.v7.widget.Toolbar
@@ -44,19 +45,20 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
-            android:elevation="6dp"
+            android:elevation="4dp"
             fab:menu_fab_size="normal"
             fab:menu_showShadow="true"
             fab:menu_shadowColor="#66000000"
             fab:menu_shadowRadius="4dp"
             fab:menu_shadowXOffset="1dp"
             fab:menu_shadowYOffset="3dp"
-            fab:menu_colorNormal="#DA4336"
-            fab:menu_colorPressed="#E75043"
-            fab:menu_colorRipple="#99FFFFFF"
+            fab:menu_colorNormal="@color/fab_normal"
+            fab:menu_colorPressed="@color/fab_pressed"
+            fab:menu_colorRipple="@color/fab_ripple"
             fab:menu_animationDelayPerItem="50">
 
             <com.github.clans.fab.FloatingActionButton
+                android:visibility="gone"
                 android:id="@+id/fab_barcode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -70,7 +72,10 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_food_white_24dp"
                 fab:fab_size="normal"
-                fab:fab_label="Add Meal" />
+                fab:fab_label="Add Meal"
+                fab:fab_colorNormal="@color/fab_normal"
+                fab:fab_colorPressed="@color/fab_pressed"
+                fab:fab_colorRipple="@color/fab_ripple"/>
 
             <com.github.clans.fab.FloatingActionButton
                 android:id="@+id/fab_food"
@@ -78,23 +83,28 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_food_apple_white_24dp"
                 fab:fab_size="normal"
-                fab:fab_label="Add Food" />
+                fab:fab_label="Add Food"
+                fab:fab_colorNormal="@color/fab_normal"
+                fab:fab_colorPressed="@color/fab_pressed"
+                fab:fab_colorRipple="@color/fab_ripple"/>
 
         </com.github.clans.fab.FloatingActionMenu>
 
         <android.support.design.widget.FloatingActionButton
-            android:visibility="gone"
+            android:visibility="invisible"
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
             android:src="@drawable/ic_plus_white_24dp"
-
-            app:rippleColor="@android:color/white"
+            app:layout_behavior="com.zireck.projectk.presentation.helper.ScrollAwareFABBehavior"
+            app:fab_colorNormal="@color/fab_normal"
+            app:fab_colorPressed="@color/fab_pressed"
+            app:rippleColor="@color/fab_ripple"
             app:fabSize="normal"
             app:borderWidth="0dp"
-            app:elevation="6dp"
+            app:elevation="8dp"
             app:pressedTranslationZ="12dp"/>
 
     </android.support.design.widget.CoordinatorLayout>
@@ -109,7 +119,6 @@
         app:menu="@menu/menu_drawer"
         app:itemIconTint="@color/drawer_item_icon_selector"
         app:itemTextColor="@color/drawer_item_text_selector"
-        app:itemBackground="@drawable/drawer_item_background_selector"
-        />
+        app:itemBackground="@drawable/drawer_item_background_selector"/>
 
 </android.support.v4.widget.DrawerLayout>

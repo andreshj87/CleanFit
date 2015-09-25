@@ -1,13 +1,25 @@
 package com.zireck.projectk.presentation.helper;
 
+import android.content.Context;
+import android.os.Build;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPropertyAnimatorListener;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
+import android.util.AttributeSet;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Interpolator;
+
+import com.zireck.projectk.R;
 
 /**
  * Created by Zireck on 23/07/2015.
  */
-@Deprecated
 public class ScrollAwareFABBehavior extends FloatingActionButton.Behavior {
-    /*
+
     private static final Interpolator INTERPOLATOR = new FastOutSlowInInterpolator();
     private boolean mIsAnimatingOut = false;
 
@@ -55,7 +67,7 @@ public class ScrollAwareFABBehavior extends FloatingActionButton.Behavior {
                         }
                     }).start();
         } else {
-            Animation anim = AnimationUtils.loadAnimation(button.getContext(), R.anim.fab_out);
+            Animation anim = AnimationUtils.loadAnimation(button.getContext(), R.anim.design_fab_out);
             anim.setInterpolator(INTERPOLATOR);
             anim.setDuration(200L);
             anim.setAnimationListener(new Animation.AnimationListener() {
@@ -84,10 +96,10 @@ public class ScrollAwareFABBehavior extends FloatingActionButton.Behavior {
                     .setInterpolator(INTERPOLATOR).withLayer().setListener(null)
                     .start();
         } else {
-            Animation anim = AnimationUtils.loadAnimation(button.getContext(), R.anim.fab_in);
+            Animation anim = AnimationUtils.loadAnimation(button.getContext(), R.anim.design_fab_in);
             anim.setDuration(200L);
             anim.setInterpolator(INTERPOLATOR);
             button.startAnimation(anim);
         }
-    }*/
+    }
 }

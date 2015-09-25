@@ -39,6 +39,9 @@ public class HomeFragment extends BaseFragment implements HomeView {
     @Bind(R.id.fit_chart_main_text) TextView mFitChartMainText;
     @Bind(R.id.fit_chart_goal_text) TextView mFitChartGoalText;
 
+    @Bind(R.id.calories_to_go) TextView mCaloriesToGo;
+    @Bind(R.id.calories_eaten) TextView mCaloriesEaten;
+
     public static HomeFragment newInstance() {
         return new HomeFragment();
     }
@@ -145,17 +148,19 @@ public class HomeFragment extends BaseFragment implements HomeView {
 
     @Override
     public void setTodayData(double maxCalories, double currentValue) {
-        System.out.println("k9d3 setting today data max=" + maxCalories + " current:" + currentValue);
         mFitChart.setMinValue(0f);
         mFitChart.setMaxValue((float) maxCalories);
         mFitChart.setValue((float) currentValue);
 
-        mFitChartMainText.setText(currentValue + " kcal");
+        mFitChartMainText.setText(MathUtils.betterFormatDouble(currentValue) + " kcal");
+        mCaloriesEaten.setText(MathUtils.betterFormatDouble(currentValue) + " calories eaten");
+
+        mFitChartGoalText.setText("Your goal is " + MathUtils.betterFormatDouble(maxCalories) + " kcal");
 
         if (currentValue >= maxCalories) {
-            mFitChartGoalText.setText("Goal exceeded by " + (currentValue-maxCalories) + " kcal");
+            mCaloriesToGo.setText("Goal exceeded by " + MathUtils.betterFormatDouble(currentValue - maxCalories) + " calories");
         } else {
-            mFitChartGoalText.setText("Your goal is " + MathUtils.betterFormatDouble(maxCalories) + " kcal");
+            mCaloriesToGo.setText(MathUtils.betterFormatDouble((maxCalories - currentValue)) + " calories to go");
         }
     }
 }

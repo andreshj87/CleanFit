@@ -14,7 +14,9 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 import com.vstechlab.easyfonts.EasyFonts;
 import com.zireck.projectk.R;
 import com.zireck.projectk.presentation.dagger.component.FoodComponent;
+import com.zireck.projectk.presentation.listener.OnDeleteMealClick;
 import com.zireck.projectk.presentation.model.Day;
+import com.zireck.projectk.presentation.model.MealModel;
 import com.zireck.projectk.presentation.navigation.Navigator;
 import com.zireck.projectk.presentation.presenter.DiaryPresenter;
 import com.zireck.projectk.presentation.view.DiaryView;
@@ -31,7 +33,7 @@ import butterknife.Bind;
 /**
  * Created by Zireck on 22/09/2015.
  */
-public class DiaryFragment extends BaseFragment implements DiaryView {
+public class DiaryFragment extends BaseFragment implements DiaryView, OnDeleteMealClick {
 
     private static final String SAVED_STATE_EXPANDABLE_ITEM_MANAGER = "RecyclerViewExpandableItemManager";
 
@@ -135,7 +137,7 @@ public class DiaryFragment extends BaseFragment implements DiaryView {
                 savedInstanceState.getParcelable(SAVED_STATE_EXPANDABLE_ITEM_MANAGER) : null;
         mRecyclerViewExpandableItemManager = new RecyclerViewExpandableItemManager(eimSavedState);
 
-        mExpandableItemAdapter = new ExpandableItemAdapter(getActivity(), new ArrayList<Day>());
+        mExpandableItemAdapter = new ExpandableItemAdapter(getActivity(), this, new ArrayList<Day>());
         mAdapter = mExpandableItemAdapter;
         mWrappedAdapter = mRecyclerViewExpandableItemManager.createWrappedAdapter(mExpandableItemAdapter);
 
@@ -170,5 +172,10 @@ public class DiaryFragment extends BaseFragment implements DiaryView {
 
         mAdapter = null;
         mLayoutManager = null;
+    }
+
+    @Override
+    public void deleteMeal(MealModel mealModel) {
+        mPresenter.deleteMeal(mealModel);
     }
 }

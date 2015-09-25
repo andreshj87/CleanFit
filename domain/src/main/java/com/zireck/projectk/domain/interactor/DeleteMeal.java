@@ -14,15 +14,22 @@ import rx.Observable;
  */
 public class DeleteMeal extends Interactor {
 
-    private final Meal mMeal;
+    private Meal mMeal;
     private MealRepository mMealRepository;
 
     @Inject
-    public DeleteMeal(final Meal meal, MealRepository mealRepository, ThreadExecutor threadExecutor,
+    public DeleteMeal(MealRepository mealRepository, ThreadExecutor threadExecutor,
                       PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
-        mMeal = meal;
         mMealRepository = mealRepository;
+    }
+
+    public void setMeal(Meal meal) {
+        if (meal == null) {
+            throw new IllegalArgumentException("Meal object cannot be null.");
+        }
+
+        mMeal = meal;
     }
 
     @Override

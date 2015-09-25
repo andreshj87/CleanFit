@@ -1,7 +1,9 @@
 package com.zireck.projectk.presentation.view.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,8 +15,11 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.codetroopers.betterpickers.numberpicker.NumberPickerBuilder;
 import com.codetroopers.betterpickers.numberpicker.NumberPickerDialogFragment;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.vstechlab.easyfonts.EasyFonts;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -23,6 +28,7 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import com.zireck.projectk.R;
 import com.zireck.projectk.presentation.dagger.component.FoodComponent;
 import com.zireck.projectk.presentation.enumeration.Mealtime;
+import com.zireck.projectk.presentation.listener.OnAddMealFinishedListener;
 import com.zireck.projectk.presentation.model.FoodModel;
 import com.zireck.projectk.presentation.presenter.AddMealPresenter;
 import com.zireck.projectk.presentation.util.MathUtils;
@@ -51,6 +57,8 @@ public class AddMealFragment extends BaseFragment implements AddMealView,
         DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener,
         NumberPickerDialogFragment.NumberPickerDialogHandler {
 
+    private OnAddMealFinishedListener mCallback;
+
     @Bind(R.id.root_layout)
     LinearLayout mRootLayout;
 
@@ -62,6 +70,7 @@ public class AddMealFragment extends BaseFragment implements AddMealView,
 
     @Bind(R.id.food_id) TextView mFoodId;
     @Bind(R.id.food_picture) CircleImageView mFoodPicture;
+    @Bind(R.id.food_textdrawable) ImageView mFoodTextDrawable;
     @Bind(R.id.food_name) TextView mFoodName;
     @Bind(R.id.food_brand) TextView mFoodBrand;
     @Bind(R.id.food_calories) TextView mFoodCalories;
@@ -119,6 +128,17 @@ public class AddMealFragment extends BaseFragment implements AddMealView,
     private NumberPickerBuilder mNumberPickerBuilder;
 
     private FoodListAdapter mAdapter;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        try {
+            mCallback = ((OnAddMealFinishedListener) activity);
+        } catch (ClassCastException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -263,7 +283,7 @@ public class AddMealFragment extends BaseFragment implements AddMealView,
     }
 
     @Override
-    public void renderFoodInView(FoodModel food) {
+    public void renderFoodInView(final FoodModel food) {
         mLayoutPickFood.setVisibility(View.INVISIBLE);
         mLayoutFoodItem.setVisibility(View.VISIBLE);
 
@@ -271,7 +291,43 @@ public class AddMealFragment extends BaseFragment implements AddMealView,
         mFoodName.setText(food.getName());
         mFoodBrand.setText(food.getBrand());
         mFoodCalories.setText(String.valueOf(MathUtils.formatDouble(food.getCalories())));
-        Picasso.with(getActivity()).load(PictureUtils.getPhotoFileUri(food.getPicture())).fit().centerCrop().into(mFoodPicture);
+
+        if (food.getPicture() != null && !TextUtils.isEmpty(food.getPicture())) {
+            Picasso.with(getActivity()).load(PictureUtils.getPhotoFileUri(food.getPicture())).fit().centerCrop().into(mFoodPicture, new Callback() {
+                @Override
+                public void onSuccess() {
+
+                }
+
+                @Override
+                public void onError() {
+                    setFoodTextDrawable(food);
+                }
+            });
+            mFoodTextDrawable.setVisibility(View.INVISIBLE);
+            mFoodPicture.setVisibility(View.VISIBLE);
+        } else {
+            setFoodTextDrawable(food);
+        }
+
+    }
+
+    private void setFoodTextDrawable(FoodModel foodModel) {
+        ColorGenerator colorGenerator = ColorGenerator.MATERIAL;
+        int color = colorGenerator.getColor(foodModel.getName());
+        TextDrawable textDrawable = TextDrawable.builder()
+                .buildRound(String.valueOf(foodModel.getName().charAt(0)).toUpperCase(), color);
+        mFoodTextDrawable.setImageDrawable(textDrawable);
+
+        mFoodPicture.setVisibility(View.INVISIBLE);
+        mFoodTextDrawable.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void mealSuccessfullyAdded() {
+        if (mCallback != null) {
+            mCallback.mealAdded();
+        }
     }
 
     private void setNutrientsHeader(String measure) {
