@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.zireck.projectk" >
+    package="com.zireck.calories" >
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -23,13 +23,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".presentation.view.activity.FoodDetailActivity" android:label="Food Detail" android:theme="@style/AppTheme.ActionBar" android:configChanges="keyboardHidden|orientation|screenSize" />
-        <activity android:name=".presentation.view.activity.AddFoodActivity" android:label="Add Food" android:theme="@style/AppTheme.ActionBar" android:configChanges="keyboardHidden|orientation|screenSize" />
-        <activity android:name=".presentation.view.activity.EditFoodActivity" android:label="Edit Food" android:theme="@style/AppTheme.ActionBar" android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity android:name="com.zireck.calories.presentation.view.activity.FoodDetailActivity" android:label="Food Detail" android:theme="@style/AppTheme.ActionBar" android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity android:name="com.zireck.calories.presentation.view.activity.AddFoodActivity" android:label="Add Food" android:theme="@style/AppTheme.ActionBar" android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity android:name="com.zireck.calories.presentation.view.activity.EditFoodActivity" android:label="Edit Food" android:theme="@style/AppTheme.ActionBar" android:configChanges="keyboardHidden|orientation|screenSize" />
 
-        <activity android:name=".presentation.view.activity.AddMealActivity" android:label="Add Meal" android:theme="@style/AppTheme.ActionBar" android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity android:name="com.zireck.calories.presentation.view.activity.AddMealActivity" android:label="Add Meal" android:theme="@style/AppTheme.ActionBar" android:configChanges="keyboardHidden|orientation|screenSize" />
 
-        <activity android:name=".presentation.view.activity.SettingsActivity" android:label="Settings" android:theme="@style/AppTheme.ActionBar" android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity android:name="com.zireck.calories.presentation.view.activity.SettingsActivity" android:label="Settings" android:theme="@style/AppTheme.ActionBar" android:configChanges="keyboardHidden|orientation|screenSize" />
     </application>
 
 </manifest>

@@ -19,7 +19,7 @@
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_behavior="com.zireck.projectk.presentation.helper.AppBarLayoutSnapBehavior"
+            app:layout_behavior="com.zireck.calories.presentation.helper.AppBarLayoutSnapBehavior"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <android.support.v7.widget.Toolbar
@@ -98,7 +98,7 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
             android:src="@drawable/ic_plus_white_24dp"
-            app:layout_behavior="com.zireck.projectk.presentation.helper.ScrollAwareFABBehavior"
+            app:layout_behavior="com.zireck.calories.presentation.helper.ScrollAwareFABBehavior"
             app:fab_colorNormal="@color/fab_normal"
             app:fab_colorPressed="@color/fab_pressed"
             app:rippleColor="@color/fab_ripple"

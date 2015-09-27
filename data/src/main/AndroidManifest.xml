@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.zireck.projectk.data">
+    package="com.zireck.calories.data">
 
     <application android:allowBackup="true" />
 
