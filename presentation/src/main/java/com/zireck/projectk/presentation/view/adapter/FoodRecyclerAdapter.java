@@ -55,8 +55,6 @@ public class FoodRecyclerAdapter extends RecyclerView.Adapter<FoodRecyclerAdapte
 
         holder.foodId.setText(String.valueOf(food.getId()));
 
-        System.out.println("k9d3 food " + food.getName() + " pic = " + food.getPicture());
-
         if (food.getPicture() != null && !TextUtils.isEmpty(food.getPicture())) {
             Uri pictureUri = PictureUtils.getPhotoFileUri(food.getPicture());
             Picasso.with(mContext).load(pictureUri).fit().centerCrop().into(holder.foodPicture, new Callback() {

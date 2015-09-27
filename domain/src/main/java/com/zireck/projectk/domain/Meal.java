@@ -16,6 +16,7 @@ public class Meal {
     private double carbohydrates;
     private double proteins;
     private long foodId;
+    private String foodName;
     private Food food;
 
     public Meal(long id) {
@@ -90,6 +91,14 @@ public class Meal {
         this.foodId = foodId;
     }
 
+    public String getFoodName() {
+        return foodName;
+    }
+
+    public void setFoodName(String foodName) {
+        this.foodName = foodName;
+    }
+
     public Food getFood() {
         return food;
     }
@@ -112,7 +121,8 @@ public class Meal {
         stringBuilder.append("carbohydrates=" + String.valueOf(this.getCarbohydrates()) + "\n");
         stringBuilder.append("proteins=" + String.valueOf(this.getProteins()) + "\n");
         stringBuilder.append("foodId=" + String.valueOf(this.getFoodId()) + "\n");
-        stringBuilder.append("food=" + this.getFood().getName() + "\n");
+        stringBuilder.append("foodName=" + this.getFoodName());
+        //stringBuilder.append("food=" + this.getFood().getName() + "\n");
         stringBuilder.append("*******************************");
 
         return stringBuilder.toString();

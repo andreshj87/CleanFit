@@ -7,13 +7,9 @@
     android:layout_height="172dp"
     android:orientation="vertical"
     android:paddingTop="25dp"
-    android:background="#7E57C2"
+    android:background="#DD7E57C2"
+    android:fitsSystemWindows="true"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#2000"/>
 
     <ImageView
         android:visibility="invisible"

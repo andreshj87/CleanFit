@@ -176,6 +176,8 @@ public class ExpandableItemAdapter extends AbstractExpandableItemAdapter<
         String foodName = "(Deleted Food)";
         if (meal.getFoodModel() != null && !TextUtils.isEmpty(meal.getFoodModel().getName())) {
             foodName = meal.getFoodModel().getName();
+        } else if (meal.getFoodName() != null && !TextUtils.isEmpty(meal.getFoodName())) {
+            foodName = meal.getFoodName();
         }
         mealsViewHolder.mMealFood.setText(foodName + ", " + meal.getGrams() + "gr");
 

@@ -34,7 +34,8 @@ public class MealEntityDao extends AbstractDao<MealEntity, Long> {
         public final static Property Fats = new Property(5, double.class, "fats", false, "FATS");
         public final static Property Carbohydrates = new Property(6, double.class, "carbohydrates", false, "CARBOHYDRATES");
         public final static Property Proteins = new Property(7, double.class, "proteins", false, "PROTEINS");
-        public final static Property FoodId = new Property(8, long.class, "foodId", false, "FOOD_ID");
+        public final static Property FoodName = new Property(8, String.class, "foodName", false, "FOOD_NAME");
+        public final static Property FoodId = new Property(9, Long.class, "foodId", false, "FOOD_ID");
     };
 
     private DaoSession daoSession;
@@ -61,7 +62,8 @@ public class MealEntityDao extends AbstractDao<MealEntity, Long> {
                 "'FATS' REAL NOT NULL ," + // 5: fats
                 "'CARBOHYDRATES' REAL NOT NULL ," + // 6: carbohydrates
                 "'PROTEINS' REAL NOT NULL ," + // 7: proteins
-                "'FOOD_ID' INTEGER NOT NULL );"); // 8: foodId
+                "'FOOD_NAME' TEXT," + // 8: foodName
+                "'FOOD_ID' INTEGER);"); // 9: foodId
     }
 
     /** Drops the underlying database table. */
@@ -86,7 +88,16 @@ public class MealEntityDao extends AbstractDao<MealEntity, Long> {
         stmt.bindDouble(6, entity.getFats());
         stmt.bindDouble(7, entity.getCarbohydrates());
         stmt.bindDouble(8, entity.getProteins());
-        stmt.bindLong(9, entity.getFoodId());
+ 
+        String foodName = entity.getFoodName();
+        if (foodName != null) {
+            stmt.bindString(9, foodName);
+        }
+ 
+        Long foodId = entity.getFoodId();
+        if (foodId != null) {
+            stmt.bindLong(10, foodId);
+        }
     }
 
     @Override
@@ -113,7 +124,8 @@ public class MealEntityDao extends AbstractDao<MealEntity, Long> {
             cursor.getDouble(offset + 5), // fats
             cursor.getDouble(offset + 6), // carbohydrates
             cursor.getDouble(offset + 7), // proteins
-            cursor.getLong(offset + 8) // foodId
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // foodName
+            cursor.isNull(offset + 9) ? null : cursor.getLong(offset + 9) // foodId
         );
         return entity;
     }
@@ -129,7 +141,8 @@ public class MealEntityDao extends AbstractDao<MealEntity, Long> {
         entity.setFats(cursor.getDouble(offset + 5));
         entity.setCarbohydrates(cursor.getDouble(offset + 6));
         entity.setProteins(cursor.getDouble(offset + 7));
-        entity.setFoodId(cursor.getLong(offset + 8));
+        entity.setFoodName(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setFoodId(cursor.isNull(offset + 9) ? null : cursor.getLong(offset + 9));
      }
     
     /** @inheritdoc */
@@ -176,9 +189,7 @@ public class MealEntityDao extends AbstractDao<MealEntity, Long> {
         int offset = getAllColumns().length;
 
         FoodEntity foodEntity = loadCurrentOther(daoSession.getFoodEntityDao(), cursor, offset);
-         if(foodEntity != null) {
-            entity.setFoodEntity(foodEntity);
-        }
+        entity.setFoodEntity(foodEntity);
 
         return entity;    
     }

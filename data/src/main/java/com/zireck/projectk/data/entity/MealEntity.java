@@ -18,7 +18,8 @@ public class MealEntity extends MealEntityBase  {
     private double fats;
     private double carbohydrates;
     private double proteins;
-    private long foodId;
+    private String foodName;
+    private Long foodId;
 
     /** Used to resolve relations */
     private transient DaoSession daoSession;
@@ -37,7 +38,7 @@ public class MealEntity extends MealEntityBase  {
         this.id = id;
     }
 
-    public MealEntity(Long id, java.util.Date date, int mealtime, int grams, double calories, double fats, double carbohydrates, double proteins, long foodId) {
+    public MealEntity(Long id, java.util.Date date, int mealtime, int grams, double calories, double fats, double carbohydrates, double proteins, String foodName, Long foodId) {
         this.id = id;
         this.date = date;
         this.mealtime = mealtime;
@@ -46,6 +47,7 @@ public class MealEntity extends MealEntityBase  {
         this.fats = fats;
         this.carbohydrates = carbohydrates;
         this.proteins = proteins;
+        this.foodName = foodName;
         this.foodId = foodId;
     }
 
@@ -121,17 +123,25 @@ public class MealEntity extends MealEntityBase  {
         this.proteins = proteins;
     }
 
-    public long getFoodId() {
+    public String getFoodName() {
+        return foodName;
+    }
+
+    public void setFoodName(String foodName) {
+        this.foodName = foodName;
+    }
+
+    public Long getFoodId() {
         return foodId;
     }
 
-    public void setFoodId(long foodId) {
+    public void setFoodId(Long foodId) {
         this.foodId = foodId;
     }
 
     /** To-one relationship, resolved on first access. */
     public FoodEntity getFoodEntity() {
-        long __key = this.foodId;
+        Long __key = this.foodId;
         if (foodEntity__resolvedKey == null || !foodEntity__resolvedKey.equals(__key)) {
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
@@ -147,12 +157,9 @@ public class MealEntity extends MealEntityBase  {
     }
 
     public void setFoodEntity(FoodEntity foodEntity) {
-        if (foodEntity == null) {
-            throw new DaoException("To-one property 'foodId' has not-null constraint; cannot set to-one to null");
-        }
         synchronized (this) {
             this.foodEntity = foodEntity;
-            foodId = foodEntity.getId();
+            foodId = foodEntity == null ? null : foodEntity.getId();
             foodEntity__resolvedKey = foodId;
         }
     }

@@ -10,5 +10,6 @@ import java.util.Collection;
 public interface DiaryView extends View {
     void navigateToSettings();
     void renderDaysInView(Collection<Day> days);
+    void dayListEmpty();
     void setDailyCaloriesGoal(double goal);
 }

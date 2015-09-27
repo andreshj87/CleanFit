@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.txusballesteros.widgets.FitChart;
+import com.vstechlab.easyfonts.EasyFonts;
 import com.zireck.projectk.R;
 import com.zireck.projectk.presentation.dagger.component.FoodComponent;
 import com.zireck.projectk.presentation.model.Day;
@@ -82,6 +83,11 @@ public class HomeFragment extends BaseFragment implements HomeView {
     private void initialize() {
         getComponent(FoodComponent.class).inject(this);
         mPresenter.setView(this);
+
+        if (getView() != null && getView().findViewById(R.id.nothing_yet) != null) {
+            ((TextView) getView().findViewById(R.id.nothing_yet))
+                    .setTypeface(EasyFonts.robotoLight(getActivity()));
+        }
     }
 
     private void initFitChart() {
@@ -107,7 +113,8 @@ public class HomeFragment extends BaseFragment implements HomeView {
     @Override
     public void renderDays(List<Day> days) {
         if (days == null || days.size() <= 0) {
-            throw new IllegalArgumentException("Day List cannot be null or empty.");
+            //throw new IllegalArgumentException("Day List cannot be null or empty.");
+            return;
         }
 
         mLayoutDays.removeAllViews();

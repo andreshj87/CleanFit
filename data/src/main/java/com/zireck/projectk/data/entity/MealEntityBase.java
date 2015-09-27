@@ -15,7 +15,7 @@ public abstract class MealEntityBase {
     public abstract double getFats();
     public abstract double getCarbohydrates();
     public abstract double getProteins();
-    public abstract long getFoodId();
+    public abstract Long getFoodId();
     public abstract FoodEntity getFoodEntity();
 
     @Override

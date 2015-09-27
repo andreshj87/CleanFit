@@ -42,6 +42,7 @@ public class MealModelDataMapper {
         mealModel.setCarbohydrates(meal.getCarbohydrates());
         mealModel.setProteins(meal.getProteins());
         mealModel.setFoodId(meal.getFoodId());
+        mealModel.setFoodName(meal.getFoodName());
         mealModel.setFoodModel(mFoodModelDataMapper.transform(meal.getFood()));
 
         return mealModel;
@@ -88,6 +89,7 @@ public class MealModelDataMapper {
         meal.setCarbohydrates(mealModel.getCarbohydrates());
         meal.setProteins(mealModel.getProteins());
         meal.setFoodId(mealModel.getFoodId());
+        meal.setFoodName(mealModel.getFoodName());
         meal.setFood(mFoodModelDataMapper.transformInverse(mealModel.getFoodModel()));
 
         return meal;

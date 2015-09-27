@@ -32,7 +32,6 @@ public class HomePresenter implements Presenter {
 
     private HomeView mView;
     private Interactor mGetUserDetails;
-    //private Interactor mGetMealList;
     private GetMealListForDate mGetMealListForDate;
     private Interactor mDeleteAllMeals;
 
@@ -49,13 +48,11 @@ public class HomePresenter implements Presenter {
 
     @Inject
     public HomePresenter(@Named("userDetails") Interactor getUserDetails,
-                         //@Named("mealList") Interactor getMealList,
                          @Named("mealListForDate") GetMealListForDate getMealListForDate,
                          @Named("deleteAllMeals") Interactor deleteAllMeals,
                          UserModelDataMapper userModelDataMapper,
                          MealModelDataMapper mealModelDataMapper) {
         mGetUserDetails = getUserDetails;
-        //mGetMealList = getMealList;
         mGetMealListForDate = getMealListForDate;
         mDeleteAllMeals = deleteAllMeals;
         mUserModelDataMapper = userModelDataMapper;
@@ -70,15 +67,6 @@ public class HomePresenter implements Presenter {
     @Override
     public void resume() {
         mGetUserDetails.execute(new GetUserDetailsSubscriber());
-        //mGetMealList.execute(new GetMealListForDateSubscriber());
-
-        //mGetMealListForDate.setDate(mDate);
-        //mGetMealListForDate.execute(new GetMealListForDateSubscriber());
-
-        //getMealsForToday();
-        //getMealsForWeek();
-
-        //mGetMealList.execute(new GetMealList());
     }
 
     @Override
@@ -136,8 +124,6 @@ public class HomePresenter implements Presenter {
 
         mWeek = new ArrayList<Day>();
         for (int i=0; i<7; i++) {
-            System.out.println("k9d3 requesting meals for day: " + now.getTime().toString());
-
             Date firstDate = DateUtils.getFirstTimeOfDay(now.getTime());
             Date lastDate = DateUtils.getLastTimeOfDay(now.getTime());
             mGetMealListForDate.setDate(firstDate, lastDate);
@@ -168,6 +154,7 @@ public class HomePresenter implements Presenter {
         @Override
         public void onError(Throwable e) {
             e.printStackTrace();
+            mView.navigateToSettings();
         }
 
         @Override
@@ -201,18 +188,7 @@ public class HomePresenter implements Presenter {
             mToday.setMeals(mMealModelDataMapper.transform(meals));
 
             if (mUserModel != null && mUserModel.isValid()) {
-                mUserModel.calculateAll();/*
-                Goal goal = Goal.fromValue(mUserModel.getGoal());
-                double maxCalories = 0;
-                if (goal != null) {
-                    if (goal.getIntValue() == Goal.MAINTAIN.getIntValue()) {
-                        maxCalories = mUserModel.getMaintain();
-                    } else if (goal.getIntValue() == Goal.BURN.getIntValue()) {
-                        maxCalories = mUserModel.getBurn();
-                    } else if (goal.getIntValue() == Goal.GAIN.getIntValue()) {
-                        maxCalories = mUserModel.getGain();
-                    }
-                }*/
+                mUserModel.calculateAll();
 
                 mToday.calculateEnergyAndNutrients();
                 mView.setTodayData(mUserModel.getGoalCalories(), mToday.getCalories());
@@ -225,14 +201,12 @@ public class HomePresenter implements Presenter {
     private final class GetMealListForWeekSubscriber extends DefaultSubscriber<List<Meal>> {
         @Override
         public void onCompleted() {
-            System.out.println("k9d3 Subscriber For Week completed");
             renderWeekWhenPossible();
         }
 
         @Override
         public void onError(Throwable e) {
             e.printStackTrace();
-            System.out.println("k9d3 Subscriber For Week error");
             renderWeekWhenPossible();
         }
 
@@ -240,7 +214,6 @@ public class HomePresenter implements Presenter {
         public void onNext(List<Meal> meals) {
             if (meals == null || meals.size() <= 0) {
                 //throw new IllegalArgumentException("Meal List cannot be null.");
-                System.out.println("k9d3 Meal List cannot be null");
                 return;
             }
 
@@ -249,30 +222,6 @@ public class HomePresenter implements Presenter {
             Day day = new Day(date);
             day.setMeals(mealModels);
             mWeek.add(day);
-
-            System.out.println("k9d3 dia anadido a semana: " + day.getDate().toString());
         }
     }
-
-    /*
-    private final class GetMealList extends DefaultSubscriber<List<Meal>> {
-        @Override
-        public void onCompleted() {
-        }
-
-        @Override
-        public void onError(Throwable e) {
-        }
-
-        @Override
-        public void onNext(List<Meal> meals) {
-            Collection<MealModel> mealModels = new ArrayList<MealModel>();
-            if (meals != null) {
-                mealModels = mMealModelDataMapper.transform(meals);
-                for (MealModel mealModel : mealModels) {
-                    System.out.println("k9d3 HomePresenter> " + mealModel.getFoodModel().getName() + " " + mealModel.getGrams() + "gr " + mealModel.getCalories() + "kcal");
-                }
-            }
-        }
-    }*/
 }

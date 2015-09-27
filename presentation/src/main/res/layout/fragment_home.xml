@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_above="@+id/fit_chart_separator"
-                android:text="13 min"
+                android:text="0 kcal"
                 android:textSize="32sp"/>
 
             <View
@@ -55,7 +55,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_below="@+id/fit_chart_today_text"
                 android:layout_marginTop="12dp"
-                android:text="Your goal is 1 hr" />
+                android:text="Your goal is unknown" />
 
             <com.txusballesteros.widgets.FitChart
                 android:id="@+id/fit_chart"
@@ -114,6 +114,7 @@
                 android:id="@+id/calories_to_go"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Unknown calories to go"
                 android:textSize="16sp"/>
 
         </LinearLayout>
@@ -144,6 +145,7 @@
                 android:id="@+id/calories_eaten"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="0 calories eaten"
                 android:textSize="16sp"/>
 
         </LinearLayout>
@@ -169,7 +171,19 @@
             android:id="@+id/layout_days"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"/>
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/nothing_yet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="24dp"
+                android:text="Nothing yet"
+                android:textSize="24sp"/>
+
+        </LinearLayout>
 
         <View
             android:id="@+id/filler"

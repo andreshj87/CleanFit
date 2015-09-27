@@ -73,7 +73,7 @@ public class FoodModelDataMapper {
      */
     public Food transformInverse(FoodModel foodModel) {
         if (foodModel == null) {
-            argumentException();
+            return null;
         }
 
         Food food = new Food(foodModel.getId());

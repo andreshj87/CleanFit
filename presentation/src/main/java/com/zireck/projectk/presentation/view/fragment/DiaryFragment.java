@@ -118,6 +118,12 @@ public class DiaryFragment extends BaseFragment implements DiaryView, OnDeleteMe
     }
 
     @Override
+    public void dayListEmpty() {
+        mRecyclerView.setVisibility(View.GONE);
+        mDiaryEmpty.setVisibility(View.VISIBLE);
+    }
+
+    @Override
     public void setDailyCaloriesGoal(double goal) {
         mExpandableItemAdapter.setGoal(goal);
     }

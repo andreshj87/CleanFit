@@ -1,7 +1,6 @@
 package com.zireck.projectk.presentation.presenter;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.zireck.projectk.domain.Meal;
 import com.zireck.projectk.domain.User;
@@ -97,7 +96,7 @@ public class DiaryPresenter implements Presenter {
         if (meals != null && !meals.isEmpty()) {
             mView.renderDaysInView(groupMealsInDays(meals));
         } else {
-            Log.e(getClass().getSimpleName(), "Meal List cannot be null.");
+            mView.dayListEmpty();
         }
     }
 
@@ -110,6 +109,7 @@ public class DiaryPresenter implements Presenter {
             Calendar firstCalendar = Calendar.getInstance();
             firstCalendar.setTime(mealModel.getDate());
             firstCalendar.set(Calendar.HOUR, 0);
+            firstCalendar.set(Calendar.HOUR_OF_DAY, 0);
             firstCalendar.set(Calendar.MINUTE, 0);
             firstCalendar.set(Calendar.SECOND, 0);
 
@@ -118,6 +118,7 @@ public class DiaryPresenter implements Presenter {
                 Calendar secondCalendar = Calendar.getInstance();
                 secondCalendar.setTime(day.getDate());
                 secondCalendar.set(Calendar.HOUR, 0);
+                secondCalendar.set(Calendar.HOUR_OF_DAY, 0);
                 secondCalendar.set(Calendar.MINUTE, 0);
                 secondCalendar.set(Calendar.SECOND, 0);
 
@@ -151,7 +152,8 @@ public class DiaryPresenter implements Presenter {
 
         @Override
         public void onError(Throwable e) {
-
+            e.printStackTrace();
+            mView.navigateToSettings();
         }
 
         @Override

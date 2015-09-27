@@ -1,5 +1,7 @@
 package com.zireck.projectk.presentation.util;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.Toast;
@@ -41,9 +43,14 @@ public class SnackbarUtils {
         getSnackbarWithElevation(view, message, elevation, Snackbar.LENGTH_LONG).show();
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private static Snackbar getSnackbarWithElevation(View view, String message, int elevation, int length) {
         Snackbar snackbar = Snackbar.make(view, message, length);
-        snackbar.getView().setElevation(elevation);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            snackbar.getView().setElevation(elevation);
+        }
+
         return snackbar;
     }
 

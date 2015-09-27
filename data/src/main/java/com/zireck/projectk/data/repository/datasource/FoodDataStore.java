@@ -7,6 +7,7 @@ import com.zireck.projectk.data.entity.DaoMaster;
 import com.zireck.projectk.data.entity.DaoSession;
 import com.zireck.projectk.data.entity.FoodEntity;
 import com.zireck.projectk.data.entity.FoodEntityDao;
+import com.zireck.projectk.data.util.GreenDaoUtils;
 
 import java.util.List;
 
@@ -22,9 +23,32 @@ public class FoodDataStore {
 
     @Inject Context mContext;
 
+    private DaoMaster.DevOpenHelper mDevOpenHelper;
+    private SQLiteDatabase mDatabase;
+    private DaoMaster mDaoMaster;
+    private DaoSession mDaoSession;
+    private FoodEntityDao mFoodEntityDao;
+
     @Inject
     public FoodDataStore() {
 
+    }
+
+    private DaoSession initGreenDao() {
+        mDevOpenHelper = new DaoMaster.DevOpenHelper(mContext, GreenDaoUtils.DATABASE_NAME, null);
+        mDatabase = mDevOpenHelper.getWritableDatabase();
+        mDaoMaster = new DaoMaster(mDatabase);
+        mDaoSession = mDaoMaster.newSession();
+        return mDaoSession;
+    }
+
+    private void closeGreenDao() {
+        //mDatabase.close();
+    }
+
+    private FoodEntityDao getFoodEntityDao() {
+        mFoodEntityDao = initGreenDao().getFoodEntityDao();
+        return mFoodEntityDao;
     }
 
     public Observable<FoodEntity> foodEntityDetails(final long foodId) {
@@ -40,6 +64,8 @@ public class FoodDataStore {
                 } else {
                     subscriber.onError(new Throwable());
                 }
+
+                closeGreenDao();
             }
         });
     }
@@ -58,6 +84,8 @@ public class FoodDataStore {
                 } else {
                     subscriber.onError(new Throwable());
                 }
+
+                closeGreenDao();
             }
         });
     }
@@ -76,6 +104,8 @@ public class FoodDataStore {
                 } else {
                     subscriber.onError(new Throwable());
                 }
+
+                closeGreenDao();
             }
         });
     }
@@ -94,6 +124,8 @@ public class FoodDataStore {
                 } else {
                     subscriber.onError(new Throwable());
                 }
+
+                closeGreenDao();
             }
         });
     }
@@ -111,6 +143,8 @@ public class FoodDataStore {
                 } else {
                     subscriber.onCompleted();
                 }
+
+                closeGreenDao();
             }
         });
     }
@@ -123,6 +157,8 @@ public class FoodDataStore {
                 foodEntityDao.update(food);
 
                 subscriber.onCompleted();
+
+                closeGreenDao();
             }
         });
     }
@@ -135,19 +171,9 @@ public class FoodDataStore {
                 foodEntityDao.deleteByKey(food.getId());
 
                 subscriber.onCompleted();
+
+                closeGreenDao();
             }
         });
-    }
-
-    private FoodEntityDao getFoodEntityDao() {
-        return initGreenDao().getFoodEntityDao();
-    }
-
-    private DaoSession initGreenDao() {
-        DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(mContext, "projectk", null);
-        SQLiteDatabase database = devOpenHelper.getWritableDatabase();
-        DaoMaster daoMaster = new DaoMaster(database);
-        DaoSession daoSession = daoMaster.newSession();
-        return daoSession;
     }
 }

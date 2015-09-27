@@ -44,8 +44,9 @@ public class GreenDAOGenerator {
         meal.addDoubleProperty("fats").notNull();
         meal.addDoubleProperty("carbohydrates").notNull();
         meal.addDoubleProperty("proteins").notNull();
+        meal.addStringProperty("foodName");
 
-        Property foodId = meal.addLongProperty("foodId").notNull().getProperty();
+        Property foodId = meal.addLongProperty("foodId").getProperty();
         meal.addToOne(food, foodId);
     }
 

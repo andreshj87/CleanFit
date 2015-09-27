@@ -6,7 +6,9 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
+import com.vstechlab.easyfonts.EasyFonts;
 import com.zireck.projectk.R;
 import com.zireck.projectk.presentation.dagger.component.FoodComponent;
 import com.zireck.projectk.presentation.helper.RecyclerItemClickListener;
@@ -30,6 +32,8 @@ public class FoodListFragment extends BaseFragment implements FoodListView {
 
     @Inject Navigator mNavigator;
     @Inject FoodListPresenter mPresenter;
+
+    @Bind(R.id.food_list_empty) TextView mFoodListEmpty;
 
     @Bind(R.id.food_list) RecyclerView mRecyclerView;
     protected FoodRecyclerAdapter mAdapter;
@@ -77,9 +81,15 @@ public class FoodListFragment extends BaseFragment implements FoodListView {
 
     @Override
     public void renderFoodList(Collection<FoodModel> foodModelsCollection) {
-        if (foodModelsCollection != null) {
-            mAdapter.setFoodsCollection(foodModelsCollection);
+        if (foodModelsCollection != null && foodModelsCollection.size() > 0) {
+            mFoodListEmpty.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.VISIBLE);
+        } else {
+            mFoodListEmpty.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.GONE);
         }
+
+        mAdapter.setFoodsCollection(foodModelsCollection);
     }
 
     @Override
@@ -91,6 +101,10 @@ public class FoodListFragment extends BaseFragment implements FoodListView {
     protected void initialize() {
         getComponent(FoodComponent.class).inject(this);
         mPresenter.setView(this);
+
+        mFoodListEmpty.setText("Your food list is empty.");
+        mFoodListEmpty.setTypeface(EasyFonts.robotoLight(getActivity()));
+        mFoodListEmpty.setVisibility(View.VISIBLE);
     }
 
     private void initRecyclerView() {

@@ -7,6 +7,7 @@ import com.zireck.projectk.data.entity.DaoMaster;
 import com.zireck.projectk.data.entity.DaoSession;
 import com.zireck.projectk.data.entity.UserEntity;
 import com.zireck.projectk.data.entity.UserEntityDao;
+import com.zireck.projectk.data.util.GreenDaoUtils;
 
 import javax.inject.Inject;
 
@@ -18,12 +19,34 @@ import rx.Subscriber;
  */
 public class UserDataStore {
 
-    @Inject
-    Context mContext;
+    @Inject Context mContext;
+
+    private DaoMaster.DevOpenHelper mDevOpenHelper;
+    private SQLiteDatabase mDatabase;
+    private DaoMaster mDaoMaster;
+    private DaoSession mDaoSession;
+    private UserEntityDao mUserEntityDao;
 
     @Inject
     public UserDataStore() {
 
+    }
+
+    private DaoSession initGreenDao() {
+        mDevOpenHelper = new DaoMaster.DevOpenHelper(mContext, GreenDaoUtils.DATABASE_NAME, null);
+        mDatabase = mDevOpenHelper.getWritableDatabase();
+        mDaoMaster = new DaoMaster(mDatabase);
+        mDaoSession = mDaoMaster.newSession();
+        return mDaoSession;
+    }
+
+    private void closeGreenDao() {
+        //mDatabase.close();
+    }
+
+    private UserEntityDao getUserEntityDao() {
+        mUserEntityDao = initGreenDao().getUserEntityDao();
+        return mUserEntityDao;
     }
 
     public Observable<UserEntity> userEntityDetails() {
@@ -39,6 +62,8 @@ public class UserDataStore {
                 } else {
                     subscriber.onError(new Throwable());
                 }
+
+                closeGreenDao();
             }
         });
     }
@@ -54,19 +79,9 @@ public class UserDataStore {
                 userEntityDao.update(userEntity);
                 userEntityDao.insert(userEntity);
                 subscriber.onCompleted();
+
+                closeGreenDao();
             }
         });
-    }
-
-    private UserEntityDao getUserEntityDao() {
-        return initGreenDao().getUserEntityDao();
-    }
-
-    private DaoSession initGreenDao() {
-        DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(mContext, "projectk", null);
-        SQLiteDatabase database = devOpenHelper.getWritableDatabase();
-        DaoMaster daoMaster = new DaoMaster(database);
-        DaoSession daoSession = daoMaster.newSession();
-        return daoSession;
     }
 }

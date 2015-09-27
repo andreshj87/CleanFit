@@ -7,6 +7,7 @@ import com.zireck.projectk.data.entity.DaoMaster;
 import com.zireck.projectk.data.entity.DaoSession;
 import com.zireck.projectk.data.entity.MealEntity;
 import com.zireck.projectk.data.entity.MealEntityDao;
+import com.zireck.projectk.data.util.GreenDaoUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -23,9 +24,32 @@ public class MealDataStore {
 
     @Inject Context mContext;
 
+    private DaoMaster.DevOpenHelper mDevOpenHelper;
+    private SQLiteDatabase mDatabase;
+    private DaoMaster mDaoMaster;
+    private DaoSession mDaoSession;
+    private MealEntityDao mMealEntityDao;
+
     @Inject
     public MealDataStore() {
 
+    }
+
+    private DaoSession initGreenDao() {
+        mDevOpenHelper = new DaoMaster.DevOpenHelper(mContext, GreenDaoUtils.DATABASE_NAME, null);
+        mDatabase = mDevOpenHelper.getWritableDatabase();
+        mDaoMaster = new DaoMaster(mDatabase);
+        mDaoSession = mDaoMaster.newSession();
+        return mDaoSession;
+    }
+
+    private void closeGreenDao() {
+        //mDatabase.close();
+    }
+
+    private MealEntityDao getMealEntityDao() {
+        mMealEntityDao = initGreenDao().getMealEntityDao();
+        return mMealEntityDao;
     }
 
     public Observable<MealEntity> mealEntityDetails(final long mealId) {
@@ -41,6 +65,8 @@ public class MealDataStore {
                 } else {
                     subscriber.onError(new Throwable());
                 }
+
+                closeGreenDao();
             }
         });
     }
@@ -51,7 +77,6 @@ public class MealDataStore {
             public void call(Subscriber<? super List<MealEntity>> subscriber) {
                 MealEntityDao mealEntityDao = getMealEntityDao();
                 List<MealEntity> mealEntities;
-                //mealEntities = mealEntityDao.loadAll();
                 mealEntities = mealEntityDao.queryBuilder().orderAsc(MealEntityDao.Properties.Date).list();
 
                 if (mealEntities != null) {
@@ -60,6 +85,8 @@ public class MealDataStore {
                 } else {
                     subscriber.onError(new Throwable());
                 }
+
+                closeGreenDao();
             }
         });
     }
@@ -68,35 +95,6 @@ public class MealDataStore {
         return Observable.create(new Observable.OnSubscribe<List<MealEntity>>() {
             @Override
             public void call(Subscriber<? super List<MealEntity>> subscriber) {
-                //System.out.println("k9d3 date received to compare: " + date.toString());
-
-                /*
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(date);
-
-                Calendar first = Calendar.getInstance();
-                first.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
-
-                Calendar last = Calendar.getInstance();
-                last.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), 23, 59, 59);*/
-
-                /*
-                Calendar now = Calendar.getInstance();
-                now.setTimeInMillis(System.currentTimeMillis());
-                now.add(Calendar.MONTH, -1);
-                now.add(Calendar.DAY_OF_MONTH, -1);
-
-                Calendar first = Calendar.getInstance();
-                first.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
-
-                Calendar last = Calendar.getInstance();
-                last.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH), 23, 59, 59);*/
-
-                //Date firstDate = first.getTime();
-                //Date lastDate = last.getTime();
-
-                System.out.println("k9d3 searching meals between dates: " + firstDate.toString() + " ___ AND ___ " + lastDate.toString());
-
                 MealEntityDao mealEntityDao = getMealEntityDao();
                 List<MealEntity> mealEntities;
                 mealEntities = mealEntityDao.queryBuilder().where(MealEntityDao.Properties.Date.between(firstDate, lastDate)).list();
@@ -108,6 +106,8 @@ public class MealDataStore {
                 }
 
                 subscriber.onCompleted();
+
+                closeGreenDao();
             }
         });
     }
@@ -125,6 +125,8 @@ public class MealDataStore {
                 } else {
                     subscriber.onCompleted();
                 }
+
+                closeGreenDao();
             }
         });
     }
@@ -137,6 +139,8 @@ public class MealDataStore {
                 mealEntityDao.update(meal);
 
                 subscriber.onCompleted();
+
+                closeGreenDao();
             }
         });
     }
@@ -149,6 +153,8 @@ public class MealDataStore {
                 mealEntityDao.deleteByKey(meal.getId());
 
                 subscriber.onCompleted();
+
+                closeGreenDao();
             }
         });
     }
@@ -162,19 +168,9 @@ public class MealDataStore {
                 mealEntityDao.deleteAll();
 
                 subscriber.onCompleted();
+
+                closeGreenDao();
             }
         });
-    }
-
-    private MealEntityDao getMealEntityDao() {
-        return initGreenDao().getMealEntityDao();
-    }
-
-    private DaoSession initGreenDao() {
-        DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(mContext, "projectk", null);
-        SQLiteDatabase database = devOpenHelper.getWritableDatabase();
-        DaoMaster daoMaster = new DaoMaster(database);
-        DaoSession daoSession = daoMaster.newSession();
-        return daoSession;
     }
 }

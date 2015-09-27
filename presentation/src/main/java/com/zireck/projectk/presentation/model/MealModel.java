@@ -21,6 +21,7 @@ public class MealModel implements Parcelable {
     private double carbohydrates;
     private double proteins;
     private long foodId;
+    private String foodName;
     private FoodModel foodModel;
 
     public MealModel() {
@@ -42,6 +43,7 @@ public class MealModel implements Parcelable {
         carbohydrates = in.readDouble();
         proteins = in.readDouble();
         foodId = in.readLong();
+        foodName = in.readString();
         foodModel = (FoodModel) in.readValue(FoodModel.class.getClassLoader());
     }
 
@@ -113,6 +115,14 @@ public class MealModel implements Parcelable {
         this.foodId = foodId;
     }
 
+    public String getFoodName() {
+        return foodName;
+    }
+
+    public void setFoodName(String foodName) {
+        this.foodName = foodName;
+    }
+
     public FoodModel getFoodModel() {
         return foodModel;
     }
@@ -135,7 +145,8 @@ public class MealModel implements Parcelable {
         stringBuilder.append("carbohydrates=" + String.valueOf(this.getCarbohydrates()) + "\n");
         stringBuilder.append("proteins=" + String.valueOf(this.getProteins()) + "\n");
         stringBuilder.append("foodId=" + String.valueOf(this.getFoodId()) + "\n");
-        stringBuilder.append("foodModel=" + this.getFoodModel().getName() + "\n");
+        stringBuilder.append("foodName=" + this.getFoodName());
+        //stringBuilder.append("foodModel=" + this.getFoodModel().getName() + "\n");
         stringBuilder.append("*******************************");
 
         return stringBuilder.toString();
@@ -195,6 +206,7 @@ public class MealModel implements Parcelable {
         dest.writeDouble(carbohydrates);
         dest.writeDouble(proteins);
         dest.writeLong(foodId);
+        dest.writeString(foodName);
         dest.writeValue(foodModel);
     }
 

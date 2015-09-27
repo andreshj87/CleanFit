@@ -265,7 +265,7 @@ public class SettingsFragment extends BaseFragment implements SettingsView,
             mUserActivityFactor.setText(notSet);
             mUserGoal.setText(notSet);
 
-            SnackbarUtils.showError(getView(), "Error rendering user data.");
+            SnackbarUtils.showError(getView(), "Please, enter your personal information.");
             return;
         }
 

@@ -241,6 +241,7 @@ public class AddMealPresenter implements Presenter {
             meal.setGrams(actualAmount);
 
             meal.setFoodId(food.getId());
+            meal.setFoodName(food.getName());
             meal.setFoodModel(food);
 
             meal.calculateEnergyAndNutrients();
