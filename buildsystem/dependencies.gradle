@@ -37,7 +37,6 @@ ext {
 
     materialSpinnerVersion = '1.1.0'
     materialMenuToolBarVersion = '1.5.4'
-    materialTabStripVersion = '1.1.0'
     materialIconLibVersion = '1.0.3'
     materialDateTimePickerVersion = '1.4.2'
     materialDialogsVersion = '0.7.8.1'
@@ -57,7 +56,7 @@ ext {
             dagger:                 "com.google.dagger:dagger:${daggerVersion}",
             rxJava:                 "io.reactivex:rxjava:${rxJavaVersion}",
             rxAndroid:              "io.reactivex:rxandroid:${rxAndroidVersion}",
-            javaxAnnotation:    "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
+            javaxAnnotation:        "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
             butterKnife:            "com.jakewharton:butterknife:${butterKnifeVersion}",
             picasso:                "com.squareup.picasso:picasso:${picassoVersion}",
             easyFonts:              "com.vstechlab.easyfonts:easyfonts:${easyFontsVersion}",
@@ -69,7 +68,6 @@ ext {
             textDrawable:           "com.amulyakhare:com.amulyakhare.textdrawable:${textDrawableVersion}",
             materialSpinner:        "com.github.ganfra:material-spinner:${materialSpinnerVersion}",
             materialMenuToolbar:    "com.balysv.materialmenu:material-menu-toolbar:${materialMenuToolBarVersion}",
-            materialTabStrip:       "com.jpardogo.materialtabstrip:library:${materialTabStripVersion}",
             materialIconLib:        "net.steamcrafted:materialiconlib:${materialIconLibVersion}",
             materialDateTimePicker: "com.wdullaer:materialdatetimepicker:${materialDateTimePickerVersion}",
             materialDialogs:        "com.afollestad:material-dialogs:${materialDialogsVersion}",
@@ -85,7 +83,7 @@ ext {
             daggerCompiler:         "com.google.dagger:dagger-compiler:${daggerVersion}",
             dagger:                 "com.google.dagger:dagger:${daggerVersion}",
             rxJava:                 "io.reactivex:rxjava:${rxJavaVersion}",
-            javaxAnnotation:    "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
+            javaxAnnotation:        "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
     ]
 
     domainTestDependencies = [
@@ -97,7 +95,7 @@ ext {
             dagger:                 "com.google.dagger:dagger:${daggerVersion}",
             rxJava:                 "io.reactivex:rxjava:${rxJavaVersion}",
             rxAndroid:              "io.reactivex:rxandroid:${rxAndroidVersion}",
-            javaxAnnotation:    "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
+            javaxAnnotation:        "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
     ]
 
     dataTestDependencies = [

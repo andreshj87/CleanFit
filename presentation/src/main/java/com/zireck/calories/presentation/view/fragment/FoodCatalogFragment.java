@@ -3,13 +3,13 @@ package com.zireck.calories.presentation.view.fragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-import com.astuetz.PagerSlidingTabStrip;
 import com.zireck.calories.R;
-import com.zireck.calories.presentation.view.adapter.FoodRepositoryFragmentPagerAdapter;
 import com.zireck.calories.presentation.listener.OnFoodRepositoryTabChangeListener;
+import com.zireck.calories.presentation.view.adapter.ViewPagerAdapter;
 
 import butterknife.Bind;
 
@@ -20,9 +20,9 @@ public class FoodCatalogFragment extends BaseFragment implements ViewPager.OnPag
 
     private OnFoodRepositoryTabChangeListener mCallback;
 
-    @Bind(R.id.pagerslidingtabstrip) PagerSlidingTabStrip mPagerSlidingTabStrip;
+    @Bind(R.id.sliding_tabs) TabLayout mTabLayout;
     @Bind(R.id.viewpager) ViewPager mViewPager;
-    private FoodRepositoryFragmentPagerAdapter mAdapter;
+    private ViewPagerAdapter mAdapter;
 
     public static FoodCatalogFragment newInstance() {
         return new FoodCatalogFragment();
@@ -69,9 +69,11 @@ public class FoodCatalogFragment extends BaseFragment implements ViewPager.OnPag
     }
 
     private void initViewPager() {
-        mAdapter = new FoodRepositoryFragmentPagerAdapter(getActivity(), getChildFragmentManager());
+        mAdapter = new ViewPagerAdapter(getChildFragmentManager());
+        mAdapter.addFragment(FoodListFragment.newInstance(), getString(R.string.fragment_foods));
+        mAdapter.addFragment(DrinkListFragment.newInstance(), getString(R.string.fragment_drinks));
         mViewPager.setAdapter(mAdapter);
-        mPagerSlidingTabStrip.setViewPager(mViewPager);
-        mPagerSlidingTabStrip.setOnPageChangeListener(this);
+
+        mTabLayout.setupWithViewPager(mViewPager);
     }
 }

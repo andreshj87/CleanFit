@@ -71,7 +71,6 @@ dependencies {
 
     compile presentationDependencies.materialSpinner
     compile presentationDependencies.materialMenuToolbar
-    compile presentationDependencies.materialTabStrip
     compile presentationDependencies.materialIconLib
     compile presentationDependencies.materialDateTimePicker
     compile presentationDependencies.materialDialogs
