@@ -8,7 +8,7 @@ import de.greenrobot.daogenerator.Schema;
 public class GreenDAOGenerator {
 
     public static void main(String args[]) throws Exception {
-        Schema schema = new Schema(1, "com.zireck.projectk.data.entity");
+        Schema schema = new Schema(1, "com.zireck.calories.data.entity");
 
         Entity food = addFood(schema);
         addMeal(schema, food);
