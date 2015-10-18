@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    card_view:contentPadding="0dp"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardBackgroundColor="@color/white"
+    card_view:cardCornerRadius="4dp"
+    card_view:cardElevation="2dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <net.steamcrafted.materialiconlib.MaterialIconView
+            android:id="@+id/food_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="16dp"
+            android:scaleType="center"
+            app:materialIcon="food_apple"
+            app:materialIconColor="@color/icon_activated"
+            app:materialIconSize="24dp"/>
+
+        <TextView
+            android:id="@+id/food_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/food_icon"
+            android:layout_toRightOf="@+id/food_icon"
+            android:layout_marginTop="16dp"
+            android:text="Food 1"/>
+
+        <net.steamcrafted.materialiconlib.MaterialIconView
+            android:id="@+id/food_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="16dp"
+            android:scaleType="center"
+            app:materialIcon="delete"
+            app:materialIconColor="@color/icon_deactivated"
+            app:materialIconSize="24dp"/>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
