@@ -2,6 +2,9 @@ package com.zireck.calories.presentation.presenter;
 
 import android.support.annotation.NonNull;
 
+import com.zireck.calories.domain.interactor.DefaultSubscriber;
+import com.zireck.calories.domain.interactor.GetMealListForDate;
+import com.zireck.calories.domain.interactor.Interactor;
 import com.zireck.calories.presentation.mapper.MealModelDataMapper;
 import com.zireck.calories.presentation.mapper.UserModelDataMapper;
 import com.zireck.calories.presentation.model.Day;
@@ -28,9 +31,9 @@ import javax.inject.Named;
 public class HomePresenter implements Presenter {
 
     private HomeView mView;
-    private com.zireck.calories.domain.interactor.Interactor mGetUserDetails;
-    private com.zireck.calories.domain.interactor.GetMealListForDate mGetMealListForDate;
-    private com.zireck.calories.domain.interactor.Interactor mDeleteAllMeals;
+    private Interactor mGetUserDetails;
+    private GetMealListForDate mGetMealListForDate;
+    private Interactor mDeleteAllMeals;
 
     UserModelDataMapper mUserModelDataMapper;
     private MealModelDataMapper mMealModelDataMapper;
@@ -44,9 +47,9 @@ public class HomePresenter implements Presenter {
     private int mDaysReceived = 0;
 
     @Inject
-    public HomePresenter(@Named("userDetails") com.zireck.calories.domain.interactor.Interactor getUserDetails,
-                         @Named("mealListForDate") com.zireck.calories.domain.interactor.GetMealListForDate getMealListForDate,
-                         @Named("deleteAllMeals") com.zireck.calories.domain.interactor.Interactor deleteAllMeals,
+    public HomePresenter(@Named("userDetails") Interactor getUserDetails,
+                         @Named("mealListForDate") GetMealListForDate getMealListForDate,
+                         @Named("deleteAllMeals") Interactor deleteAllMeals,
                          UserModelDataMapper userModelDataMapper,
                          MealModelDataMapper mealModelDataMapper) {
         mGetUserDetails = getUserDetails;
@@ -63,7 +66,7 @@ public class HomePresenter implements Presenter {
 
     @Override
     public void resume() {
-        mGetUserDetails.execute(new GetUserDetailsSubscriber());
+        refreshData();
     }
 
     @Override
@@ -79,7 +82,11 @@ public class HomePresenter implements Presenter {
 
     @Deprecated
     public void deleteAllMeals() {
-        mDeleteAllMeals.execute(new com.zireck.calories.domain.interactor.DefaultSubscriber());
+        mDeleteAllMeals.execute(new DefaultSubscriber());
+    }
+
+    public void refreshData() {
+        mGetUserDetails.execute(new GetUserDetailsSubscriber());
     }
 
     private void checkValidUser(UserModel userModel) {
@@ -142,7 +149,7 @@ public class HomePresenter implements Presenter {
         return (mUserModel != null && mUserModel.isValid()) ? mUserModel.getGoalCalories() : 0;
     }
 
-    private final class GetUserDetailsSubscriber extends com.zireck.calories.domain.interactor.DefaultSubscriber<User> {
+    private final class GetUserDetailsSubscriber extends DefaultSubscriber<User> {
 
         @Override
         public void onCompleted() {
@@ -169,10 +176,10 @@ public class HomePresenter implements Presenter {
         }
     }
 
-    private final class GetMealListForTodaySubscriber extends com.zireck.calories.domain.interactor.DefaultSubscriber<List<Meal>> {
+    private final class GetMealListForTodaySubscriber extends DefaultSubscriber<List<Meal>> {
         @Override
         public void onCompleted() {
-
+            mView.stopRefreshing();
         }
 
         @Override
@@ -195,7 +202,7 @@ public class HomePresenter implements Presenter {
         }
     }
 
-    private final class GetMealListForWeekSubscriber extends com.zireck.calories.domain.interactor.DefaultSubscriber<List<Meal>> {
+    private final class GetMealListForWeekSubscriber extends DefaultSubscriber<List<Meal>> {
         @Override
         public void onCompleted() {
             renderWeekWhenPossible();

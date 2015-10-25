@@ -1,6 +1,8 @@
 package com.zireck.calories.presentation.view.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,14 +11,14 @@ import android.widget.TextView;
 
 import com.txusballesteros.widgets.FitChart;
 import com.vstechlab.easyfonts.EasyFonts;
+import com.zireck.calories.R;
 import com.zireck.calories.presentation.dagger.component.FoodComponent;
 import com.zireck.calories.presentation.model.Day;
 import com.zireck.calories.presentation.navigation.Navigator;
+import com.zireck.calories.presentation.presenter.HomePresenter;
 import com.zireck.calories.presentation.util.DateUtils;
 import com.zireck.calories.presentation.util.MathUtils;
 import com.zireck.calories.presentation.view.HomeView;
-import com.zireck.calories.R;
-import com.zireck.calories.presentation.presenter.HomePresenter;
 
 import java.util.List;
 
@@ -34,6 +36,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
 
     @Inject HomePresenter mPresenter;
 
+    @Bind(R.id.swipe_layout) SwipeRefreshLayout mSwipeLayout;
     @Bind(R.id.layout_days) ViewGroup mLayoutDays;
     @Bind(R.id.fit_chart) FitChart mFitChart;
     //@Bind(R.id.wheel_indicator_view) WheelIndicatorView mWheelIndicatorView;
@@ -85,12 +88,33 @@ public class HomeFragment extends BaseFragment implements HomeView {
         getComponent(FoodComponent.class).inject(this);
         mPresenter.setView(this);
 
+        initTextFont();
+        initSwipeRefreshLayout();
+    }
+
+    private void initTextFont() {
         if (getView() != null && getView().findViewById(R.id.nothing_yet) != null) {
             ((TextView) getView().findViewById(R.id.nothing_yet))
                     .setTypeface(EasyFonts.robotoLight(getActivity()));
         }
     }
 
+    private void initSwipeRefreshLayout() {
+        mSwipeLayout.setColorSchemeResources(R.color.primary, R.color.calories);
+        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPresenter.refreshData();
+                    }
+                }, 2500);
+            }
+        });
+    }
+
+    @Deprecated
     private void initFitChart() {
         mFitChart.setMinValue(0f);
         mFitChart.setMaxValue(100f);
@@ -170,5 +194,10 @@ public class HomeFragment extends BaseFragment implements HomeView {
         } else {
             mCaloriesToGo.setText(MathUtils.betterFormatDouble((maxCalories - currentValue)) + " calories to go");
         }
+    }
+
+    @Override
+    public void stopRefreshing() {
+        mSwipeLayout.setRefreshing(false);
     }
 }
