@@ -2,6 +2,7 @@ package com.zireck.calories.presentation.view.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -144,8 +145,12 @@ public class ExpandableItemAdapter extends AbstractExpandableItemAdapter<
         int barProgress = realProgress > 100 ? 100 : realProgress;
 
         daysViewHolder.mDayCaloriesProgress.setLayoutParams(
-                new LinearLayout.LayoutParams(0, 24, barProgress)
+                new LinearLayout.LayoutParams(0, 32, barProgress)
         );
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            daysViewHolder.mDayCaloriesProgress.setClipToOutline(true);
+        }
 
         daysViewHolder.mDayCaloriesPercent.setText(realProgress + "%");
         daysViewHolder.itemView.setClickable(true);

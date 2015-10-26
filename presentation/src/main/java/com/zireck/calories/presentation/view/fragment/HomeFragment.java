@@ -1,5 +1,6 @@
 package com.zireck.calories.presentation.view.fragment;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -163,8 +164,13 @@ public class HomeFragment extends BaseFragment implements HomeView {
             int barProgress = realProgress > 100 ? 100 : realProgress;
 
             dayCaloriesProgress.setLayoutParams(
-                    new LinearLayout.LayoutParams(0, 24, barProgress)
+                    new LinearLayout.LayoutParams(0, 32, barProgress)
             );
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                dayCaloriesProgress.setClipToOutline(true);
+            }
+
             dayCaloriesPercent.setText(realProgress + "%");
 
             // TODO: fix height of the last item

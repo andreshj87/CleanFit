@@ -43,7 +43,7 @@
             android:layout_width="0dp"
             android:layout_height="12dp"
             android:layout_weight="50"
-            android:background="@color/calories"/>
+            android:background="@drawable/day_calories_progress_background"/>
 
     </LinearLayout>
 
