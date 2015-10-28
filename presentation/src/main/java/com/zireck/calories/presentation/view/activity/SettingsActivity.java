@@ -2,16 +2,20 @@ package com.zireck.calories.presentation.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 
+import com.zireck.calories.R;
+import com.zireck.calories.presentation.dagger.HasComponent;
 import com.zireck.calories.presentation.dagger.component.DaggerFoodComponent;
 import com.zireck.calories.presentation.dagger.component.FoodComponent;
 import com.zireck.calories.presentation.dagger.module.FoodModule;
 import com.zireck.calories.presentation.view.fragment.SettingsFragment;
-import com.zireck.calories.presentation.dagger.HasComponent;
 
 import butterknife.Bind;
 
@@ -22,7 +26,7 @@ public class SettingsActivity extends BaseActivity implements HasComponent<FoodC
 
     private FoodComponent mFoodComponent;
 
-    @Bind(com.zireck.calories.R.id.toolbar) Toolbar mToolbar;
+    @Bind(R.id.toolbar) Toolbar mToolbar;
 
     /**
      * Generates the intent needed to launch this activity.
@@ -36,6 +40,7 @@ public class SettingsActivity extends BaseActivity implements HasComponent<FoodC
         super.onCreate(savedInstanceState);
         setContentView(com.zireck.calories.R.layout.activity_settings);
 
+        colorizeStatusBar();
         initInjector();
         initActionBar();
         initFragment();
@@ -57,6 +62,15 @@ public class SettingsActivity extends BaseActivity implements HasComponent<FoodC
         return mFoodComponent;
     }
 
+    private void colorizeStatusBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getResources().getColor(R.color.primary_dark));
+        }
+    }
+
     private void initInjector() {
         mFoodComponent = DaggerFoodComponent.builder()
                 .applicationComponent(getApplicationComponent())
@@ -72,6 +86,6 @@ public class SettingsActivity extends BaseActivity implements HasComponent<FoodC
 
     private void initFragment() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(com.zireck.calories.R.id.fragment_container, SettingsFragment.newInstance()).commit();
+        fragmentTransaction.replace(R.id.fragment_container, SettingsFragment.newInstance()).commit();
     }
 }

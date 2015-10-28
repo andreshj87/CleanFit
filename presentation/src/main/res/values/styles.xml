@@ -26,7 +26,7 @@
 
     <style name="AppTheme.ActionBar" parent="AppTheme">
         <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="21">true</item>
-        <item name="android:windowTranslucentStatus" tools:targetApi="21">false</item>
+        <item name="android:windowTranslucentStatus" tools:targetApi="21">true</item>
     </style>
 
     <!--

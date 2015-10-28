@@ -21,12 +21,12 @@
             android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginStart="48dp"
             app:expandedTitleMarginEnd="64dp"
-            app:expandedTitleTextAppearance="@android:color/transparent"
-            android:fitsSystemWindows="true">
+            app:expandedTitleTextAppearance="@android:color/transparent">
 
             <ImageView
                 android:id="@+id/food_image"

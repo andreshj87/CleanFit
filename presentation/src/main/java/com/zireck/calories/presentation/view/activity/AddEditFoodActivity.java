@@ -1,10 +1,13 @@
 package com.zireck.calories.presentation.view.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.zireck.calories.presentation.dagger.component.FoodComponent;
 import com.zireck.calories.R;
@@ -26,6 +29,7 @@ public abstract class AddEditFoodActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit_food);
 
+        colorizeStatusBar();
         initInjector();
         initActionBar();
         initializeFragment();
@@ -45,6 +49,15 @@ public abstract class AddEditFoodActivity extends BaseActivity
     @Override
     public FoodComponent getComponent() {
         return mFoodComponent;
+    }
+
+    private void colorizeStatusBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getResources().getColor(R.color.primary_dark));
+        }
     }
 
     public abstract void initInjector();
