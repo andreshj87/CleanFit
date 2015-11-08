@@ -2,11 +2,13 @@ package com.zireck.calories.presentation.presenter;
 
 import android.support.annotation.NonNull;
 
+import com.zireck.calories.domain.Food;
+import com.zireck.calories.domain.interactor.DefaultSubscriber;
+import com.zireck.calories.domain.interactor.Interactor;
 import com.zireck.calories.presentation.dagger.PerActivity;
 import com.zireck.calories.presentation.mapper.FoodModelDataMapper;
 import com.zireck.calories.presentation.model.FoodModel;
 import com.zireck.calories.presentation.view.FoodListView;
-import com.zireck.calories.domain.Food;
 import com.zireck.calories.presentation.view.View;
 
 import java.util.Collection;
@@ -22,11 +24,11 @@ import javax.inject.Named;
 public class FoodListPresenter implements Presenter {
 
     private FoodListView mView;
-    private final com.zireck.calories.domain.interactor.Interactor mGetFoodListInteractor;
+    private final Interactor mGetFoodListInteractor;
     private final FoodModelDataMapper mFoodModelDataMapper;
 
     @Inject
-    public FoodListPresenter(@Named("foodList") com.zireck.calories.domain.interactor.Interactor getFoodListInteractor,
+    public FoodListPresenter(@Named("foodList") Interactor getFoodListInteractor,
                              FoodModelDataMapper foodModelDataMapper) {
         mGetFoodListInteractor = getFoodListInteractor;
         mFoodModelDataMapper = foodModelDataMapper;
@@ -56,17 +58,17 @@ public class FoodListPresenter implements Presenter {
         mGetFoodListInteractor.execute(new FoodListSubscriber());
     }
 
-    private void showFoodsCollectionInView(Collection<com.zireck.calories.domain.Food> foodsCollection) {
+    private void showFoodsCollectionInView(Collection<Food> foodsCollection) {
         final Collection<FoodModel> foodModelsCollection =
                 mFoodModelDataMapper.transform(foodsCollection);
         mView.renderFoodList(foodModelsCollection);
     }
 
-    public void onItemClick(int position) {
-        mView.navigateToFoodDetails(position);
+    public void onItemClick(FoodModel food) {
+        mView.navigateToFoodDetails(food);
     }
 
-    private final class FoodListSubscriber extends com.zireck.calories.domain.interactor.DefaultSubscriber<List<Food>> {
+    private final class FoodListSubscriber extends DefaultSubscriber<List<Food>> {
         @Override
         public void onCompleted() {
         }
@@ -76,7 +78,7 @@ public class FoodListPresenter implements Presenter {
         }
 
         @Override
-        public void onNext(List<com.zireck.calories.domain.Food> foods) {
+        public void onNext(List<Food> foods) {
             showFoodsCollectionInView(foods);
         }
     }

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.vstechlab.easyfonts.EasyFonts;
+import com.zireck.calories.R;
 import com.zireck.calories.presentation.dagger.component.FoodComponent;
 import com.zireck.calories.presentation.helper.RecyclerItemClickListener;
 import com.zireck.calories.presentation.model.FoodModel;
@@ -29,13 +30,11 @@ import butterknife.Bind;
  */
 public class DrinkListFragment extends BaseFragment implements DrinkListView {
 
-    @Inject
-    Navigator mNavigator;
-    @Inject
-    DrinkListPresenter mPresenter;
+    @Inject Navigator mNavigator;
+    @Inject DrinkListPresenter mPresenter;
 
-    @Bind(com.zireck.calories.R.id.food_list_empty) TextView mDrinkListEmpty;
-    @Bind(com.zireck.calories.R.id.food_list) RecyclerView mRecyclerView;
+    @Bind(R.id.food_list_empty) TextView mDrinkListEmpty;
+    @Bind(R.id.food_list) RecyclerView mRecyclerView;
     protected FoodRecyclerAdapter mAdapter;
 
     public static DrinkListFragment newInstance() {
@@ -76,7 +75,7 @@ public class DrinkListFragment extends BaseFragment implements DrinkListView {
 
     @Override
     protected int getFragmentLayout() {
-        return com.zireck.calories.R.layout.fragment_food_list;
+        return R.layout.fragment_food_list;
     }
 
     @Override
@@ -93,8 +92,7 @@ public class DrinkListFragment extends BaseFragment implements DrinkListView {
     }
 
     @Override
-    public void navigateToFoodDetails(int position) {
-        FoodModel food = mAdapter.getItem(position);
+    public void navigateToFoodDetails(FoodModel food) {
         mNavigator.openFoodDetailActivity(getActivity(), food);
     }
 
@@ -114,7 +112,8 @@ public class DrinkListFragment extends BaseFragment implements DrinkListView {
         mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                mPresenter.onItemClick(position);
+                FoodModel food = mAdapter.getItem(position);
+                mPresenter.onItemClick(food);
             }
         }));
 

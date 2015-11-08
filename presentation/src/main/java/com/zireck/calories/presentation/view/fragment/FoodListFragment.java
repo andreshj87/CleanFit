@@ -9,13 +9,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.vstechlab.easyfonts.EasyFonts;
-import com.zireck.calories.presentation.navigation.Navigator;
-import com.zireck.calories.presentation.view.FoodListView;
 import com.zireck.calories.R;
 import com.zireck.calories.presentation.dagger.component.FoodComponent;
 import com.zireck.calories.presentation.helper.RecyclerItemClickListener;
 import com.zireck.calories.presentation.model.FoodModel;
+import com.zireck.calories.presentation.navigation.Navigator;
 import com.zireck.calories.presentation.presenter.FoodListPresenter;
+import com.zireck.calories.presentation.view.FoodListView;
 import com.zireck.calories.presentation.view.adapter.FoodRecyclerAdapter;
 
 import java.util.ArrayList;
@@ -30,8 +30,7 @@ import butterknife.Bind;
  */
 public class FoodListFragment extends BaseFragment implements FoodListView {
 
-    @Inject
-    Navigator mNavigator;
+    @Inject Navigator mNavigator;
     @Inject FoodListPresenter mPresenter;
 
     @Bind(R.id.food_list_empty) TextView mFoodListEmpty;
@@ -94,8 +93,7 @@ public class FoodListFragment extends BaseFragment implements FoodListView {
     }
 
     @Override
-    public void navigateToFoodDetails(int position) {
-        FoodModel food = mAdapter.getItem(position);
+    public void navigateToFoodDetails(FoodModel food) {
         mNavigator.openFoodDetailActivity(getActivity(), food);
     }
 
@@ -115,7 +113,8 @@ public class FoodListFragment extends BaseFragment implements FoodListView {
         mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                mPresenter.onItemClick(position);
+                FoodModel food = mAdapter.getItem(position);
+                mPresenter.onItemClick(food);
             }
         }));
 

@@ -26,7 +26,6 @@ public class Navigator {
     public static final int ADD_FOOD_REQUEST = 1;
     public static final int EDIT_FOOD_REQUEST = 2;
     public static final int DELETE_FOOD_REQUEST = 3;
-
     public static final int ADD_MEAL_REQUEST = 4;
 
     @Inject

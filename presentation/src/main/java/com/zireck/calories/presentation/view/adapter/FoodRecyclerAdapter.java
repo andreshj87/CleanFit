@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+import com.zireck.calories.R;
 import com.zireck.calories.presentation.model.FoodModel;
 import com.zireck.calories.presentation.util.MathUtils;
 import com.zireck.calories.presentation.util.PictureUtils;
@@ -30,7 +30,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class FoodRecyclerAdapter extends RecyclerView.Adapter<FoodRecyclerAdapter.FoodViewHolder> {
 
-    public static final int ITEM_LAYOUT = com.zireck.calories.R.layout.fragment_food_list_item;
+    public static final int ITEM_LAYOUT = R.layout.fragment_food_list_item;
 
     private Context mContext;
     private List<FoodModel> mFoodsCollection;
@@ -54,24 +54,13 @@ public class FoodRecyclerAdapter extends RecyclerView.Adapter<FoodRecyclerAdapte
 
         holder.foodId.setText(String.valueOf(food.getId()));
 
+        setFoodTextDrawable(food, holder);
         if (food.getPicture() != null && !TextUtils.isEmpty(food.getPicture())) {
             Uri pictureUri = PictureUtils.getPhotoFileUri(food.getPicture());
-            Picasso.with(mContext).load(pictureUri).fit().centerCrop().into(holder.foodPicture, new Callback() {
-                @Override
-                public void onSuccess() {
-
-                }
-
-                @Override
-                public void onError() {
-                    setFoodTextDrawable(food, holder);
-                }
-            });
+            Picasso.with(mContext).load(pictureUri).fit().centerCrop().into(holder.foodPicture);
 
             holder.foodTextDrawable.setVisibility(View.INVISIBLE);
             holder.foodPicture.setVisibility(View.VISIBLE);
-        } else {
-            setFoodTextDrawable(food, holder);
         }
 
         holder.foodName.setText(food.getName());
@@ -103,12 +92,12 @@ public class FoodRecyclerAdapter extends RecyclerView.Adapter<FoodRecyclerAdapte
     }
 
     public static class FoodViewHolder extends RecyclerView.ViewHolder {
-        @Bind(com.zireck.calories.R.id.food_id) TextView foodId;
-        @Bind(com.zireck.calories.R.id.food_picture) CircleImageView foodPicture;
-        @Bind(com.zireck.calories.R.id.food_textdrawable) ImageView foodTextDrawable;
-        @Bind(com.zireck.calories.R.id.food_name) TextView foodName;
-        @Bind(com.zireck.calories.R.id.food_brand) TextView foodBrand;
-        @Bind(com.zireck.calories.R.id.food_calories) TextView foodCalories;
+        @Bind(R.id.food_id) TextView foodId;
+        @Bind(R.id.food_picture) CircleImageView foodPicture;
+        @Bind(R.id.food_textdrawable) ImageView foodTextDrawable;
+        @Bind(R.id.food_name) TextView foodName;
+        @Bind(R.id.food_brand) TextView foodBrand;
+        @Bind(R.id.food_calories) TextView foodCalories;
 
         public FoodViewHolder(View itemView) {
             super(itemView);

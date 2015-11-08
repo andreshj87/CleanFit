@@ -9,5 +9,5 @@ import java.util.Collection;
  */
 public interface FoodListView extends View {
     void renderFoodList(Collection<FoodModel> foodItems);
-    void navigateToFoodDetails(final int position);
+    void navigateToFoodDetails(FoodModel food);
 }

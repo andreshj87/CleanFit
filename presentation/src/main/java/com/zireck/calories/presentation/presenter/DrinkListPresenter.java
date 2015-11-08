@@ -65,8 +65,8 @@ public class DrinkListPresenter implements Presenter {
         mView.renderDrinkList(foodModelsCollection);
     }
 
-    public void onItemClick(int position) {
-        mView.navigateToFoodDetails(position);
+    public void onItemClick(FoodModel food) {
+        mView.navigateToFoodDetails(food);
     }
 
     private final class DrinkListSubscriber extends DefaultSubscriber<List<Food>> {

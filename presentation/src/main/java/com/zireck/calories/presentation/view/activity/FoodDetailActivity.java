@@ -10,7 +10,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.squareup.picasso.Picasso;
+import com.zireck.calories.R;
+import com.zireck.calories.presentation.dagger.HasComponent;
 import com.zireck.calories.presentation.dagger.component.DaggerFoodComponent;
 import com.zireck.calories.presentation.dagger.component.FoodComponent;
 import com.zireck.calories.presentation.dagger.module.FoodModule;
@@ -18,7 +21,6 @@ import com.zireck.calories.presentation.listener.FoodDetailCallback;
 import com.zireck.calories.presentation.model.FoodModel;
 import com.zireck.calories.presentation.util.PictureUtils;
 import com.zireck.calories.presentation.view.fragment.FoodDetailFragment;
-import com.zireck.calories.presentation.dagger.HasComponent;
 
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
 import net.steamcrafted.materialiconlib.MaterialIconView;
@@ -38,10 +40,10 @@ public class FoodDetailActivity extends BaseActivity implements FoodDetailCallba
 
     private FoodModel mFood;
 
-    @Bind(com.zireck.calories.R.id.collapsing_toolbar) CollapsingToolbarLayout mCollapsingToolbarLayout;
-    @Bind(com.zireck.calories.R.id.toolbar) Toolbar mToolbar;
-    @Bind(com.zireck.calories.R.id.food_image) ImageView mFoodImage;
-    @Bind(com.zireck.calories.R.id.fab) FloatingActionButton mFloatingActionButton;
+    @Bind(R.id.collapsing_toolbar) CollapsingToolbarLayout mCollapsingToolbarLayout;
+    @Bind(R.id.toolbar) Toolbar mToolbar;
+    @Bind(R.id.food_image) ImageView mFoodImage;
+    @Bind(R.id.fab) FloatingActionButton mFloatingActionButton;
 
     /**
      * Generates the intent needed to launch this activity.
@@ -60,12 +62,13 @@ public class FoodDetailActivity extends BaseActivity implements FoodDetailCallba
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.zireck.calories.R.layout.activity_food_detail);
+        setContentView(R.layout.activity_food_detail);
 
         mapExtras();
         initInjector();
         initActionBar();
         initFloatingActionButton();
+        initFoodImage();
         initializeFragment();
     }
 
@@ -127,7 +130,14 @@ public class FoodDetailActivity extends BaseActivity implements FoodDetailCallba
         mFloatingActionButton.setImageDrawable(icon.getDrawable());
     }
 
-    @OnClick(com.zireck.calories.R.id.fab)
+    private void initFoodImage() {
+        ColorGenerator colorGenerator = ColorGenerator.MATERIAL;
+        int color = colorGenerator.getColor(mFood.getName());
+
+        mFoodImage.setBackgroundColor(color);
+    }
+
+    @OnClick(R.id.fab)
     public void onClickFAB() {
         mNavigator.openAddMealActivity(this);
     }
@@ -138,7 +148,7 @@ public class FoodDetailActivity extends BaseActivity implements FoodDetailCallba
         }
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(com.zireck.calories.R.id.fragment_container, FoodDetailFragment.newInstance(mFood)).commit();
+        fragmentTransaction.replace(R.id.fragment_container, FoodDetailFragment.newInstance(mFood)).commit();
     }
 
     private static void throwIllegalArgumentException() {
