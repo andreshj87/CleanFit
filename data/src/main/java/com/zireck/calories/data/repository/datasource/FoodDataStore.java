@@ -176,4 +176,22 @@ public class FoodDataStore {
             }
         });
     }
+
+    public Observable<Boolean> isCatalogEmpty() {
+        return Observable.create(new Observable.OnSubscribe<Boolean>() {
+            @Override
+            public void call(Subscriber<? super Boolean> subscriber) {
+                FoodEntityDao foodEntityDao = getFoodEntityDao();
+                List<FoodEntity> foodCatalog = foodEntityDao.loadAll();
+
+                if (foodCatalog == null || foodCatalog.size() <= 0) {
+                    subscriber.onNext(true);
+                } else {
+                    subscriber.onNext(false);
+                }
+
+                subscriber.onCompleted();
+            }
+        });
+    }
 }

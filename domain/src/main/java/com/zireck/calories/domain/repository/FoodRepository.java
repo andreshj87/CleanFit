@@ -1,48 +1,57 @@
 package com.zireck.calories.domain.repository;
 
+import com.zireck.calories.domain.Food;
+
 import java.util.List;
+
 import rx.Observable;
 
 /**
- * Interface that represents a Repository for getting {@link com.zireck.calories.domain.Food} related data.
+ * Interface that represents a Repository for getting {@link Food} related data.
  */
 public interface FoodRepository {
 
     /**
-     * Get an {@link Observable} which will emit a {@link com.zireck.calories.domain.Food}.
+     * Get an {@link Observable} which will emit a {@link Food}.
      *
      * @param foodId The food id used to retrieve food data.
      */
-    Observable<com.zireck.calories.domain.Food> food(final long foodId);
+    Observable<Food> food(final long foodId);
 
     /**
-     * Get an {@link Observable} which will emit a List of all {@link com.zireck.calories.domain.Food}.
+     * Get an {@link Observable} which will emit a List of all {@link Food}.
      */
-    Observable<List<com.zireck.calories.domain.Food>> allFood();
+    Observable<List<Food>> allFood();
 
     /**
-     * Get an {@link Observable} which will emit a List of {@link com.zireck.calories.domain.Food}.
+     * Get an {@link Observable} which will emit a List of {@link Food}.
      */
-    Observable<List<com.zireck.calories.domain.Food>> foods();
+    Observable<List<Food>> foods();
 
     /**
      * Get an {@link Observable} which will emit a List of Drinks.
      */
-    Observable<List<com.zireck.calories.domain.Food>> drinks();
+    Observable<List<Food>> drinks();
 
     /**
-     * Get an {@link Observable} which will notify the addition of a {@link com.zireck.calories.domain.Food} object.
+     * Get an {@link Observable} which will notify the addition of a {@link Food} object.
      */
-    Observable<Void> addFood(final com.zireck.calories.domain.Food food);
+    Observable<Void> addFood(final Food food);
 
     /**
-     * Get an {@link Observable} which will notify the edition of a {@link com.zireck.calories.domain.Food} object.
+     * Get an {@link Observable} which will notify the edition of a {@link Food} object.
      */
-    Observable<Void> editFood(final com.zireck.calories.domain.Food food);
+    Observable<Void> editFood(final Food food);
 
     /**
-     * Get an {@link Observable} which will notify the deletion of a {@link com.zireck.calories.domain.Food} object.
+     * Get an {@link Observable} which will notify the deletion of a {@link Food} object.
      * @param food
      */
-    Observable<Void> deleteFood(final com.zireck.calories.domain.Food food);
+    Observable<Void> deleteFood(final Food food);
+
+    /**
+     * Get an {@link Observable} which will check if the food catalog is empty.
+     * @return
+     */
+    Observable<Boolean> isCatalogEmpty();
 }

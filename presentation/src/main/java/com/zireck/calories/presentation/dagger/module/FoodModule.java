@@ -4,9 +4,11 @@ import com.zireck.calories.domain.Food;
 import com.zireck.calories.domain.executor.PostExecutionThread;
 import com.zireck.calories.domain.executor.ThreadExecutor;
 import com.zireck.calories.domain.interactor.AddFood;
+import com.zireck.calories.domain.interactor.CheckIfFoodCatalogIsEmpty;
 import com.zireck.calories.domain.interactor.DeleteFood;
 import com.zireck.calories.domain.interactor.EditFood;
 import com.zireck.calories.domain.interactor.GetAllFoodList;
+import com.zireck.calories.domain.interactor.GetDrinkList;
 import com.zireck.calories.domain.interactor.GetFoodDetails;
 import com.zireck.calories.domain.interactor.GetFoodList;
 import com.zireck.calories.domain.interactor.Interactor;
@@ -50,7 +52,7 @@ public class FoodModule {
     }
 
     @Provides @PerActivity @Named("drinkList")
-    Interactor provideGetDrinkListInteractor(com.zireck.calories.domain.interactor.GetDrinkList getDrinkList) {
+    Interactor provideGetDrinkListInteractor(GetDrinkList getDrinkList) {
         return getDrinkList;
     }
 
@@ -78,5 +80,12 @@ public class FoodModule {
     Interactor provideDeleteFoodInteractor(FoodRepository foodRepository, ThreadExecutor threadExecutor,
                                        PostExecutionThread postExecutionThread) {
         return new DeleteFood(mFood, foodRepository, threadExecutor, postExecutionThread);
+    }
+
+    @Provides @PerActivity @Named("checkIfFoodCatalogIsEmpty")
+    Interactor provideCheckIfFoodCatalogIsEmptyInteractor(FoodRepository foodRepository,
+                                                          ThreadExecutor threadExecutor,
+                                                          PostExecutionThread postExecutionThread) {
+        return new CheckIfFoodCatalogIsEmpty(foodRepository, threadExecutor, postExecutionThread);
     }
 }
