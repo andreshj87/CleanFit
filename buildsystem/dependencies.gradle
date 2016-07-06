@@ -1,6 +1,7 @@
 allprojects {
     repositories {
         jcenter()
+        maven { url "https://jitpack.io" }
     }
 }
 
@@ -39,7 +40,7 @@ ext {
     materialMenuToolBarVersion = '1.5.4'
     materialIconLibVersion = '1.0.3'
     materialDateTimePickerVersion = '1.4.2'
-    materialDialogsVersion = '0.7.8.1'
+    materialDialogsVersion = '0.7.9.1@aar'
 
     fitChartVersion = '1.0'
     wheelIndicatorViewVersion = '1.0.0'
@@ -70,7 +71,7 @@ ext {
             materialMenuToolbar:    "com.balysv.materialmenu:material-menu-toolbar:${materialMenuToolBarVersion}",
             materialIconLib:        "net.steamcrafted:materialiconlib:${materialIconLibVersion}",
             materialDateTimePicker: "com.wdullaer:materialdatetimepicker:${materialDateTimePickerVersion}",
-            materialDialogs:        "com.afollestad:material-dialogs:${materialDialogsVersion}",
+            materialDialogs:        "com.github.afollestad.material-dialogs:core:${materialDialogsVersion}",
             fitChart:               "com.txusballesteros:FitChart:${fitChartVersion}",
             wheelIndicatorView:     "com.dlazaro66.wheelindicatorview:WheelIndicatorView:${wheelIndicatorViewVersion}",
     ]
